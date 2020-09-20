@@ -25,5 +25,10 @@ Route.group( () => {
 }).prefix('api');
 
 Route.group( () => {
+	Route.post('/surveys', 'SurveysController.store');
+	Route.post('/instances', 'InstanceController.store');
+}).prefix('api');
+
+Route.group( () => {
 	Route.post('/response', 'SurveysController.responseHook');
 }).prefix('api');

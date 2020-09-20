@@ -8,8 +8,20 @@ class Session extends Model {
 		return this.belongsTo('App/Models/Instance');
 	}
 	
+	contact() {
+		return this.belongsTo('App/Models/Contact');
+	}
+	
+	sender() {
+		return this.belongsTo('App/Models/Sender');
+	}
+	
+	question() {
+		return this.belongsTo('App/Models/Question');
+	}
+	
 	status() {
-		this.belongsTo('App/Models/Status');
+		return this.belongsTo('App/Models/Status');
 	}
 }
 

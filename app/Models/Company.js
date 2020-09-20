@@ -6,7 +6,7 @@ const Model = use('Model');
 
 class Company extends Model {
 	senders() {
-		return this.belongsToMany('App/Models/Sender');
+		return this.hasMany('App/Models/Sender');
 	}
 }
 
