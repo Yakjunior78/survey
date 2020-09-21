@@ -5,7 +5,6 @@ class InstanceForm {
 	async validate(request) {
 		
 		const rules = {
-			description: 'required',
 			survey_id: 'required',
 			group_id: 'required',
 			start_at: 'required',

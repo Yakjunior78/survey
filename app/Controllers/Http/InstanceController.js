@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const InstanceRepository = new(use('App/Modules/Instances/InstanceRepository'))();
 

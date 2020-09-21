@@ -1,9 +1,11 @@
 'use strict';
 
 const { Command } = require('@adonisjs/ace');
+const Event = use('Event');
+
 const Response = new(use('App/Modules/Surveys/Response'))();
 
-const ContactModel = use('App/Models/Contact');
+const InstanceModel = use('App/Models/Instance');
 const SurveyModel = use('App/Models/Survey');
 
 class Test extends Command {
@@ -18,11 +20,9 @@ class Test extends Command {
     
     async handle(args, options) {
         
-        let contact = await ContactModel.first();
+        let instanceModel = await InstanceModel.find(79);
         
-        console.log(contact.msisdn, 'contacts');
-        
-        return true;
+        return Event.fire('new::instance', instanceModel);
     }
 }
 

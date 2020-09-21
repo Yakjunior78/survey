@@ -26,6 +26,10 @@ class SurveyRepository {
 		
 		return surveyModel;
 	}
+	
+	async initiate(data) {
+	
+	}
 }
 
 module.exports = SurveyRepository;
