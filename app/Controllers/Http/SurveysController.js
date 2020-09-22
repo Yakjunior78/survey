@@ -3,12 +3,13 @@
 const Logger = use('Logger');
 const Response = new(use('App/Modules/Surveys/Response'))();
 const SurveyRepository = new(use('App/Modules/Surveys/SurveyRepository'))();
-const InstanceRepository = new(use('App/Modules/Instances/InstanceRepository'))();
+const SurveyHandler = new(use('App/Modules/Surveys/SurveyHandler'))();
+const InstanceForm = new(use('App/Modules/Instances/Form'))();
 
 class SurveysController {
 	
-	async store({ request, response }) {
-		
+	async store({ request, response })
+	{
 		let req = request.all();
 		
 		let result = await SurveyRepository.create(req);
@@ -16,17 +17,27 @@ class SurveysController {
 		return response.json(result);
 	}
 	
-	async initiate({ request, response }) {
+	async initiate({ request, response })
+	{
+		let data = request.all();
+		let validation = await InstanceForm.validate(data);
 		
-		let req = request.all();
+		if (validation.fails()) {
+			return InstanceForm.error(validation);
+		}
 		
-		let result = await InstanceRepository.create(req);
-		
-		return response.json(result);
+		return response.json(await SurveyHandler.initiate(data));
 	}
 	
-	async responseHook({ request }) {
+	async initialize({ request, response })
+	{
+		let req = request.all();
 		
+		return response.json(request);
+	}
+	
+	async responseHook({ request })
+	{
 		let req = request.all();
 		
 		return await Response.handle(req);

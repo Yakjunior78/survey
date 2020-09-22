@@ -26,7 +26,7 @@ const generateLink = async (instance) => {
 	let token = uuidv4(6);
 	
 	instance.token = token;
-	instance.url = Env.get('SURVEY_WEB_URI') + '/' + token;
+	instance.url = Env.get('SURVEY_WEB_URI') + '/survey/' + token;
 	
 	return instance.save();
 }

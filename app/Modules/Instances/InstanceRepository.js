@@ -10,31 +10,7 @@ const { isNowOrPast } = use('App/Helpers/DateHelper')
 
 class InstanceRepository {
 	
-	async create(data) {
-		
-		let validation = await InstanceForm.validate(data);
-		
-		if (validation.fails()) {
-			return InstanceForm.error(validation);
-		}
-		
-		let survey =  await SurveyModel.query().where('uuid', data.survey_id).first();
-		
-		if(!survey) {
-			return {
-				status: 406,
-				message: 'Model survey with such id was not found'
-			}
-		}
-		
-		let channel = await ChannelModel.query().where('id', data.channel_id).first();
-		
-		if(!channel) {
-			return {
-				status: 406,
-				message: 'Selected channel is not active'
-			}
-		}
+	async create(survey, channel, data) {
 		
 		let instances = await survey.instances().count('* as total');
 		
