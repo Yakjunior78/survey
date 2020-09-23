@@ -25,6 +25,10 @@ class Survey extends Model {
 	status() {
 		return this.belongsTo('App/Models/Status');
 	}
+	
+	company() {
+		return this.belongsTo('App/Models/Company');
+	}
 }
 
 module.exports = Survey

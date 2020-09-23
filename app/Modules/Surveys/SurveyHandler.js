@@ -3,7 +3,7 @@
 const SurveyModel = use('App/Models/Survey');
 const ChannelModel = use('App/Models/Channel');
 const InstanceRepository = new(use('App/Modules/Instances/InstanceRepository'))();
-const { notAllowed } = use('App/Helpers/Response')
+const { notAllowed } = use('App/Helpers/Response');
 
 class SurveyHandler {
 	

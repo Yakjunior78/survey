@@ -4,7 +4,8 @@ const {PubSub} = require('@google-cloud/pubsub');
 const timeout = 60;
 const topic = 'test-topic';
 const subscription = 'test-subscription';
-const uuidv4 = require('uuid/v4');
+const { token } = use('App/Helpers/Emalify');
+
 const Env = use('Env');
 
 const publish = async(instance) => {
@@ -23,7 +24,7 @@ const publish = async(instance) => {
 
 const generateLink = async (instance) => {
 	
-	let token = uuidv4(6);
+	let token = token();
 	
 	instance.token = token;
 	instance.url = Env.get('SURVEY_WEB_URI') + '/survey/' + token;

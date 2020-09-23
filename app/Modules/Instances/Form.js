@@ -14,6 +14,15 @@ class InstanceForm {
 		return await validate (request, rules);
 	}
 	
+	async validateInstance(request) {
+		
+		const rules = {
+			uuid: 'required'
+		}
+		
+		return await validate (request, rules);
+	}
+	
 	async error(validation) {
 		return {
 			status: 401,

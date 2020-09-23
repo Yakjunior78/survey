@@ -6,7 +6,11 @@ const SurveyModel = use('App/Models/Survey');
 const ChannelModel = use('App/Models/Channel');
 
 const InstanceForm = new(use('App/Modules/Instances/Form'))();
-const { isNowOrPast } = use('App/Helpers/DateHelper')
+const ContactRepository = new(use('App/Modules/Contacts/ContactRepository'))();
+const SessionRepo = new(use('App/Modules/Session/SessionRepository'))();
+
+const { isNowOrPast } = use('App/Helpers/DateHelper');
+const { notAllowed } = use('App/Helpers/Response')
 
 class InstanceRepository {
 	
@@ -14,21 +18,17 @@ class InstanceRepository {
 		
 		let instances = await survey.instances().count('* as total');
 		
-		let instanceModel = new InstanceModel;
-		
-		instanceModel.description = 'Instance ' + (instances[0].total + 1) + ' of this survey.';
-		instanceModel.survey_id = survey.id;
-		instanceModel.start_at = data.start_at;
-		instanceModel.end_at = data.end_at;
-		instanceModel.group_id = data.group_id;
-		instanceModel.channel_id = channel.id;
-		instanceModel.created_by = data.created_by;
-		instanceModel.created_by_name = data.created_by_name;
-		instanceModel.status_id = data.status_id;
-		
-		await instanceModel.save();
-		
-		let instance = await InstanceModel.find(instanceModel.id);
+		let instance = await InstanceModel.create({
+			description: 'Instance ' + (instances[0].total + 1) + ' of this survey.',
+			survey_id: survey.id,
+			start_at: data.start_at,
+			end_at: data.end_at,
+			group_id: data.group_id,
+			channel_id: channel.id,
+			created_by: data.created_by,
+			created_by_name: data.created_by_name,
+			status_id: data.status_id
+		})
 		
 		await this.attachQuestions(instance);
 		
@@ -53,6 +53,62 @@ class InstanceRepository {
 		}
 		
 		return questions;
+	}
+	
+	async initialize(data)
+	{
+		let validation = await InstanceForm.validateInstance(data);
+		
+		if (validation.fails()) {
+			return InstanceForm.error(validation);
+		}
+		
+		let instance = await this.getInstance(data.uuid);
+		
+		if(!instance) return notAllowed('Survey instance not found!');
+		
+		let company = await this.getCompany(instance);
+		
+		if(!company) return notAllowed('Company instance not found!');
+		
+		let contact = await this.getContact(company, data.user);
+		
+		let session = await SessionRepo.show(contact, instance, null);
+		
+		if(!session) session = await  SessionRepo.init(instance, contact);
+		
+		return {
+			question: await session.question().fetch(),
+			contact: contact
+		};
+	}
+	
+	async getInstance(id)
+	{
+		return InstanceModel
+			.query()
+			.where('uuid', id)
+			.first();
+	}
+	
+	async getCompany(instance)
+	{
+		let survey = await instance.survey().first();
+		
+		if(!survey) return null;
+		
+		return survey.company ().first ();
+	}
+	
+	async getContact(company, data)
+	{
+		let contact = data ? await ContactRepository.getContact(company, null, data) : null;
+		
+		if(!contact) {
+			contact = await ContactRepository.createSingleContact(company, null, data);
+		}
+		
+		return contact;
 	}
 }
 

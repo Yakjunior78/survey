@@ -28,20 +28,6 @@ class SurveysController {
 		
 		return response.json(await SurveyHandler.initiate(data));
 	}
-	
-	async initialize({ request, response })
-	{
-		let req = request.all();
-		
-		return response.json(request);
-	}
-	
-	async responseHook({ request })
-	{
-		let req = request.all();
-		
-		return await Response.handle(req);
-	}
 }
 
 module.exports = SurveysController;

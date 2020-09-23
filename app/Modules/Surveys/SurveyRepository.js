@@ -13,18 +13,14 @@ class SurveyRepository {
 			return SurveyForm.error(validation);
 		}
 		
-		let surveyModel = new SurveyModel;
-		
-		surveyModel.title = data.title;
-		surveyModel.description = data.description;
-		surveyModel.company_id = data.company_id;
-		surveyModel.created_by = data.created_by;
-		surveyModel.category_id = data.category_id;
-		surveyModel.status_id = data.status_id;
-		
-		await surveyModel.save();
-		
-		return surveyModel;
+		return await SurveyModel.create({
+			title: data.title,
+			description: data.description,
+			company_id: data.company_id,
+			created_by: data.created_by,
+			category_id: data.category_id,
+			status_id: data.status_id
+		});
 	}
 }
 

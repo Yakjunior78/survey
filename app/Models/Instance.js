@@ -7,7 +7,7 @@ class Instance extends Model {
 	
 	static boot() {
 		super.boot();
-		this.addHook("beforeCreate", "UuidHook.generateUuid");
+		this.addHook("beforeCreate", "UuidHook.generateShorterUuid");
 	}
 	
 	survey() {

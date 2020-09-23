@@ -28,8 +28,9 @@ Route.group( () => {
 	Route.post('/surveys', 'SurveysController.store');
 	Route.post('/surveys/initiate', 'SurveysController.initiate');
 	Route.resource('/instances', 'InstanceController');
+	Route.post('/instances/initialize', 'InstanceController.initialize');
 }).prefix('api');
 
 Route.group( () => {
-	Route.post('/response', 'SurveysController.responseHook');
+	Route.post('/response', 'ResponsesController.handle');
 }).prefix('api');
