@@ -4,6 +4,7 @@ const Event = use('Event');
 const InstanceModel = use('App/Models/Instance');
 const SurveyModel = use('App/Models/Survey');
 const ChannelModel = use('App/Models/Channel');
+const StatusModel = use('App/Models/Status');
 
 const InstanceForm = new(use('App/Modules/Instances/Form'))();
 const ContactRepository = new(use('App/Modules/Contacts/ContactRepository'))();
@@ -19,6 +20,8 @@ class InstanceRepository {
 		
 		let instances = await survey.instances().count('* as total');
 		
+		let status = await StatusModel.query().where('slug', 'active').first();
+		
 		let instance = await InstanceModel.create({
 			description: 'Instance ' + (instances[0].total + 1) + ' of this survey.',
 			survey_id: survey.id,
@@ -28,7 +31,8 @@ class InstanceRepository {
 			channel_id: channel.id,
 			created_by: data.created_by,
 			created_by_name: data.created_by_name,
-			status_id: data.status_id
+			status_id: status.id,
+			sender_id: data.sender_id ? data.sender_id : null
 		})
 		
 		await this.attachQuestions(instance);
@@ -44,7 +48,7 @@ class InstanceRepository {
 	
 	async attachQuestions(instance) {
 		
-		let survey = await instance.survey().fetch();
+		let survey = await instance.survey().first();
 		
 		let questions = await survey.questions().fetch();
 		
@@ -107,10 +111,10 @@ class InstanceRepository {
 	
 	async getContact(company, data)
 	{
-		let contact = data ? await ContactRepository.getContact(company, null, data) : null;
+		let contact = data ? await ContactRepository.getContact(data, null) : null;
 		
 		if(!contact) {
-			contact = await ContactRepository.createSingleContact(company, null, data);
+			contact = await ContactRepository.createSingleContact(data, company, null);
 		}
 		
 		return contact;

@@ -35,7 +35,9 @@ class SessionRepository {
 			return SessionModel
 				.query ()
 				.where ('instance_id', instance.id)
-				.where ('status_id', 6)
+				.whereHas ('status', (status) => {
+					status.where('slug', 'active');
+				})
 				.where ('contact_id', contact.id)
 				.first ();
 		}
@@ -44,7 +46,9 @@ class SessionRepository {
 			return SessionModel
 				.query ()
 				.where ('sender_id', sender.id)
-				.where ('status_id', 6)
+				.whereHas ('status', (status) => {
+					status.where('slug', 'active');
+				})
 				.where ('contact_id', contact.id)
 				.first ();
 		}

@@ -6,5 +6,13 @@ class QuestionRepository {
 			.where ('rank', rank)
 			.first ();
 	}
+	
+	async nextQuestion(survey, rank)
+	{
+		return survey
+			.questions ()
+			.where ('rank', rank + 1)
+			.first ();
+	}
 }
 module.exports = QuestionRepository;

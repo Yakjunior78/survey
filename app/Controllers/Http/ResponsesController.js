@@ -1,12 +1,20 @@
 'use strict';
 
+const ResponseHandler = new(use('App/Modules/Responses/ResponseHandler'))();
+
 class ResponsesController {
 	
-	async handle({ request, response }) {
-		
+	async handle({ request, response })
+	{
 		let req = request.all();
 		
-		return await Response.handle(req);
+		let result = await ResponseHandler.handle (req);
+		
+		if(req.type === 'onDemandNotification') {
+			return result;
+		}
+
+		return response.json(result);
 	}
 }
 

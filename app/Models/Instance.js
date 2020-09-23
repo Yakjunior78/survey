@@ -29,6 +29,14 @@ class Instance extends Model {
 	status() {
 		return this.belongsTo('App/Models/Status');
 	}
+	
+	sender() {
+		return this.belongsTo('App/Models/Sender');
+	}
+	
+	group() {
+		return this.belongsTo('App/Models/Group');
+	}
 }
 
 module.exports = Instance

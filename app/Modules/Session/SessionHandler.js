@@ -1,6 +1,6 @@
 const SessionModel = use('App/Models/Session');
-const SessionRepo = use('App/Modules/Session/SessionRepository');
-const QuestionRepo = use('App/Modules/Questions/QuestionRepository');
+const SessionRepo = new(use('App/Modules/Session/SessionRepository'))();
+const QuestionRepo = new(use('App/Modules/Questions/QuestionRepository'))();
 
 class SessionHandler  {
 	
@@ -11,15 +11,15 @@ class SessionHandler  {
 		this.channel = channel;
 	}
 	
-	async handle() {
+	async handle(create) {
 		
 		let session = await this.session();
 		
-		if(!session) {
+		if(!session && create) {
 			
 			let survey = await this.instance.survey().fetch();
 			
-			let question = await QuestionRepo.get(survey, 0);
+			let question = await QuestionRepo.get(survey, 1);
 			
 			session = await SessionRepo.create(this.instance, this.contact, question);
 		}

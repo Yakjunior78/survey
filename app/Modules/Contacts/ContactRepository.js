@@ -4,7 +4,7 @@ const { shortToken } = use('App/Helpers/Emalify');
 
 class ContactRepository {
 	
-	async createSingleContact(company, group, data)
+	async createSingleContact(data, company, group)
 	{
 		let contactModel = new ContactModel();
 		
@@ -18,21 +18,20 @@ class ContactRepository {
 		return contactModel;
 	}
 	
-	async getContact(company, group, data)
+	async getContact(data, group)
 	{
-		if(company) {
-			return ContactModel
-				.query ()
-				.where ('company_id', company.id)
-				.where ('uuid', data.id)
-				.first ();
-		}
-		
 		if(group) {
 			return ContactModel
 				.query ()
 				.where ('group_id', group.id)
 				.where ('msisdn', data.phoneNumber)
+				.first ();
+		}
+		
+		if(data.id) {
+			return ContactModel
+				.query ()
+				.where ('uuid', data.id)
 				.first ();
 		}
 		
