@@ -22,8 +22,8 @@ class Question extends Model {
 		return this.hasMany('App/Models/Choice');
 	}
 	
-	inputTypes() {
-		return this.hasMany('App/Models/InputType')
+	inputType() {
+		return this.belongsTo('App/Models/InputType')
 	}
 	
 	responses() {

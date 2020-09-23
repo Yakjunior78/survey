@@ -11,6 +11,7 @@ const SessionRepo = new(use('App/Modules/Session/SessionRepository'))();
 
 const { isNowOrPast } = use('App/Helpers/DateHelper');
 const { notAllowed } = use('App/Helpers/Response');
+const { transform } = use('App/Helpers/Transformer');
 
 class InstanceRepository {
 	
@@ -80,11 +81,10 @@ class InstanceRepository {
 		if(!session) return notAllowed('Survey question not set yet');
 		
 		return {
-			question: await session.question().fetch(),
+			question: await transform('Question', await session.question().fetch()),
 			contact: contact,
 			instance: instance,
-			survey: await instance.survey().first(),
-			session: session
+			survey: await transform('Survey', await instance.survey().first()),
 		};
 	}
 	
