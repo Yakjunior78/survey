@@ -10,7 +10,7 @@ const ContactRepository = new(use('App/Modules/Contacts/ContactRepository'))();
 const SessionRepo = new(use('App/Modules/Session/SessionRepository'))();
 
 const { isNowOrPast } = use('App/Helpers/DateHelper');
-const { notAllowed } = use('App/Helpers/Response')
+const { notAllowed } = use('App/Helpers/Response');
 
 class InstanceRepository {
 	
@@ -75,11 +75,16 @@ class InstanceRepository {
 		
 		let session = await SessionRepo.show(contact, instance, null);
 		
-		if(!session) session = await  SessionRepo.init(instance, contact);
+		if(!session) session = await SessionRepo.init(instance, contact);
+		
+		if(!session) return notAllowed('Survey question not set yet');
 		
 		return {
 			question: await session.question().fetch(),
-			contact: contact
+			contact: contact,
+			instance: instance,
+			survey: await instance.survey().first(),
+			session: session
 		};
 	}
 	

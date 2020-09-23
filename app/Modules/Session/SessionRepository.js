@@ -2,6 +2,7 @@ const SessionModel = use('App/Models/Session');
 const QuestionRepo = new(use('App/Modules/Questions/QuestionRepository'))();
 
 const { getStatus } = use('App/Helpers/Emalify');
+const { notAllowed } = use('App/Helpers/Response');
 
 class SessionRepository {
 	
@@ -10,6 +11,8 @@ class SessionRepository {
 		let survey = await instance.survey().fetch();
 		
 		let question = await QuestionRepo.get(survey, 1);
+		
+		if(!question) return null;
 		
 		return await this.create(instance, contact, question);
 	}
