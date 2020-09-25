@@ -17,7 +17,7 @@ class SurveyRepository {
 		
 		let status = await StatusModel.query().where('slug', 'active').first();
 		
-		return await SurveyModel.create({
+		let survey = await SurveyModel.create({
 			title: data.title,
 			description: data.description,
 			company_id: data.company_id,
@@ -25,6 +25,12 @@ class SurveyRepository {
 			category_id: data.category_id,
 			status_id: status ? status.id : null
 		});
+		
+		return {
+			status: 201,
+			message: 'Survey created successfully',
+			data: survey
+		}
 	}
 }
 
