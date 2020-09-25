@@ -25,10 +25,22 @@ Route.group( () => {
 }).prefix('api');
 
 Route.group( () => {
+	/**
+	 * Survey
+	 */
 	Route.post('/surveys', 'SurveysController.store');
 	Route.post('/surveys/initiate', 'SurveysController.initiate');
+	
+	/**
+	 * Instance
+	 */
 	Route.resource('/instances', 'InstanceController');
 	Route.post('/instances/initialize', 'InstanceController.initialize');
+	
+	/**
+	 * Categorise
+	 */
+	Route.resource('/categories', 'CategoryController');
 }).prefix('api');
 
 Route.group( () => {
