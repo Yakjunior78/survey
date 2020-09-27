@@ -19,16 +19,10 @@ const Route = use('Route')
 Route.on('/').render('welcome');
 
 Route.group( () => {
-	Route.post('test', 'TestController.publish');
-	Route.post('send', 'TestController.sendSms');
-	Route.get('token', 'TestController.token');
-}).prefix('api');
-
-Route.group( () => {
 	/**
 	 * Survey
 	 */
-	Route.post('/surveys', 'SurveysController.store');
+	Route.resource('/surveys', 'SurveysController');
 	Route.post('/surveys/initiate', 'SurveysController.initiate');
 	
 	/**
@@ -44,5 +38,18 @@ Route.group( () => {
 }).prefix('api');
 
 Route.group( () => {
+	/**
+	 * Response hook
+	 */
 	Route.post('/response', 'ResponsesController.handle');
+}).prefix('api');
+
+
+Route.group( () => {
+	/**
+	 * Test routes
+	 */
+	Route.post('test', 'TestController.publish');
+	Route.post('send', 'TestController.sendSms');
+	Route.get('token', 'TestController.token');
 }).prefix('api');

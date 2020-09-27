@@ -4,6 +4,7 @@ const StatusModel = use('App/Models/Status');
 const SurveyForm = new(use('App/Modules/Surveys/Form'))();
 
 const { validate } = use('Validator');
+const { transform } = use('App/Helpers/Transformer');
 
 class SurveyRepository {
 	
@@ -29,8 +30,15 @@ class SurveyRepository {
 		return {
 			status: 201,
 			message: 'Survey created successfully',
-			data: survey
+			survey: survey
 		}
+	}
+	
+	async show(id)
+	{
+		let survey = await SurveyModel.findOrFail(id);
+		
+		return transform(survey, 'Survey');
 	}
 }
 

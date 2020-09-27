@@ -85,10 +85,10 @@ class InstanceRepository {
 		if(!session) return notAllowed('Survey question not set yet');
 		
 		return {
-			question: await transform('Question', await session.question().fetch()),
+			question: await transform(await session.question().fetch(), 'Question'),
 			contact: contact,
 			instance: instance,
-			survey: await transform('Survey', await instance.survey().first()),
+			survey: await transform(await instance.survey().first(), 'Survey'),
 		};
 	}
 	

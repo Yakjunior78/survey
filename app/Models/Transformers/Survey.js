@@ -15,8 +15,14 @@ class SurveyTransformer {
 			category: category ? category.name : null,
 			status_id: survey.status_id,
 			status: status ? status.name : null,
-			by: survey.created_by
+			by: survey.created_by,
+			questions: await this.questions(survey)
 		}
+	}
+	
+	async questions(survey)
+	{
+		return await survey.questions().fetch();
 	}
 }
 
