@@ -35,6 +35,11 @@ Route.group( () => {
 	 * Categorise
 	 */
 	Route.resource('/categories', 'CategoryController');
+	
+	/**
+	 * Question types
+	 */
+	Route.get('/question-types', 'QuestionTypesController.all');
 }).prefix('api');
 
 Route.group( () => {
