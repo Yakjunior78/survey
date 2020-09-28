@@ -9,10 +9,15 @@ class QuestionRepository {
 	
 	async update(id, data)
 	{
-		return await QuestionModel
+		await QuestionModel
 			.query()
 			.where('id', id)
 			.update(data);
+		
+		return {
+			status: 201,
+			message: 'Question updated successfully!'
+		}
 	}
 	
 	async questionData(data)

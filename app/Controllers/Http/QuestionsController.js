@@ -1,6 +1,7 @@
 const QuestionRepo = new(use('App/Modules/Questions/QuestionRepository'))();
 
 class QuestionsController {
+	
 	async store({ request, response })
 	{
 		let data = request.all();
