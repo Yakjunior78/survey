@@ -1,3 +1,6 @@
+const { transform } = use('App/Helpers/Transformer');
+const QuestionModel = use('App/Models/Question');
+
 class SurveyTransformer {
 	
 	async transform(survey) {
@@ -22,7 +25,21 @@ class SurveyTransformer {
 	
 	async questions(survey)
 	{
-		return await survey.questions().fetch();
+		let questions =  await survey.questions().fetch();
+		
+		questions = questions.toJSON();
+		
+		let transformedQuestions = [];
+		
+		for (let i = 0; i < questions.length; i++) {
+			
+			let question = await QuestionModel.findOrFail(questions[i].id);
+			
+			let transformed = await transform (question, 'Question');
+			transformedQuestions.push(transformed);
+		}
+		
+		return transformedQuestions;
 	}
 }
 

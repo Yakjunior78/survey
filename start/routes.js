@@ -32,6 +32,11 @@ Route.group( () => {
 	Route.post('/instances/initialize', 'InstanceController.initialize');
 	
 	/**
+	 * Questions
+	 */
+	Route.post('/question-choices', 'ChoicesController.store');
+	
+	/**
 	 * Categorise
 	 */
 	Route.resource('/categories', 'CategoryController');
