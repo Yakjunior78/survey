@@ -10,6 +10,7 @@ class SurveyTransformer {
 		let status = await survey.status().first();
 		
 		return {
+			id: survey.id,
 			uuid: survey.uuid,
 			title: survey.title,
 			description: survey.description,

@@ -1,10 +1,16 @@
 const QuestionModel = use('App/Models/Question');
+const { transform } = use('App/Helpers/Transformer');
 
 class QuestionRepository {
 	
 	async store(data)
 	{
-		return QuestionModel.create (data);
+		let question = await QuestionModel.create (data);
+		return {
+			status: 201,
+			message: 'Question created successfully',
+			question:  await transform(question, 'Question')
+		};
 	}
 	
 	async update(id, data)

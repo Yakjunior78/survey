@@ -36,7 +36,10 @@ class SurveyRepository {
 	
 	async show(id)
 	{
-		let survey = await SurveyModel.findOrFail(id);
+		let survey = await SurveyModel
+			.query()
+			.where('uuid', id)
+			.first();
 		
 		return transform(survey, 'Survey');
 	}
