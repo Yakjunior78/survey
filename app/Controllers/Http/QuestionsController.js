@@ -16,6 +16,11 @@ class QuestionsController {
 		
 		return response.json(await QuestionRepo.update(id, data));
 	}
+	
+	async destroy({ params, response })
+	{
+		return response.json(await QuestionRepo.destroy(params.id));
+	}
 }
 
 module.exports = QuestionsController;

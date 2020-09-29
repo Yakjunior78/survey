@@ -29,6 +29,18 @@ class QuestionRepository {
 		}
 	}
 	
+	async destroy(id)
+	{
+		let question = await QuestionModel.findOrFail(id);
+		
+		await question.delete();
+		
+		return {
+			status: 201,
+			message: 'Question deleted successfully',
+		}
+	}
+	
 	async questionData(data)
 	{
 		return data;
