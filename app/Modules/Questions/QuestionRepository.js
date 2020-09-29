@@ -1,4 +1,5 @@
 const QuestionModel = use('App/Models/Question');
+const SurveyModel = use('App/Models/Survey');
 const ConditionModel = use('App/Models/Condition');
 const { transform } = use('App/Helpers/Transformer');
 
@@ -6,7 +7,14 @@ class QuestionRepository {
 	
 	async store(data)
 	{
+		let survey = await SurveyModel.find(data.survey_id);
+		
+		let count = await survey.questions().getCount();
+		
+		data.rank = count + 1;
+		
 		let question = await QuestionModel.create (data);
+		
 		return {
 			status: 201,
 			message: 'Question created successfully',
