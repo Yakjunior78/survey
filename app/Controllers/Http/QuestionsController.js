@@ -21,6 +21,15 @@ class QuestionsController {
 	{
 		return response.json(await QuestionRepo.destroy(params.id));
 	}
+	
+	async updateRank({ request, response })
+	{
+		let data = request.all();
+		
+		let result = await QuestionRepo.updateRank(data)
+		
+		return response.json(result);
+	}
 }
 
 module.exports = QuestionsController;

@@ -68,5 +68,18 @@ class QuestionRepository {
 			.where ('rank', rank + 1)
 			.first ();
 	}
+	
+	async updateRank(data)
+	{
+		for (let i = 0; i < data.length; i++) {
+			let question = await QuestionModel.findOrFail(data[i].id);
+			question.update({ rank: data[i].rank });
+		}
+		
+		return {
+			status: 201,
+			message: 'Questions rank updated successfully'
+		};
+	}
 }
 module.exports = QuestionRepository;

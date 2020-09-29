@@ -36,6 +36,7 @@ Route.group( () => {
 	 */
 	Route.resource('/questions', 'QuestionsController');
 	Route.resource('/question-choices', 'ChoicesController');
+	Route.post('/questions/update-rank', 'QuestionsController.updateRank');
 	
 	/**
 	 * Categorise
