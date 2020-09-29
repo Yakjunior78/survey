@@ -80,8 +80,10 @@ class QuestionRepository {
 	async updateRank(data)
 	{
 		for (let i = 0; i < data.length; i++) {
-			let question = await QuestionModel.findOrFail(data[i].id);
-			question.update({ rank: data[i].rank });
+			let question = await QuestionModel.find(data[i].id);
+			question.rank = data[i].rank;
+			
+			await question.save();
 		}
 		
 		return {

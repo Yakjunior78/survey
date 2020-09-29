@@ -26,7 +26,7 @@ class QuestionsController {
 	{
 		let data = request.all();
 		
-		let result = await QuestionRepo.updateRank(data)
+		let result = await QuestionRepo.updateRank(data.questions);
 		
 		return response.json(result);
 	}

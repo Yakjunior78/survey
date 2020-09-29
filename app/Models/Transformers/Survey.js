@@ -26,7 +26,10 @@ class SurveyTransformer {
 	
 	async questions(survey)
 	{
-		let questions =  await survey.questions().fetch();
+		let questions =  await survey
+			.questions()
+			.orderBy('rank', 'asc')
+			.fetch();
 		
 		questions = questions.toJSON();
 		
