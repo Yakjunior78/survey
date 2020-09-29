@@ -1,4 +1,5 @@
 const QuestionModel = use('App/Models/Question');
+const ConditionModel = use('App/Models/Condition');
 const { transform } = use('App/Helpers/Transformer');
 
 class QuestionRepository {
@@ -32,6 +33,12 @@ class QuestionRepository {
 	async destroy(id)
 	{
 		let question = await QuestionModel.findOrFail(id);
+		
+		await question.conditions().delete();
+		
+		await question.choices().delete();
+		
+		await question.responses().delete();
 		
 		await question.delete();
 		
