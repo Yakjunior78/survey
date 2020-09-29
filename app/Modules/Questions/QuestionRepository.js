@@ -20,9 +20,12 @@ class QuestionRepository {
 			.where('id', id)
 			.update(data);
 		
+		let question = await QuestionModel.find(id);
+		
 		return {
 			status: 201,
-			message: 'Question updated successfully!'
+			message: 'Question updated successfully!',
+			question:  await transform(question, 'Question')
 		}
 	}
 	

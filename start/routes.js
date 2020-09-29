@@ -35,7 +35,7 @@ Route.group( () => {
 	 * Questions
 	 */
 	Route.resource('/questions', 'QuestionsController');
-	Route.post('/question-choices', 'ChoicesController.store');
+	Route.resource('/question-choices', 'ChoicesController');
 	
 	/**
 	 * Categorise
