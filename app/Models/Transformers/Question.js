@@ -17,6 +17,7 @@ class QuestionTransformer {
 			conditions: await question.conditions().fetch(),
 			question_type_id: type ? type.id : null,
 			questionType: type ? type : null,
+			rank: question.rank
 		}
 	}
 }

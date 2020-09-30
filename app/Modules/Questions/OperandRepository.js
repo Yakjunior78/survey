@@ -1,7 +1,7 @@
-const OperandModel = use('App/Model/Operand');
+const OperandModel = use('App/Models/Operand');
 
 class OperandRepository {
-	async index() {
+	async get() {
 		return await OperandModel.all();
 	}
 }

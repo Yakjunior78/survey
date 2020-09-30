@@ -8,6 +8,10 @@ class Condition extends Model {
 	operand() {
 		return this.belongsTo('App/Models/Operand');
 	}
+	
+	question() {
+		return this.belongsTo('App/Models/Question');
+	}
 }
 
 module.exports = Condition
