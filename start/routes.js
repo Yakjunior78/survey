@@ -42,6 +42,7 @@ Route.group( () => {
 	 * Categorise
 	 */
 	Route.resource('/categories', 'CategoryController');
+	Route.resource('/operands', 'OperandsController');
 	
 	/**
 	 * Question types

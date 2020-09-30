@@ -9,6 +9,8 @@ class QuestionTransformer {
 			id: question.id,
 			uuid: question.uuid,
 			question: question.question,
+			required: question.required ? true : false,
+			multiple: question.multiple ? true : false,
 			input: inputType ? inputType : null,
 			input_type_id: inputType ? inputType.id : null,
 			options: await question.choices().fetch(),
