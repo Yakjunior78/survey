@@ -8,6 +8,34 @@ const { transform } = use('App/Helpers/Transformer');
 
 class SurveyRepository {
 	
+	async index(identity, page)
+	{
+		let surveys = await SurveyModel
+			.query()
+			.whereHas('company', (company) => {
+				company.where('identity', identity)
+			})
+			.paginate(page ? page : 1, 8);
+		
+		surveys = surveys.toJSON();
+		
+		let surveyList = surveys.data;
+		
+		let transformedSurveys = [];
+		
+		for (let i = 0; i < surveyList.length; i++)
+		{
+			let survey = await SurveyModel.findOrFail(surveyList[i].id);
+			
+			let transformed = await transform (survey, 'Survey');
+			transformedSurveys.push(transformed);
+		}
+		
+		surveys.data = transformedSurveys;
+		
+		return surveys;
+	}
+	
 	async create(data) {
 		
 		let validation = await SurveyForm.validate(data);

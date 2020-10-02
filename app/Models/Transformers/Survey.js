@@ -1,5 +1,6 @@
 const { transform } = use('App/Helpers/Transformer');
 const QuestionModel = use('App/Models/Question');
+const InstanceModel = use('App/Models/Instance');
 
 class SurveyTransformer {
 	
@@ -8,6 +9,9 @@ class SurveyTransformer {
 		let company = await survey.company().first();
 		let category = await survey.category().first();
 		let status = await survey.status().first();
+		
+		let instances = await survey.instances().fetch();
+		let channels = await this.channels(instances);
 		
 		return {
 			id: survey.id,
@@ -20,7 +24,10 @@ class SurveyTransformer {
 			status_id: survey.status_id,
 			status: status ? status.name : null,
 			by: survey.created_by,
-			questions: await this.questions(survey)
+			questions: await this.questions(survey),
+			instances: instances,
+			channels: channels,
+			created_by_name: survey.created_by_name
 		}
 	}
 	
@@ -44,6 +51,27 @@ class SurveyTransformer {
 		}
 		
 		return transformedQuestions;
+	}
+	
+	async channels(instances)
+	{
+		instances = instances.toJSON();
+		
+		let channels = [];
+		
+		for (let i = 0; i < instances.length; i++) {
+			
+			let instanceModel = await InstanceModel.find(instances[i].id);
+			let channel = await instanceModel.channel().first();
+			
+			let exists = await channels.find( chan => chan.id === channel.id);
+			
+			if(!exists) {
+				channels.push(channel);
+			}
+		}
+		
+		return channels;
 	}
 }
 

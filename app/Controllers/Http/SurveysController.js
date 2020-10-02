@@ -8,6 +8,15 @@ const InstanceForm = new(use('App/Modules/Instances/Form'))();
 
 class SurveysController {
 	
+	async index({ request, response })
+	{
+		request = request.all();
+		
+		let result = await SurveyRepository.index(request.identity);
+		
+		return response.json(result);
+	}
+	
 	async show({ params, response })
 	{
 		let result = await SurveyRepository.show(params.id);
