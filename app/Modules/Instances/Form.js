@@ -6,7 +6,6 @@ class InstanceForm {
 		
 		const rules = {
 			survey_id: 'required',
-			group_id: 'required',
 			start_at: 'required',
 			channel_id: 'required',
 		}
