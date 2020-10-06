@@ -45,6 +45,7 @@ Route.group( () => {
 	Route.resource('/categories', 'CategoryController');
 	Route.resource('/operands', 'OperandsController');
 	Route.resource('/channels', 'ChannelsController');
+	Route.resource('/statuses', 'StatusesController');
 	
 	/**
 	 * Question types
