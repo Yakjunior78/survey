@@ -10,7 +10,7 @@ class SurveyTransformer {
 		let category = await survey.category().first();
 		let status = await survey.status().first();
 		
-		let instances = await survey.instances().fetch();
+		let instances = await this.instances(survey);
 		let channels = await this.channels(instances);
 		
 		return {
@@ -55,8 +55,6 @@ class SurveyTransformer {
 	
 	async channels(instances)
 	{
-		instances = instances.toJSON();
-		
 		let channels = [];
 		
 		for (let i = 0; i < instances.length; i++) {
@@ -72,6 +70,29 @@ class SurveyTransformer {
 		}
 		
 		return channels;
+	}
+	
+	async instances(survey)
+	{
+		let instances =  await survey
+		.instances()
+		.orderBy('created_at', 'asc')
+		.fetch();
+		
+		instances = instances.toJSON();
+		
+		let transformedInstances = [];
+		
+		for (let i = 0; i < instances.length; i++) {
+			
+			let instance = await InstanceModel.findOrFail(instances[i].id);
+			
+			let transformed = await transform (instance, 'Instance');
+			
+			transformedInstances.push(transformed);
+		}
+		
+		return transformedInstances;
 	}
 }
 

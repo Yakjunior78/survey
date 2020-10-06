@@ -13,6 +13,7 @@ const SessionRepo = new(use('App/Modules/Session/SessionRepository'))();
 const { isNowOrPast } = use('App/Helpers/DateHelper');
 const { notAllowed } = use('App/Helpers/Response');
 const { transform } = use('App/Helpers/Transformer');
+const moment = use('moment');
 
 class InstanceRepository {
 	
@@ -25,8 +26,8 @@ class InstanceRepository {
 		let instance = await InstanceModel.create({
 			description: 'Instance ' + (instances[0].total + 1) + ' of this survey.',
 			survey_id: survey.id,
-			start_at: data.start_at,
-			end_at: data.end_at,
+			start_at: moment(data.start_at).format('YYYY-MM-DD HH:mm:ss'),
+			end_at: moment(data.end_at).format('YYYY-MM-DD HH:mm:ss'),
 			group_id: data.group_id,
 			channel_id: channel.id,
 			created_by: data.created_by,

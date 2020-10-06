@@ -39,4 +39,4 @@ class Instance extends Model {
 	}
 }
 
-module.exports = Instance
+module.exports = Instance;
