@@ -30,6 +30,7 @@ Route.group( () => {
 	 */
 	Route.resource('/instances', 'InstanceController');
 	Route.post('/instances/initialize', 'InstanceController.initialize');
+	Route.post('/statistics', 'StatisticsController.instance');
 	
 	/**
 	 * Questions
