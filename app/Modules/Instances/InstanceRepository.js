@@ -69,7 +69,7 @@ class InstanceRepository {
 			return InstanceForm.error(validation);
 		}
 		
-		let instance = await this.getInstance(data.uuid);
+		let instance = data && data.uuid ? await this.getInstance(data.uuid) : null;
 		
 		if(!instance) return notAllowed('Survey instance not found!');
 		
@@ -79,21 +79,31 @@ class InstanceRepository {
 		
 		let contact = await this.getContact(company, data.user);
 		
-		let session = await SessionRepo.show(contact, instance, null);
+		let contacts = contact.toJSON();
 		
-		if(!session) session = await SessionRepo.init(instance, contact);
+		let session = await SessionRepo.show(contacts[0], instance, null);
+		
+		if(!session) session = await SessionRepo.init(instance, contacts[0]);
 		
 		if(!session) return notAllowed('Survey question not set yet');
 		
 		return {
 			question: await transform(await session.question().fetch(), 'Question'),
-			contact: contact,
+			contact: contacts[0],
 			instance: instance,
 			survey: await transform(await instance.survey().first(), 'Survey'),
 		};
 	}
 	
-	async getInstance(id, type)
+	async getInstance(id, )
+	{
+		return InstanceModel
+			.query()
+			.where('uuid', id)
+			.first();
+	}
+	
+	async getInstances(id, type)
 	{
 		return InstanceModel
 			.query()

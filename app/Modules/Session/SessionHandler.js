@@ -29,6 +29,7 @@ class SessionHandler  {
 			let contactModel = await ContactModel.find(contact.id);
 			
 			let survey = await instanceModel.survey().first();
+			
 			let question = await QuestionRepo.get(survey, 1);
 			
 			return SessionRepo.create(instanceModel, contact, question);

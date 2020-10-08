@@ -15,7 +15,7 @@ class ContactRepository {
 		
 		await contactModel.save();
 		
-		return contactModel;
+		return await ContactModel.query().where('id', contactModel.id).fetch();
 	}
 	
 	async getContact(data, group, group_ids)

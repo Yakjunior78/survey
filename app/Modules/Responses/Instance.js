@@ -34,7 +34,7 @@ class Instance {
 	
 	async forWeb(id, type)
 	{
-		return InstanceRepo.getInstance (id, type);
+		return InstanceRepo.getInstances (id, type);
 	}
 }
 

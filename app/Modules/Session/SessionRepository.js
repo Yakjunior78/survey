@@ -38,7 +38,7 @@ class SessionRepository {
 				.whereHas ('status', (status) => {
 					status.where('slug', 'active');
 				})
-				.where ('contact_id', contact.id)
+				.where('contact_id', contact.id)
 				.first ();
 		}
 		
