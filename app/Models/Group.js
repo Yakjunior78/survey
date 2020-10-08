@@ -7,6 +7,10 @@ class Group extends Model {
 	contacts() {
 		return this.hasMany('App/Models/Contact');
 	}
+	
+	instances() {
+		return this.belongsTo('App/Models/Instance');
+	}
 }
 
 module.exports = Group

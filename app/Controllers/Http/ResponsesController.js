@@ -13,8 +13,12 @@ class ResponsesController {
 		if(req.type === 'onDemandNotification') {
 			return result;
 		}
-
-		return response.json(result);
+		
+		return response.json({
+			status: 201,
+			message: 'Response saved successfully',
+			question: result
+		});
 	}
 }
 

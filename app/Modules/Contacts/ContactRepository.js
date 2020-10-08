@@ -18,21 +18,25 @@ class ContactRepository {
 		return contactModel;
 	}
 	
-	async getContact(data, group)
+	async getContact(data, group, group_ids)
 	{
 		if(group) {
-			return ContactModel
-				.query ()
-				.where ('group_id', group.id)
-				.where ('msisdn', data.phoneNumber)
-				.first ();
+			return await ContactModel
+				.query()
+				.where('msisdn', data.phoneNumber)
+				.whereHas('group', (group) => {
+					group.whereIn('id', group_ids )
+				})
+				.orderBy('updated_at', 'asc')
+				.fetch()
 		}
 		
 		if(data.id) {
 			return ContactModel
 				.query ()
 				.where ('uuid', data.id)
-				.first ();
+				.orderBy('updated_at', 'asc')
+				.fetch();
 		}
 		
 		return null;

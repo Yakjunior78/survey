@@ -42,7 +42,13 @@ class SurveysController {
 			return InstanceForm.error(validation);
 		}
 		
-		return response.json(await SurveyHandler.initiate(data));
+		let instance = await SurveyHandler.initiate(data);
+		
+		return response.json({
+			status: 201,
+			message: 'Survey instance initiated successfully',
+			instance: instance
+		});
 	}
 }
 

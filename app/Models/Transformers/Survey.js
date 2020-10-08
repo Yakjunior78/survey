@@ -75,9 +75,9 @@ class SurveyTransformer {
 	async instances(survey)
 	{
 		let instances =  await survey
-		.instances()
-		.orderBy('created_at', 'asc')
-		.fetch();
+			.instances()
+			.orderBy('updated_at', 'desc')
+			.fetch();
 		
 		instances = instances.toJSON();
 		

@@ -15,6 +15,7 @@ class SurveyRepository {
 			.whereHas('company', (company) => {
 				company.where('identity', identity)
 			})
+			.orderBy('updated_at', 'desc')
 			.paginate(page ? page : 1, 8);
 		
 		surveys = surveys.toJSON();

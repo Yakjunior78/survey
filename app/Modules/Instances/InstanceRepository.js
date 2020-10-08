@@ -28,13 +28,13 @@ class InstanceRepository {
 			survey_id: survey.id,
 			start_at: moment(data.start_at).format('YYYY-MM-DD HH:mm:ss'),
 			end_at: moment(data.end_at).format('YYYY-MM-DD HH:mm:ss'),
-			group_id: data.group_id,
+			group_id: data.group_id ? data.group_id : null,
 			channel_id: channel.id,
 			created_by: data.created_by,
 			created_by_name: data.created_by_name,
 			status_id: status.id,
 			sender_id: data.sender_id ? data.sender_id : null
-		})
+		});
 		
 		await this.attachQuestions(instance);
 		
@@ -93,12 +93,15 @@ class InstanceRepository {
 		};
 	}
 	
-	async getInstance(id)
+	async getInstance(id, type)
 	{
 		return InstanceModel
 			.query()
 			.where('uuid', id)
-			.first();
+			.whereHas('channel', (channel) => {
+				channel.where('slug', type)
+			})
+			.fetch();
 	}
 	
 	async getCompany(instance)
