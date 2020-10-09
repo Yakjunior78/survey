@@ -5,7 +5,7 @@ class StatisticsController {
 	{
 		let data = request.all();
 		
-		let result = await StatRepo.instanceQuestions(data.uuid);
+		let result = await StatRepo.instanceQuestions(data.survey_id, data.instance_id);
 		
 		return response.json(result);
 	}

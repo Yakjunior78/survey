@@ -1,4 +1,6 @@
 const ChoiceModel = use('App/Models/Choice');
+const QuestionModel = use('App/Models/Question');
+
 const { transform } = use('App/Helpers/Transformer');
 
 class ChoiceRepository {
@@ -6,6 +8,12 @@ class ChoiceRepository {
 	{
 		data.value = data.name;
 		data.label = data.name;
+		
+		let question = await QuestionModel.find(data.question_id);
+		
+		let count = await question.choices().getCount();
+		
+		data.rank = count + 1;
 		
 		let choiceModel = await ChoiceModel.create(data);
 		

@@ -2,6 +2,10 @@ class QuestionTransformer {
 	
 	async transform(question) {
 		
+		if(!question) {
+			return {};
+		}
+		
 		let type = await question.type().first();
 		let inputType = await question.inputType().first();
 		

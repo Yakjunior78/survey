@@ -4,11 +4,14 @@ const { transform } = use('App/Helpers/Transformer');
 
 class QuestionStatistics {
 	
-	async transform(question) {
+	async transform(question, channel) {
 		
 		let type = await question.type().first();
 		let inputType = await question.inputType().first();
-		let response = await question.responses().getCount();
+		let responses = channel && channel.id
+			? await question.responses().where('channel_id', channel.id).getCount()
+			: await question.responses().getCount();
+		
 		let choices = await this.options(question);
 		
 		return {
@@ -17,7 +20,7 @@ class QuestionStatistics {
 			question: question.question,
 			rank: question.rank,
 			questionType: type ? type.slug : '',
-			responses: response,
+			responses: responses,
 			choices: choices
 		}
 	}

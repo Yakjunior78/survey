@@ -1,16 +1,22 @@
 const InstanceModel = use('App/Models/Instance');
 const QuestionModel = use('App/Models/Question');
+const SurveyModel = use('App/Models/Survey');
 
 const { transform } = use('App/Helpers/Transformer');
 
 class StatisticsRepository {
-	async instanceQuestions(id)
+	
+	async instanceQuestions(survey_id, instance_id)
 	{
-		let instance = await InstanceModel.query().where('uuid', id).first();
+		let instance = await InstanceModel.query().where('uuid', instance_id).first();
 		
-		let questions = await instance.questions().fetch();
+		let survey = await SurveyModel.query().where('uuid', survey_id).first();
+		
+		let questions = instance ? await instance.questions().fetch() : await survey.questions().fetch();
 		
 		questions = questions.toJSON();
+		
+		let channel = instance ? await instance.channel().first() : {};
 		
 		let transformedQuestions = [];
 		
@@ -18,7 +24,7 @@ class StatisticsRepository {
 			
 			let question = await QuestionModel.find(questions[i].id);
 			
-			let transformedQuestion =  await transform(question, 'QuestionStatistics');
+			let transformedQuestion =  await transform(question, 'QuestionStatistics', channel);
 			
 			await transformedQuestions.push(transformedQuestion);
 		}
