@@ -29,7 +29,7 @@ class QuestionTransformer {
 	
 	async conditions(question)
 	{
-		let conditions = await question.conditions().orderBy('created_at', 'asc').fetch();
+		let conditions = await question.conditions().orderBy('created_at', 'desc').fetch();
 		
 		conditions = conditions.toJSON();
 		

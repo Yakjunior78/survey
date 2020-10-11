@@ -9,6 +9,13 @@ class ConditionsController {
 		
 		return response.json(result);
 	}
+	
+	async destroy({ params, response })
+	{
+		let result = await ConditionRepo.destroy(params.id);
+		
+		return response.json(result);
+	}
 }
 
 module.exports = ConditionsController;

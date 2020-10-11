@@ -24,6 +24,21 @@ class ConditionRepository {
 			condition: condition
 		}
 	}
+	
+	async destroy(id)
+	{
+		let condition = await ConditionModel.find(id);
+		
+		let question = await condition.question().first();
+		
+		await condition.delete();
+		
+		return {
+			status: 201,
+			message: 'Question condition created successfully',
+			question: await transform(question, 'Question'),
+		}
+	}
 }
 
 module.exports = ConditionRepository;
