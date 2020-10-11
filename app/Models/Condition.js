@@ -12,6 +12,10 @@ class Condition extends Model {
 	question() {
 		return this.belongsTo('App/Models/Question');
 	}
+	
+	nextQuestion() {
+		return this.belongsTo('App/Models/Question', 'next_question_id');
+	}
 }
 
 module.exports = Condition
