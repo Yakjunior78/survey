@@ -1,3 +1,3 @@
-const Event = use('Event')
+const Event = use('Event');
 
-Event.on('new::instance', 'instance.created');
+Event.on('new::Instance', 'instance.created');
