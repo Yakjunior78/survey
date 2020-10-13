@@ -11,7 +11,7 @@ class StatisticsRepository {
 		let instance = await InstanceModel.query().where('uuid', instance_id).first();
 
 		let survey = await SurveyModel.query().where('uuid', survey_id).first();
-			
+
 		let questions = instance ? await instance.questions().orderBy('rank', 'asc').fetch() : await survey.questions().fetch();
 
 		questions = questions.toJSON();
