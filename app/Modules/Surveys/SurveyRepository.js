@@ -1,6 +1,6 @@
 const SurveyModel = use('App/Models/Survey');
 const StatusModel = use('App/Models/Status');
-const CompanyModel = use('App/Models/Company');s
+const CompanyModel = use('App/Models/Company');
 
 const SurveyForm = new(use('App/Modules/Surveys/Form'))();
 
@@ -30,7 +30,7 @@ class SurveyRepository {
             let survey = await SurveyModel.findOrFail(surveyList[i].id);
 
             let transformed = await transform (survey, 'Survey');
-            
+
             transformedSurveys.push(transformed);
         }
 
