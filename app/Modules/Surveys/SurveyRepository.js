@@ -80,7 +80,7 @@ class SurveyRepository {
 
     async company(data)
     {
-        let company = await CompanyModel.where('identity', data.identity).first();
+        let company = await CompanyModel.query().where('identity', data.identity).first();
 
         if(!company) {
            company = await CompanyModel.create({
