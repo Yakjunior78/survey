@@ -10,6 +10,10 @@ class Survey extends Model {
 		this.addHook("beforeCreate", "UuidHook.generateUuid");
 	}
 	
+	static get deleteTimestamp () {
+		return null
+	}
+	
 	instances() {
 		return this.hasMany('App/Models/Instance');
 	}

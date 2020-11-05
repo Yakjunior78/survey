@@ -10,6 +10,10 @@ class Session extends Model {
 		this.addHook("beforeCreate", "UuidHook.generateUuid");
 	}
 	
+	static get deleteTimestamp () {
+		return null
+	}
+	
 	instance() {
 		return this.belongsTo('App/Models/Instance');
 	}

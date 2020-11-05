@@ -10,6 +10,10 @@ class Instance extends Model {
 		this.addHook("beforeCreate", "UuidHook.generateShorterUuid");
 	}
 	
+	static get deleteTimestamp () {
+		return null
+	}
+	
 	survey() {
 		return this.belongsTo('App/Models/Survey');
 	}

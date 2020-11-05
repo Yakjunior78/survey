@@ -1,10 +1,9 @@
 const SurveyModel = use('App/Models/Survey');
 const StatusModel = use('App/Models/Status');
-
-const SurveyForm = new(use('App/Modules/Surveys/Form'))();
-
 const { validate } = use('Validator');
 const { transform } = use('App/Helpers/Transformer');
+
+const SurveyForm = new(use('App/Modules/Surveys/Form'))();
 
 class SurveyRepository {
 	
@@ -71,6 +70,36 @@ class SurveyRepository {
 			.first();
 		
 		return transform(survey, 'Survey');
+	}
+	
+	async update(id, data)
+	{
+		await SurveyModel
+			.query()
+			.where('uuid', id)
+			.update(data);
+		
+		let survey = await SurveyModel
+			.query()
+			.where('uuid', id)
+			.first();
+		
+		return transform(survey, 'Survey');
+	}
+	
+	async destroy(id)
+	{
+		let survey = await SurveyModel
+			.query()
+			.where('uuid', id)
+			.first();
+		
+		await survey.delete();
+		
+		return {
+			'message': 'Survey deleted successfully',
+			'status': 201
+		}
 	}
 }
 

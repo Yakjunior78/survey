@@ -33,6 +33,18 @@ class SurveysController {
 		return response.json(result);
 	}
 	
+	async update({ request, params, response })
+	{
+		let result = await SurveyRepository.update(params.id, request.all());
+		return response.json(result);
+	}
+	
+	async destroy({ params, response })
+	{
+		let result = await SurveyRepository.destroy(params.id);
+		return response.json(result);
+	}
+	
 	async initiate({ request, response })
 	{
 		let data = request.all();

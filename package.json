@@ -28,6 +28,7 @@
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/validator": "^5.0.6",
     "@google-cloud/pubsub": "^2.5.0",
+    "@radmen/adonis-lucid-soft-deletes": "^0.2.0",
     "axios": "^0.20.0",
     "cuid": "^2.1.8",
     "mysql": "^2.18.1",
