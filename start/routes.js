@@ -23,12 +23,12 @@ Route.group( () => {
 	 * Survey
 	 */
 	Route.resource('/surveys', 'SurveysController');
-	Route.post('/surveys/initiate', 'SurveysController.initiate');
 	
 	/**
 	 * Instance
 	 */
 	Route.resource('/instances', 'InstanceController');
+	
 	Route.post('/instances/initialize', 'InstanceController.initialize');
 	Route.post('/statistics', 'StatisticsController.instance');
 	

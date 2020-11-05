@@ -9,6 +9,7 @@ const StatusModel = use('App/Models/Status');
 const InstanceForm = new(use('App/Modules/Instances/Form'))();
 const ContactRepository = new(use('App/Modules/Contacts/ContactRepository'))();
 const SessionRepo = new(use('App/Modules/Session/SessionRepository'))();
+const SurveyHandler = new(use('App/Modules/Surveys/SurveyHandler'))();
 
 const { isNowOrPast } = use('App/Helpers/DateHelper');
 const { notAllowed } = use('App/Helpers/Response');
@@ -16,6 +17,65 @@ const { transform } = use('App/Helpers/Transformer');
 const moment = use('moment');
 
 class InstanceRepository {
+	
+	async store(data)
+	{
+		let validation = await InstanceForm.validate(data);
+		
+		if (validation.fails()) {
+			return InstanceForm.error(validation);
+		}
+		
+		let survey =  await this.getSurvey(data.survey_id);
+		
+		if(!survey) {
+			return notAllowed('Survey not found');
+		}
+		
+		let channel = await ChannelModel.findOrFail(data.channel_id);
+		
+		let instance = await this.create(survey, channel, data);
+		
+		return {
+			status: 201,
+			message: 'Survey instance created successfully',
+			instance: instance
+		};
+	}
+	
+	async update(id, data)
+	{
+		await InstanceModel
+			.query()
+			.where('uuid', id)
+			.update(data);
+		
+		let instance = await InstanceModel
+			.query()
+			.where('uuid', id)
+			.first();
+		
+		return {
+			status: 201,
+			message: 'Survey instance updated successfully',
+			instance: instance
+		};
+	}
+	
+	async destroy(id)
+	{
+		let instance = await InstanceModel
+			.query()
+			.where('uuid', id)
+			.first();
+		
+		await instance.delete();
+		
+		return {
+			'message': 'Survey instance deleted successfully',
+			'status': 201
+		}
+	}
 	
 	async create(survey, channel, data) {
 		
@@ -45,6 +105,13 @@ class InstanceRepository {
 		}
 		
 		return instance;
+	}
+	
+	async getSurvey(id) {
+		return SurveyModel
+			.query ()
+			.where ('uuid', id)
+			.first ();
 	}
 	
 	async attachQuestions(instance) {

@@ -44,24 +44,6 @@ class SurveysController {
 		let result = await SurveyRepository.destroy(params.id);
 		return response.json(result);
 	}
-	
-	async initiate({ request, response })
-	{
-		let data = request.all();
-		let validation = await InstanceForm.validate(data);
-		
-		if (validation.fails()) {
-			return InstanceForm.error(validation);
-		}
-		
-		let instance = await SurveyHandler.initiate(data);
-		
-		return response.json({
-			status: 201,
-			message: 'Survey instance initiated successfully',
-			instance: instance
-		});
-	}
 }
 
 module.exports = SurveysController;

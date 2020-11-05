@@ -1,7 +1,6 @@
 'use strict';
 
 const ChannelModel = use('App/Models/Channel');
-
 const { publish, generateLink, testToken } = use('App/Jobs/Survey');
 
 const Instance = exports = module.exports = {}
