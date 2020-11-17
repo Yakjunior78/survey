@@ -23,6 +23,7 @@ class SessionHandler  {
 		if(!session && create) {
 			
 			let instance = instances[0];
+			
 			let contact = contacts[0];
 			
 			let instanceModel = await InstanceModel.find(instance.id);

@@ -1,4 +1,5 @@
 'use strict';
+const Logger = use('Logger');
 
 const ResponseHandler = new(use('App/Modules/Responses/ResponseHandler'))();
 
@@ -8,7 +9,9 @@ class ResponsesController {
 	{
 		let req = request.all();
 		
-		return await ResponseHandler.handle(req);
+		// Logger.info('handling response');
+		
+		return response.json(await ResponseHandler.handle(req));
 	}
 }
 

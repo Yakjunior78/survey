@@ -1,10 +1,12 @@
 const SessionRepo = new(use('App/Modules/Session/SessionRepository'))();
 const ResponseModel = use('App/Models/Response');
 const ChannelModel = use('App/Models/Channel');
+const SessionModel = use('App/Models/Session');
 
 const Instance = new(use('App/Modules/Responses/Instance'))();
 const Session = new(use('App/Modules/Responses/Session'))();
 const Question = new(use('App/Modules/Responses/Question'))();
+const Logger = use('Logger');
 
 class ResponseHandler {
 	
@@ -19,7 +21,7 @@ class ResponseHandler {
 		let instances = await Instance.find(data, type);
 		
 		if(!instances)  return 'no instance';
-
+		
 		let session = await Session.find(instances, data, type);
 		
 		let response = await this.recordResponse(session, data, channel);
