@@ -1,12 +1,35 @@
 const SessionModel = use('App/Models/Session');
+const ContactModel = use('App/Models/Contact');
+const SessionTrailModel = use('App/Models/SessionTrail');
+
 const QuestionRepo = new(use('App/Modules/Questions/QuestionRepository'))();
 
 const { getStatus } = use('App/Helpers/Emalify');
 const { notAllowed } = use('App/Helpers/Response');
+const { mapIds } = use('App/Helpers/Emalify');
 
 class SessionRepository {
 	
-	async init(instance, contact)
+	async find(contacts, instances)
+	{
+		let contact_ids = await mapIds(contacts.toJSON(), 'id');
+		let instance_ids = await mapIds(instances.toJSON(), 'id');
+		
+		return SessionModel
+			.query ()
+			.whereIn ('contact_id', contact_ids)
+			.whereIn ('instance_id', instance_ids)
+			.whereHas ('sessionTrails', (sessionTrails) => {
+				sessionTrails.where ('consent', true);
+			})
+			.whereHas ('status', (status) => {
+				status.where ('slug', 'active');
+			})
+			.orderBy ('updated_at', 'desc')
+			.first ();
+	}
+	
+	async init(instance, contact) //TODO to be removed
 	{
 		let survey = await instance.survey().fetch();
 		
@@ -17,16 +40,34 @@ class SessionRepository {
 		return await this.create(instance, contact, question);
 	}
 	
-	async create(instance, contact, question)
+	async create(contact, instance)
 	{
+		let selectedContact = await ContactModel.query()
+			.where('msisdn', contact.msisdn)
+			.where('group_id', contact.group_id)
+			.first();
+		
 		let status = await getStatus('active');
 		
-		return await SessionModel.create ({
+		let survey = await instance.survey().fetch();
+		
+		let question = await QuestionRepo.get(survey, 1);
+		
+		if(!question) return null;
+		
+		let session = await SessionModel.create ({
 			instance_id : instance.id,
-			contact_id : contact.id,
-			status_id :  status ? status.id : null,
-			question_id :  question.id
+			contact_id : selectedContact.id,
+			status_id :  status ? status.id : null
 		});
+		
+		await SessionTrailModel.create({
+			session_id: session.id,
+			question_id: question.id,
+			consent: true
+		});
+		
+		return session;
 	}
 	
 	async show(contact, instance, sender)

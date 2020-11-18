@@ -1,30 +1,34 @@
 const InstanceRepo = new(use('App/Modules/Instances/InstanceRepository'))();
 const InstanceModel = use('App/Models/Instance');
+const { mapIds } = use('App/Helpers/Emalify');
 
 class Instance {
 	
-	async find(data, type)
+	async find(data, contacts, channel)
 	{
 		let instance = null;
 		
-		switch(type) {
+		let group_ids = await mapIds(contacts.toJSON(), 'group_id');
+		
+		switch(channel.slug) {
 			case 'sms':
-				return await this.forSms(data);
+				return await this.forSms(data, group_ids);
 			case 'web':
 		    case 'chat':
-				return await this.forWeb(data.instanceId, type);
+				return await this.forWeb(data.instanceId, channel.slug);
 			default:
 				return instance;
 		}
 	}
 	
-	async forSms(data)
+	async forSms(data, group_ids)
 	{
 		return await InstanceModel
 			.query()
 			.whereHas('sender', (sender) => {
 				sender.where('code', data.shortCode);
 			})
+			.whereIn('group_id', group_ids)
 			.whereHas('status', (status) => {
 				status.where('slug', 'active');
 			})
@@ -32,9 +36,9 @@ class Instance {
 			.fetch();
 	}
 	
-	async forWeb(id, type)
+	async forWeb(id, channel)
 	{
-		return InstanceRepo.getInstances (id, type);
+		return InstanceRepo.getInstances (id, channel.slug);
 	}
 }
 

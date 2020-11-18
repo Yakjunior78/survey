@@ -7,71 +7,74 @@ const { check } = use('App/Helpers/Conditions');
 
 class Question {
 
-	async next(session, response)
+	async handle(session, response)
 	{
-		let currentQuestion = await session.question().with('conditions').first();
-
-		let count = await currentQuestion.conditions().getCount();
-
-		let conditions = await currentQuestion.conditions().fetch();
-
-		conditions = count ? conditions.toJSON() : [];
-
-		let applicableCondition = await this.applicableCondition(response, conditions);
-
-		let nextQuestion = await this.getNextQuestion(session, currentQuestion, applicableCondition);
-
-		if(!nextQuestion) return null;
-
-		await this.updateSession(session, nextQuestion);
-
-		return nextQuestion;
+		let current = await this.current(session);
+		
+		let condition = await this.condition(current, response);
+		
+		let next = await this.next(session, current, condition);
+		
+		await this.updateSession(session, next);
+		
+		return next;
 	}
-
-	async applicableCondition(response, conditions)
+	
+	async current(session)
 	{
+		let sessionTrail = await session.sessionTrails().first();
+		
+		return sessionTrail.question ().with ('conditions').first ();
+	}
+	
+	async condition(current, response)
+	{
+		let count = await current.conditions().getCount();
+		
+		let conditions = await current.conditions().fetch();
+		
+		conditions = count ? conditions.toJSON() : [];
+		
 		let appliedCondition = null;
-
+		
 		for (let i = 0; i < conditions.length; i++) {
-
+			
 			let condition = await ConditionModel.find(conditions[i].id);
-
+			
 			let resp = await check(condition, response.response);
-
+			
 			if(resp) {
 				appliedCondition = condition;
 				break;
 			}
 		}
-
+		
 		return appliedCondition;
 	}
-
-	async getNextQuestion(session, currentQuestion, condition)
+	
+	async next(session, current, condition)
 	{
 		let instance = await session.instance().first();
-
+		
 		let survey = await instance.survey().first();
-
+		
 		let question = null;
-
+		
 		if(condition && condition.end) {
 			return null;
 		}
-
+		
 		if(condition && condition.next_question_id) {
 			question = await QuestionModel.find(condition.next_question_id);
 		} else {
-			question = await QuestionRepo.nextQuestion(survey, currentQuestion.rank);
+			question = await QuestionRepo.nextQuestion(survey, current.rank);
 		}
-
+		
 		return await transform(question, 'Question');
 	}
-
+	
 	async updateSession(session, question)
 	{
-		session.question_id = question.id;
-
 		await session.save();
 
 		return session;

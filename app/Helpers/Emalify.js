@@ -23,9 +23,22 @@ const getStatus = async (slug) => {
 		.first ();
 }
 
+const mapIds = async (arr, column) => {
+	
+	let ids = [];
+	
+	for (let i = 0; i < arr.length; i++) {
+		
+		await ids.push((arr[i][column]));
+	}
+	
+	return ids;
+}
+
 module.exports = {
 	random,
 	token,
 	getStatus,
-	shortToken
+	shortToken,
+	mapIds
 }

@@ -26,12 +26,12 @@ class Session extends Model {
 		return this.belongsTo('App/Models/Sender');
 	}
 	
-	question() {
-		return this.belongsTo('App/Models/Question');
-	}
-	
 	status() {
 		return this.belongsTo('App/Models/Status');
+	}
+	
+	sessionTrails() {
+		return this.hasMany('App/Models/SessionTrail');
 	}
 }
 

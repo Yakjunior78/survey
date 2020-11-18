@@ -7,13 +7,13 @@ const SessionModel = use('App/Models/Session');
 
 class Session {
 	
-	async find(instances, data, type)
+	async find(instances, data, channel)
 	{
-		let contacts = await Contact.find(instances, data, type);
+		let contacts = await Contact.find(instances, data, channel.slug);
 		
 		if(!contacts) return null;
 		
-		let sender = await this.getSender(data, type);
+		let sender = await this.getSender(data, channel.slug);
 		
 		return await this.getSession(contacts, instances, sender);
 	}

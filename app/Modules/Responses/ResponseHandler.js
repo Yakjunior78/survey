@@ -1,32 +1,33 @@
 const SessionRepo = new(use('App/Modules/Session/SessionRepository'))();
-const ResponseModel = use('App/Models/Response');
 const ChannelModel = use('App/Models/Channel');
 const SessionModel = use('App/Models/Session');
 
 const Instance = new(use('App/Modules/Responses/Instance'))();
 const Session = new(use('App/Modules/Responses/Session'))();
 const Question = new(use('App/Modules/Responses/Question'))();
+const Response = new(use('App/Modules/Responses/Response'))();
+const ContactHandler = new(use('App/Modules/Contacts/ContactsHandler'))();
+const SessionHandler = new(use('App/Modules/Session/SessionHandler'))();
+
 const Logger = use('Logger');
 
 class ResponseHandler {
 	
-	async handle(request)
+	async handle(data, channel)
 	{
-		let data = request.data;
+		let contacts = await ContactHandler.find(data, channel);
 		
-		let channel = await this.type(request.type);
+		let instances = await Instance.find(data, contacts, channel);
 		
-		let type = channel ? channel.slug : null;
+		if(!instances) return 'Unable to proceed';
 		
-		let instances = await Instance.find(data, type);
+		let session = await SessionHandler.handle(contacts, instances);
 		
-		if(!instances)  return 'no instance';
+		if(!session) return null;
 		
-		let session = await Session.find(instances, data, type);
+		let response = await Response.record(session, data, channel);
 		
-		let response = await this.recordResponse(session, data, channel);
-		
-		let nextQuestion = await Question.next (session, response);
+		let nextQuestion = await Question.handle(session, response);
 		
 		return await this.transform(nextQuestion, channel);
 	}
@@ -57,7 +58,6 @@ class ResponseHandler {
 		let choice_string = '';
 		
 		switch(type.slug) {
-
 			case 'multiple_choice':
 				let choices = question.options;
 				choice_string = await this.formatChoices(choices);
@@ -71,6 +71,15 @@ class ResponseHandler {
 		}
 		
 		return description + '\n' + choice_string;
+	}
+	
+	async transformForJson(question)
+	{
+		return {
+			status: 201,
+			message: 'Response saved successfully',
+			question: question
+		}
 	}
 	
 	async formatChoices(choices)
@@ -91,48 +100,9 @@ class ResponseHandler {
 		return reply;
 	}
 	
-	async transformForJson(question)
-	{
-		return {
-			status: 201,
-			message: 'Response saved successfully',
-			question: question
-		}
-	}
-	
 	async type(type)
 	{
 		return ChannelModel.query ().where ('service', type).first ();
-	}
-	
-	async recordResponse(session, data, channel)
-	{
-		let question = await session.question().first();
-		
-		let response = data.message;
-		
-		switch(channel.slug) {
-			
-			case 'sms':
-				let choice = await question.choices().where('rank', data.message).first();
-				response = choice && choice.id ? choice.value : data.message;
-				break;
-			case 'web':
-			case 'chat':
-				response = data.message
-				break;
-			default:
-				response = data.message;
-				break;
-		}
-		
-		return await ResponseModel.create({
-			response: response,
-			question_id: question.id,
-			contact_id: session.contact_id,
-			session_id: session.id,
-			channel_id: channel.id
-		});
 	}
 }
 

@@ -1,7 +1,7 @@
 'use strict';
-const Logger = use('Logger');
 
 const ResponseHandler = new(use('App/Modules/Responses/ResponseHandler'))();
+const ChannelModel = use('App/Models/Channel');
 
 class ResponsesController {
 	
@@ -9,9 +9,9 @@ class ResponsesController {
 	{
 		let req = request.all();
 		
-		// Logger.info('handling response');
+		let channel = await ChannelModel.query().where ('service', req.type).first();
 		
-		return response.json(await ResponseHandler.handle(req));
+		return await ResponseHandler.handle(req.data, channel);
 	}
 }
 

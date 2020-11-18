@@ -170,13 +170,13 @@ class InstanceRepository {
 			.first();
 	}
 	
-	async getInstances(id, type)
+	async getInstances(id, channel)
 	{
 		return InstanceModel
 			.query()
 			.where('uuid', id)
-			.whereHas('channel', (channel) => {
-				channel.where('slug', type)
+			.whereHas('channel', (chann) => {
+				chann.where('slug', channel)
 			})
 			.fetch();
 	}

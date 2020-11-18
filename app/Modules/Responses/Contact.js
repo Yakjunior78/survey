@@ -3,9 +3,9 @@ const ContactModel = use('App/Models/Contact');
 
 class Contact {
 	
-	async find(instances, data, type)
+	async find(instances, data, channel)
 	{
-		switch(type) {
+		switch(channel) {
 			case 'sms':
 				return await this.forSms(data, instances);
 			case 'web':
@@ -24,6 +24,8 @@ class Contact {
 		for (let i = 0; i < instances.length; i++) {
 			await group_ids.push((instances[i].group_id));
 		}
+		
+		return group_ids;
 		
 		return await ContactRepo.getContact(data, true, group_ids);
 	}

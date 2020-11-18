@@ -18,7 +18,7 @@ class ContactRepository {
 		return await ContactModel.query().where('id', contactModel.id).fetch();
 	}
 	
-	async getContact(data, group, group_ids)
+	async getContact(data, group, group_ids) //TODO Delete block
 	{
 		if(group) {
 			return await ContactModel
@@ -40,6 +40,24 @@ class ContactRepository {
 		}
 		
 		return null;
+	}
+	
+	async forSms(data)
+	{
+		return await ContactModel
+			.query()
+			.where('msisdn', data.phoneNumber)
+			.orderBy('updated_at', 'asc')
+			.fetch()
+	}
+	
+	async forWeb(data)
+	{
+		return ContactModel
+			.query ()
+			.where ('uuid', data.id)
+			.orderBy('updated_at', 'asc')
+			.fetch();
 	}
 }
 
