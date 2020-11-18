@@ -11,18 +11,21 @@ class Question {
 	{
 		let current = await this.current(session);
 		
+		if(!current) {
+			return null;
+		}
+		
 		let condition = await this.condition(current, response);
-		
-		let next = await this.next(session, current, condition);
-		
-		await this.updateSession(session, next);
-		
-		return next;
+
+		return await this.next (session, current, condition);
 	}
 	
 	async current(session)
 	{
-		let sessionTrail = await session.sessionTrails().first();
+		let sessionTrail = await session
+			.sessionTrails()
+			.orderBy('created_at', 'desc')
+			.first();
 		
 		return sessionTrail.question ().with ('conditions').first ();
 	}
@@ -71,13 +74,6 @@ class Question {
 		}
 		
 		return await transform(question, 'Question');
-	}
-	
-	async updateSession(session, question)
-	{
-		await session.save();
-
-		return session;
 	}
 }
 

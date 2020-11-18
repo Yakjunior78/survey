@@ -6,7 +6,10 @@ const ResponseModel = use('App/Models/Response');
 class Response {
 	async record(session, data, channel)
 	{
-		let sessionTrail = await session.sessionTrails().first();
+		let sessionTrail = await session
+			.sessionTrails()
+			.orderBy('created_at', 'desc')
+			.first();
 		
 		let question = await sessionTrail.question().first();
 		

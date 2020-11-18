@@ -27,27 +27,29 @@ class ResponseHandler {
 		
 		let response = await Response.record(session, data, channel);
 		
-		let nextQuestion = await Question.handle(session, response);
+		let next = await Question.handle(session, response);
 		
-		return await this.transform(nextQuestion, channel);
+		await SessionHandler.update(session, next);
+		
+		return await this.reply(next, channel);
 	}
 	
-	async transform(question, channel)
+	async reply(question, channel)
 	{
 		switch(channel.slug) {
 			case 'sms':
-				return await this.transformForSms(question);
+				return await this.smsReply(question);
 			case 'web':
 			case 'chat':
-				return await this.transformForJson(question);
+				return await this.jsonReply(question);
 			default:
 				return null;
 		}
 	}
 	
-	async transformForSms(question)
+	async smsReply(question)
 	{
-		if(question && !question.id) {
+		if(!question || (question && !question.id)) {
 			return 'Thank you for participating in our survey. Good bye.'
 		}
 		
@@ -73,7 +75,7 @@ class ResponseHandler {
 		return description + '\n' + choice_string;
 	}
 	
-	async transformForJson(question)
+	async jsonReply(question)
 	{
 		return {
 			status: 201,

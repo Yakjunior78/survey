@@ -96,6 +96,13 @@ class SessionRepository {
 		
 		return null;
 	}
+	
+	async update(session, next)
+	{
+		await session.save();
+		
+		return session;
+	}
 }
 
 module.exports = SessionRepository;

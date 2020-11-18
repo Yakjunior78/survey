@@ -1,4 +1,5 @@
 const repo = new(use('App/Modules/Session/SessionRepository'))();
+const SessionTrailModel = use('App/Models/SessionTrail');
 
 class SessionHandler {
 	
@@ -7,10 +8,30 @@ class SessionHandler {
 		let session = await repo.find(contacts, instances);
 		
 		if(!session) {
-			session = await repo.create(contacts.first(), instances.first());
+			return await repo.create(contacts.first(), instances.first());
 		}
 		
 		return session;
+	}
+	
+	async update(session, next)
+	{
+		let latestTrail = await session
+			.sessionTrails()
+			.orderBy('created_at', 'desc')
+			.first();
+		
+		latestTrail.replied = true;
+		
+		await latestTrail.save();
+		
+		if(!next) return null;
+		
+		return await SessionTrailModel.create({
+			session_id: session.id,
+			question_id: next.id,
+			consent: false
+		});
 	}
 }
 
