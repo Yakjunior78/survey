@@ -25,7 +25,7 @@ Route.group( () => {
 	Route.resource('/surveys', 'SurveysController');
 	
 	/**
-	 * Instance
+	 * Instance, Statistics
 	 */
 	Route.resource('/instances', 'InstanceController');
 	
@@ -33,7 +33,7 @@ Route.group( () => {
 	Route.post('/statistics', 'StatisticsController.instance');
 	
 	/**
-	 * Questions
+	 * Questions, Choices, Ratings, Conditions, Ranks
 	 */
 	Route.resource('/questions', 'QuestionsController');
 	Route.resource('/question-choices', 'ChoicesController');
@@ -42,7 +42,7 @@ Route.group( () => {
 	Route.post('/questions/update-rank', 'QuestionsController.updateRank');
 	
 	/**
-	 * Categorise
+	 * Categories, Operands, Channels, Statuses
 	 */
 	Route.resource('/categories', 'CategoryController');
 	Route.resource('/operands', 'OperandsController');
@@ -60,6 +60,13 @@ Route.group( () => {
 	 * Response hook
 	 */
 	Route.post('/response', 'ResponsesController.handle');
+}).prefix('api');
+
+Route.group( () => {
+	/**
+	 * Response hook
+	 */
+	Route.get('/senders', 'SendersController.index');
 }).prefix('api');
 
 
