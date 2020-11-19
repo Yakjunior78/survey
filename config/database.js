@@ -57,6 +57,28 @@ module.exports = {
       database: Env.get('DB_DATABASE', 'adonis')
     }
   },
+    
+    mysqlContacts: {
+        client: 'mysql',
+        connection: {
+            host: Env.get('DB_HOST_TEST', 'localhost'),
+            port: Env.get('DB_PORT_TEST', ''),
+            user: Env.get('DB_USER_TEST', 'root'),
+            password: Env.get('DB_PASSWORD_TEST', ''),
+            database: Env.get('DB_DATABASE_CONTACTS', 'adonis')
+        }
+    },
+    
+    mysqlSMS: {
+        client: 'mysql',
+        connection: {
+            host: Env.get('DB_HOST_TEST', 'localhost'),
+            port: Env.get('DB_PORT_TEST', ''),
+            user: Env.get('DB_USER_TEST', 'root'),
+            password: Env.get('DB_PASSWORD_TEST', ''),
+            database: Env.get('DB_DATABASE_SMS', 'adonis')
+        }
+    },
 
   /*
   |--------------------------------------------------------------------------
