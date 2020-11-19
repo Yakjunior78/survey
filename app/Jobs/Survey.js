@@ -10,6 +10,8 @@ const Env = use('Env');
 
 const publish = async(instance) => {
 	
+	console.log('this is also called');
+	
 	const pubSubClient = new PubSub();
 	
 	let data = {

@@ -36,6 +36,8 @@ class InstanceRepository {
 		
 		let instance = await this.create(survey, channel, data);
 		
+		Event.fire('NewInstance::created', instance);
+		
 		return {
 			status: 201,
 			message: 'Survey instance created successfully',
@@ -100,9 +102,9 @@ class InstanceRepository {
 		
 		let send_now = await isNowOrPast(data.start_at);
 		
-		if(send_now) {
-			Event.fire('new::instance', instance);
-		}
+		// if(send_now) {
+		// 	Event.fire('new::instance', instance);
+		// }
 		
 		return instance;
 	}
