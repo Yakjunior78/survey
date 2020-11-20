@@ -53,13 +53,13 @@ class ResponseHandler {
 		
 		let session = await SessionHandler.handle(contacts, instances);
 		
-		return {
-			session: session
-		};
-		
 		if(!session) return null;
 		
 		let response = await Response.record(session, data, channel);
+		
+		return {
+			response: response
+		}
 		
 		let next = await Question.handle(session, response);
 		
