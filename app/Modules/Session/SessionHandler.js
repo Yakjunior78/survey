@@ -11,7 +11,15 @@ class SessionHandler {
 		let session = await repo.find(contacts, instances);
 		
 		if(!session) {
-			return await repo.create(contacts.first(), instances.first());
+			
+			let activeInstances = [];
+			
+			for (const instance of instances) {
+				let expired = await repo.checkExpiry(contacts.first(), instance);
+				if(!expired) activeInstances.push(instance);
+			}
+			
+			return await repo.create(contacts.first(), activeInstances[0]);
 		}
 		
 		return session;

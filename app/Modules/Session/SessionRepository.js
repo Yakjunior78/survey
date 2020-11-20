@@ -42,6 +42,12 @@ class SessionRepository {
 	
 	async create(contact, instance)
 	{
+		let expired = await this.checkExpiry(contact, instance);
+		
+		if(expired) {
+			return null;
+		}
+		
 		let selectedContact = await ContactModel.query()
 			.where('msisdn', contact.msisdn)
 			.where('group_id', contact.group_id)
@@ -68,6 +74,15 @@ class SessionRepository {
 		});
 		
 		return session;
+	}
+	
+	async checkExpiry(contact, instance)
+	{
+		return SessionModel
+			.query ()
+			.where ('contact_id', contact.id)
+			.where ('instance_id', instance.id)
+			.first ();
 	}
 	
 	async show(contact, instance, sender)
