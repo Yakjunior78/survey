@@ -43,7 +43,7 @@ class HandleResponse extends Command {
 			
 			message.ack();
 			
-			Logger.info('Instance dispatched successfully');
+			Logger.info('Response dispatched successfully');
 			
 		} catch (e) {
 			Logger.info(e.message, 'this is the error');
