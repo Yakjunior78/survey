@@ -28,7 +28,7 @@ class Question {
 			.orderBy('created_at', 'desc')
 			.first();
 		
-		return sessionTrail.question ().with ('conditions').first ();
+		return sessionTrail ? sessionTrail.question ().with ('conditions').first () : null;
 	}
 	
 	async condition(current, response)
