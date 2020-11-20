@@ -1,7 +1,7 @@
 'use strict';
 
 const { publish } = use('App/Services/Messaging/PubSubHandler');
-const InstanceModel = use('App/Model/Instance');
+const InstanceModel = use('App/Models/Instance');
 
 class InstanceHandler {
 	
