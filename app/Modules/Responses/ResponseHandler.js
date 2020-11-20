@@ -19,8 +19,6 @@ class ResponseHandler {
 		
 		let instances = await Instance.find(data, contacts, channel);
 		
-		return instances;
-		
 		if(!instances) return 'Unable to proceed';
 		
 		let session = await SessionHandler.handle(contacts, instances);
