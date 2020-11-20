@@ -4,9 +4,9 @@ class Contacts {
 	async sync(instance)
 	{
 		let group = await Database.connection('mysqlSMS')
-			.table('contact_groups')
+			.from('contact_groups')
 			.where('id', instance.group_id)
-			.select('*');
+			.first();
 		
 		console.log(group);
 	}
