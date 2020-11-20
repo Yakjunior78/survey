@@ -2,6 +2,8 @@ const GroupModel = use('App/Models/Group');
 const InstanceModel = use('App/Models/Instance');
 const SMS = new(use('App/Services/SMS/Send'))();
 
+const QuestionRepo = new(use('App/Modules/Questions/QuestionRepository'))();
+
 const { smsReply } = use('App/Helpers/Question');
 const Env = use('Env');
 
@@ -34,10 +36,10 @@ class Instance {
 	async message(instance)
 	{
 		instance = await InstanceModel.query().where('id', instance.id).first();
-
-		console.log('instance iko sawa');
 		
-		let question = await instance.questions().where('rank', 1).first();
+		let survey = await instance.survey().first();
+		
+		let question = await QuestionRepo.get(survey, 1);
 		
 		return await smsReply(question);
 	}
