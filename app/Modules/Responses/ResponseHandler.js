@@ -44,9 +44,6 @@ class ResponseHandler {
 	
 	async response(data, channel)
 	{
-		console.log('are we here');
-		console.log(channel, 'this is th slug');
-		
 		let contacts = await ContactHandler.find(data, channel);
 		
 		let instances = await Instance.find(data, contacts, channel);
