@@ -1,10 +1,14 @@
 'use strict';
 
+const QuestionModel = use('App/Models/Question');
+
 const smsReply = async (question) => {
 	
 	if(!question || (question && !question.id)) {
 		return 'Thank you for participating in our survey. Good bye.'
 	}
+	
+	question = await QuestionModel.query().where('id', question.id).first();
 	
 	let description = question.question;
 	
