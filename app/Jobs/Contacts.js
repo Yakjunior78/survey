@@ -41,7 +41,7 @@ class Contacts {
 		return await Database
 			.connection('mysqlContacts')
 			.from(table)
-			.all();
+			.fetch();
 	}
 }
 
