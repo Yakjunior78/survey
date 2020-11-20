@@ -9,6 +9,8 @@ class InstanceHandler {
 		
 		let instance = await InstanceModel.find(id);
 		
+		return instance;
+		
 		return await publish(
 			instance,
 			Env.get('DISPATCH_SURVEY_INSTANCE'),
