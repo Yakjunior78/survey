@@ -8,7 +8,7 @@ class Contacts {
 			.where('id', instance.group_id)
 			.first();
 		
-		console.log(group);
+		console.log(group.id);
 	}
 }
 
