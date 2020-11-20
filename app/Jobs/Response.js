@@ -1,4 +1,5 @@
 const ResponseHandler = new(use('App/Modules/Responses/ResponseHandler'))();
+const SMS = new(use('App/Services/SMS/Send'))();
 
 class Response {
 	async handle(data)
@@ -9,7 +10,27 @@ class Response {
 		
 		let response = await ResponseHandler.response(data, channel);
 		
-		console.log(response, 'this is the response');
+		await this.reply(response)
+	}
+	
+	async reply(response)
+	{
+		let data = await this.messageData(response);
+		
+		return await SMS.handle(data);
+	}
+	
+	async messageData(response)
+	{
+		return {
+			from: Env.get('DEFAULT_SHORT_CODE'),
+			messages: [
+				{
+					recipient: '254704664119',
+					message: response
+				}
+			]
+		}
 	}
 }
 
