@@ -10,6 +10,8 @@ class SessionHandler {
 	{
 		let session = await repo.find(contacts, instances);
 		
+		return session;
+		
 		if(!session) {
 			
 			let activeInstances = [];
