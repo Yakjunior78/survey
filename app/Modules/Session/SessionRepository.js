@@ -64,6 +64,8 @@ class SessionRepository {
 			status_id :  status ? status.id : null
 		});
 		
+		console.log('creating ');
+		
 		await SessionTrailModel.create({
 			session_id: session.id,
 			question_id: question.id,
