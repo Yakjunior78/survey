@@ -1,6 +1,7 @@
 const SessionModel = use('App/Models/Session');
 const ContactModel = use('App/Models/Contact');
 const SessionTrailModel = use('App/Models/SessionTrail');
+const InstanceModel = use('App/Models/Instance');
 
 const QuestionRepo = new(use('App/Modules/Questions/QuestionRepository'))();
 
@@ -42,11 +43,7 @@ class SessionRepository {
 	
 	async create(contact, instance)
 	{
-		let expired = await this.checkExpiry(contact, instance);
-		
-		if(expired) {
-			return null;
-		}
+		instance = await InstanceModel.query().where('id', instance.id).first();
 		
 		let selectedContact = await ContactModel.query()
 			.where('msisdn', contact.msisdn)
