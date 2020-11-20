@@ -3,6 +3,9 @@ const ResponseHandler = new(use('App/Modules/Responses/ResponseHandler'))();
 class Response {
 	async handle(data)
 	{
+		console.log(data, 'this is the data');
+		
+		return;
 		data = data.data;
 		let channel = data.channel;
 		
