@@ -21,8 +21,7 @@ class ResponseHandler {
 	{
 		switch(channel.slug) {
 			case 'sms':
-				return await this.response(data, channel);
-				// return await this.publish(data, channel);
+				return await this.publish(data, channel);
 			case 'web':
 			case 'chat':
 				return await this.response(data, channel);
