@@ -22,7 +22,7 @@ class SessionHandler {
 			}
 			
 			return {
-				instances: activeInstances,
+				instance: activeInstances[0],
 				session: session
 			};
 			
