@@ -17,14 +17,14 @@ class Instance {
 	
 	async messageData(group, instance) {
 		
-		let message = await this.message(instance);
+		// let message = await this.message(instance);
 		
 		return {
 			from: Env.get('DEFAULT_SHORT_CODE'),
 			messages: [
 				{
 					recipient: '254704664119',
-					message: message
+					message: 'We are here Yakov'
 				}
 			]
 		}
@@ -34,7 +34,7 @@ class Instance {
 	{
 		instance = await InstanceModel.query().where('id', instance.id).first();
 
-		let question = await instance.questions ().where ('rank', 1).first();
+		let question = await instance.questions().where('rank', 1).first();
 		
 		return await smsReply(question);
 	}
