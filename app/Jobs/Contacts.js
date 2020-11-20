@@ -5,7 +5,8 @@ class Contacts {
 	{
 		let group = await Database.connection('mysqlSMS')
 			.table('contact_groups')
-			.find(instance.group_id);
+			.where('id', instance.group_id)
+			.select('*');
 		
 		console.log(group);
 	}
