@@ -1,6 +1,7 @@
 'use strict';
 
 const InstanceRepository = new(use('App/Modules/Instances/InstanceRepository'))();
+const InstanceHandler = new(use('App/Modules/Instances/InstanceHandler'))();
 
 class InstanceController {
 	
@@ -30,6 +31,15 @@ class InstanceController {
 		let data = request.all();
 		
 		let result = await InstanceRepository.initialize(request.all());
+		
+		return response.json(result);
+	}
+	
+	async dispatch({ request, response })
+	{
+		let id = request.instance_id;
+		
+		let result = await InstanceHandler.dispatch(id);
 		
 		return response.json(result);
 	}

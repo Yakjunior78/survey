@@ -28,6 +28,7 @@ Route.group( () => {
 	 * Instance, Statistics
 	 */
 	Route.resource('/instances', 'InstanceController');
+	Route.post('/dispatch/instance', 'InstanceController.dispatch');
 	
 	Route.post('/instances/initialize', 'InstanceController.initialize');
 	Route.post('/statistics', 'StatisticsController.instance');
