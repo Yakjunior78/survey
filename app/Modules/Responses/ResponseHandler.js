@@ -21,7 +21,8 @@ class ResponseHandler {
 	{
 		switch(channel.slug) {
 			case 'sms':
-				return await this.publish(data, channel);
+				return await this.response(data, channel);
+				// return await this.publish(data, channel);
 			case 'web':
 			case 'chat':
 				return await this.response(data, channel);
@@ -51,6 +52,8 @@ class ResponseHandler {
 		if(!instances) return 'Unable to proceed';
 		
 		let session = await SessionHandler.handle(contacts, instances);
+		
+		return session;
 		
 		if(!session) return null;
 		
