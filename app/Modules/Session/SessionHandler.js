@@ -14,6 +14,8 @@ class SessionHandler {
 			
 			let activeInstances = [];
 			
+			instances = instances.toJSON();
+			
 			for (const instance of instances) {
 				let expired = await repo.checkExpiry(contacts.first(), instance);
 				if(!expired) activeInstances.push(instance);
