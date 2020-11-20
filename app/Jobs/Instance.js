@@ -12,7 +12,7 @@ class Instance {
 		
 		let data = await this.messageData(group, instance);
 		
-		return await SMS.handle(group);
+		return await SMS.handle(data);
 	}
 	
 	async messageData(group, instance) {
