@@ -3,6 +3,8 @@
 const { publish } = use('App/Services/Messaging/PubSubHandler');
 const InstanceModel = use('App/Models/Instance');
 
+const Env = use('Env');
+
 class InstanceHandler {
 	
 	async dispatch(id) {
