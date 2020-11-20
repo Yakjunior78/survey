@@ -7,7 +7,7 @@ class InstanceHandler {
 	
 	async dispatch(id) {
 		
-		let instance = await InstanceModel.find(id);
+		let instance = await InstanceModel.query().where('id', id).first();
 		
 		return instance;
 		
