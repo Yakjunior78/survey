@@ -20,9 +20,7 @@ class Contacts {
 		
 		let company = await this.company(group.customer_account);
 		
-		let contactGroup = await this.contactGroup(group, company);
-		
-		return await this.contacts(contactGroup, company, file.table_name);
+		return await this.contactGroup(group, company, file);
 	}
 	
 	async group(id)
@@ -57,16 +55,19 @@ class Contacts {
 		return company;
 	}
 	
-	async contactGroup(group, company)
+	async contactGroup(group, company, file)
 	{
 		let contactGroup = await GroupModel.query().where('company_id', company.id).where('code', group.id).first();
 		
 		if(!contactGroup) {
+			
 			contactGroup = await GroupModel.create({
 				title: '',
 				code: group.id,
 				company_id: company.id
 			});
+			
+			return await this.contacts(contactGroup, company, file.table_name);
 		}
 		
 		return contactGroup;
