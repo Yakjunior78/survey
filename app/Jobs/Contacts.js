@@ -1,6 +1,7 @@
 const Database = use('Database');
 const CompanyModel = use('App/Models/Company');
 const GroupModel = use('App/Models/Group');
+const ContactModel = use('App/Models/Contact');
 
 class Contacts {
 	async sync(instance)
@@ -78,9 +79,17 @@ class Contacts {
 			.select('msisdn', 'fname', 'lname', 'network')
 			.from(table);
 		
-		contacts.forEach( (contact) => {
-			console.log(contact, 'this is the contacts');
-		})
+		for (const contact of contacts) {
+			await ContactModel.create({
+				group_id: group.id,
+				company_id: company.id,
+				msisdn: contact.msisdn,
+				fname: contact.fname,
+				lname: contact.lname
+			});
+		}
+		
+		return;
 	}
 }
 
