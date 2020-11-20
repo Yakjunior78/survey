@@ -53,10 +53,7 @@ class ResponseHandler {
 		
 		let session = await SessionHandler.handle(contacts, instances);
 		
-		return {
-			instances: instances,
-			session: session
-		};
+		return session;
 		
 		if(!session) return null;
 		
