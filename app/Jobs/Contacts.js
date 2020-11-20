@@ -40,7 +40,7 @@ class Contacts {
 	{
 		return await Database
 			.connection('mysqlContacts')
-			.select('msisdn, fname, lname, network')
+			.select('msisdn', 'fname', 'lname', 'network')
 			.from(table);
 	}
 }
