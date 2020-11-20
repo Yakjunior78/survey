@@ -9,6 +9,8 @@ const Response = new(use('App/Modules/Responses/Response'))();
 const ContactHandler = new(use('App/Modules/Contacts/ContactsHandler'))();
 const SessionHandler = new(use('App/Modules/Session/SessionHandler'))();
 
+const { smsReply, jsonReply } = use('App/Helpers/Question');
+
 const Logger = use('Logger');
 
 class ResponseHandler {
@@ -38,68 +40,13 @@ class ResponseHandler {
 	{
 		switch(channel.slug) {
 			case 'sms':
-				return await this.smsReply(question);
+				return await smsReply(question);
 			case 'web':
 			case 'chat':
-				return await this.jsonReply(question);
+				return await jsonReply(question);
 			default:
 				return null;
 		}
-	}
-	
-	async smsReply(question)
-	{
-		if(!question || (question && !question.id)) {
-			return 'Thank you for participating in our survey. Good bye.'
-		}
-		
-		let description = question.question;
-		
-		let type = await question.questionType;
-		
-		let choice_string = '';
-		
-		switch(type.slug) {
-			case 'multiple_choice':
-				let choices = question.options;
-				choice_string = await this.formatChoices(choices);
-				break;
-			case 'open_ended':
-				choice_string = '';
-				break;
-			default:
-				choice_string = '';
-				break;
-		}
-		
-		return description + '\n' + choice_string;
-	}
-	
-	async jsonReply(question)
-	{
-		return {
-			status: 201,
-			message: 'Response saved successfully',
-			question: question
-		}
-	}
-	
-	async formatChoices(choices)
-	{
-		let reply = 'Reply with: ';
-		
-		choices = choices.toJSON();
-		
-		for (let i = 0; i < choices.length; i++) {
-			let value = choices[i].rank;
-			let label = choices[i].label;
-			
-			let choiceString = '\n '+ '('+value+') '+label;
-			
-			reply = reply + ' ' + choiceString;
-		}
-		
-		return reply;
 	}
 	
 	async type(type)
