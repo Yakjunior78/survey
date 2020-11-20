@@ -39,6 +39,10 @@ class InstanceController {
 	{
 		let id = request.instance_id;
 		
+		return response.json({
+			id: id
+		});
+		
 		let result = await InstanceHandler.dispatch(id);
 		
 		return response.json(result);
