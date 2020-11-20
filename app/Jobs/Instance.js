@@ -34,7 +34,7 @@ class Instance {
 	{
 		instance = await InstanceModel.query().where('id', instance.id).first();
 
-		let question = await instance.questions ().where ('rank', 1);
+		let question = await instance.questions ().where ('rank', 1).first();
 		
 		return await smsReply(question);
 	}
