@@ -21,12 +21,7 @@ class SessionHandler {
 				if(!expired) activeInstances.push(instance);
 			}
 			
-			return {
-				instance: activeInstances[0],
-				session: session
-			};
-			
-			// return await repo.create(contacts.first(), activeInstances[0]);
+			return await repo.create(contacts.first(), activeInstances[0]);
 		}
 		
 		return session;
