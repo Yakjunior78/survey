@@ -24,7 +24,6 @@ class Question {
 	{
 		let sessionTrail = await session
 			.sessionTrails()
-			.where('replied', '!=', 1)
 			.orderBy('created_at', 'desc')
 			.first();
 		

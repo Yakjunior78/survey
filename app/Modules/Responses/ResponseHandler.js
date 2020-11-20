@@ -57,10 +57,6 @@ class ResponseHandler {
 		
 		let response = await Response.record(session, data, channel);
 		
-		return {
-			response: response
-		}
-		
 		let next = await Question.handle(session, response);
 		
 		await SessionHandler.update(session, next);
