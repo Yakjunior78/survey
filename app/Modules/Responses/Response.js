@@ -8,7 +8,7 @@ class Response {
 	{
 		let sessionTrail = await session
 			.sessionTrails()
-			.where('replied', '!=', 1)
+			.whereNull('replied')
 			.orderBy('created_at', 'desc')
 			.first();
 		
