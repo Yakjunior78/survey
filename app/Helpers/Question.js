@@ -8,7 +8,7 @@ const smsReply = async (question) => {
 	
 	let description = question.question;
 	
-	let type = await question.questionType;
+	let type = await question.type().first();
 	
 	let choice_string = '';
 	
