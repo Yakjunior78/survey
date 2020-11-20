@@ -1,4 +1,6 @@
 const Database = use('Database');
+const CompanyModel = use('App/Models/Company');
+const GroupModel = use('App/Models/Group');
 
 class Contacts {
 	async sync(instance)
@@ -15,9 +17,11 @@ class Contacts {
 			return;
 		}
 		
-		let contacts = await this.contacts(file.table_name);
+		let company = await this.company(group.customer_account);
 		
-		console.log(contacts);
+		let contactGroup = await this.contactGroup(group, company);
+		
+		return await this.contacts(contactGroup, company, file.table_name);
 	}
 	
 	async group(id)
@@ -36,12 +40,47 @@ class Contacts {
 			.first ();
 	}
 	
-	async contacts(table)
+	async company(account)
 	{
-		return await Database
+		let company = await CompanyModel.query().where('identity', account).first();
+		
+		if(!company) {
+			company = await CompanyModel.create({
+				name: account,
+				slug: account,
+				description: 'Company with customer account '+account,
+				identity: account
+			})
+		}
+		
+		return company;
+	}
+	
+	async contactGroup(group, company)
+	{
+		let contactGroup = await GroupModel.query().where('company_id', company.id).where('code', group.id).first();
+		
+		if(!contactGroup) {
+			contactGroup = await GroupModel.create({
+				title: '',
+				code: group.id,
+				company_id: company.id
+			});
+		}
+		
+		return contactGroup;
+	}
+	
+	async contacts(group, company, table)
+	{
+		let contacts = await Database
 			.connection('mysqlContacts')
 			.select('msisdn', 'fname', 'lname', 'network')
 			.from(table);
+		
+		contacts.forEach( (contact) => {
+			console.log(contact, 'this is the contacts');
+		})
 	}
 }
 
