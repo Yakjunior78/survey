@@ -10,9 +10,13 @@ class Instance {
 		
 		let group_ids = await mapIds(contacts.toJSON(), 'group_id');
 		
+		let groups = await GroupModel.query().whereIn('id', group_ids);
+		
+		let ids = await mapIds(groups.toJSON(), 'code');
+		
 		switch(channel.slug) {
 			case 'sms':
-				return await this.forSms(data, group_ids);
+				return await this.forSms(data, ids);
 			case 'web':
 		    case 'chat':
 				return await this.forWeb(data.instanceId, channel.slug);
