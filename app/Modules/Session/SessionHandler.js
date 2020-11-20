@@ -1,5 +1,8 @@
 const repo = new(use('App/Modules/Session/SessionRepository'))();
 const SessionTrailModel = use('App/Models/SessionTrail');
+const SessionModel = use('App/Models/Session');
+
+const { getStatus } = use('App/Helpers/Emalify');
 
 class SessionHandler {
 	
@@ -25,13 +28,23 @@ class SessionHandler {
 		
 		await latestTrail.save();
 		
-		if(!next) return null;
+		if(!next) return await this.deactivateSession(session);
 		
 		return await SessionTrailModel.create({
 			session_id: session.id,
 			question_id: next.id,
 			consent: false
 		});
+	}
+	
+	async deactivateSession(session)
+	{
+		let status = await getStatus('closed');
+		
+		return await SessionModel
+			.query()
+			.where('id', session.id)
+			.update({'status_id': status.id});
 	}
 }
 
