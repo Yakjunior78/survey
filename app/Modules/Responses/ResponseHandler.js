@@ -10,12 +10,39 @@ const ContactHandler = new(use('App/Modules/Contacts/ContactsHandler'))();
 const SessionHandler = new(use('App/Modules/Session/SessionHandler'))();
 
 const { smsReply, jsonReply } = use('App/Helpers/Question');
+const { publish } = use('App/Services/Messaging/PubSubHandler');
 
 const Logger = use('Logger');
+const Env = use('Env');
 
 class ResponseHandler {
 	
 	async handle(data, channel)
+	{
+		switch(channel.slug) {
+			case 'sms':
+				return await this.publish(data, channel);
+			case 'web':
+			case 'chat':
+				return await this.response(data, channel);
+			default:
+				return 'unknown survey channel';
+		}
+	}
+	
+	async publish(data, channel)
+	{
+		return await publish(
+			{
+				data: data,
+				channel: channel
+			},
+			Env.get('HANDLE_RESPONSE'),
+			'handle_response'
+		);
+	}
+	
+	async response(data, channel)
 	{
 		let contacts = await ContactHandler.find(data, channel);
 		

@@ -63,6 +63,7 @@ const commands = [
     'App/Commands/TestSendingSms',
     'App/Commands/Contacts/ContactsSync',
     'App/Commands/Surveys/DispatchSurveyInstance',
+    'App/Commands/Surveys/HandleResponse',
 ]
 
 module.exports = { providers, aceProviders, aliases, commands }
