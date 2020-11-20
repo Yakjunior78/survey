@@ -27,7 +27,7 @@ class Instance {
 			messages: [
 				{
 					recipient: '254704664119',
-					message: 'We are here Yakov'
+					message: message
 				}
 			]
 		}
