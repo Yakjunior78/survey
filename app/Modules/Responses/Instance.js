@@ -12,7 +12,7 @@ class Instance {
 		
 		let group_ids = await mapIds(contacts.toJSON(), 'group_id');
 		
-		let groups = await GroupModel.query().whereIn('id', group_ids);
+		let groups = await GroupModel.query().whereIn('id', group_ids).fetch();
 		
 		let ids = await mapIds(groups.toJSON(), 'code');
 		
