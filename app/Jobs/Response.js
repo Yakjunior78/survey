@@ -1,6 +1,8 @@
 const ResponseHandler = new(use('App/Modules/Responses/ResponseHandler'))();
 const SMS = new(use('App/Services/SMS/Send'))();
 
+const Env = use('Env');
+
 class Response {
 	async handle(data)
 	{
