@@ -2,28 +2,27 @@
 
 const { Command } = require('@adonisjs/ace');
 const {PubSub} = require('@google-cloud/pubsub');
+const pubSubClient = new PubSub();
+const sub = Env.get('CLONE_SURVEY_CONTACTS_SUBSCRIPTION');
 
 const Env = use('Env');
 const Logger = use('Logger');
-const sub = Env.get('CONTACT_SYNC_TOPIC_SUBSCRIPTION');
-
-const pubSubClient = new PubSub();
 
 const contactHandler = new(use('App/Jobs/Contacts'))();
 
-class ContactsSync extends Command {
+class CloneContacts extends Command {
 	
 	static get signature () {
-		return 'contacts:sync'
+		return 'contacts:clone'
 	}
 	
 	static get description () {
-		return 'Sync contacts to survey contacts';
+		return 'Clone contact groups to survey contacts';
 	}
 	
 	async handle (args, options) {
 		
-		Logger.info('Listening to messages');
+		Logger.info('Contacts clone handler');
 		
 		const subscription = pubSubClient.subscription(sub);
 		
@@ -32,18 +31,16 @@ class ContactsSync extends Command {
 	
 	async messageHandler(message) {
 		
-		Logger.info('handling message');
+		Logger.info('Contacts cloning started');
 		
 		try {
 			const payload = JSON.parse(Buffer.from(message.data, 'utf-8').toString());
 			
-			Logger.info('Sent for processing');
-			
-			await contactHandler.sync(payload.data);
+			await contactHandler.clone(payload.data);
 			
 			message.ack();
 			
-			Logger.info('Contacts synced successfully');
+			Logger.info('Contacts cloned completed');
 			
 		} catch (e) {
 			Logger.info(e.message, 'this is the error');
@@ -52,4 +49,4 @@ class ContactsSync extends Command {
 	}
 }
 
-module.exports = ContactsSync;
+module.exports = CloneContacts;

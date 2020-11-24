@@ -2,10 +2,14 @@ const Database = use('Database');
 const CompanyModel = use('App/Models/Company');
 const GroupModel = use('App/Models/Group');
 const ContactModel = use('App/Models/Contact');
+const InstanceModel = use('App/Models/Instance');
 
 class Contacts {
-	async sync(instance)
+	
+	async clone(instance)
 	{
+		instance = await InstanceModel.query().where('id', instance.id).first();
+		
 		let group = await this.group(instance.group_id);
 		
 		if(!group) {
@@ -20,7 +24,10 @@ class Contacts {
 		
 		let company = await this.company(group.customer_account);
 		
-		return await this.contactGroup(group, company, file);
+		await this.contactGroup(group, company, file);
+		
+		instance.cloned = true;
+		return instance.save ();
 	}
 	
 	async group(id)
@@ -57,7 +64,11 @@ class Contacts {
 	
 	async contactGroup(group, company, file)
 	{
-		let contactGroup = await GroupModel.query().where('company_id', company.id).where('code', group.id).first();
+		let contactGroup = await GroupModel
+			.query()
+			.where('company_id', company.id)
+			.where('code', group.id)
+			.first();
 		
 		if(!contactGroup) {
 			
@@ -90,7 +101,7 @@ class Contacts {
 			});
 		}
 		
-		return;
+		return true;
 	}
 }
 

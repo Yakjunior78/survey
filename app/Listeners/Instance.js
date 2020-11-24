@@ -1,7 +1,7 @@
 'use strict';
 
 const ChannelModel = use('App/Models/Channel');
-const { publish, generateLink, testToken } = use('App/Jobs/Survey');
+const { generateLink } = use('App/Jobs/Survey');
 
 const Instance = exports = module.exports = {}
 
@@ -13,17 +13,9 @@ Instance.created = async (instance) => {
 		return false;
 	}
 	
-	switch(channel.slug) {
-		
-		case 'sms':
-			await publish(instance);
-			return await updateInstance(instance);
-		case 'web':
-			await generateLink(instance);
-			return await updateInstance(instance);
-		default:
-			return 'Channel not supported'
-	}
+	await generateLink(instance);
+	
+	return await updateInstance(instance);
 }
 
 async function updateInstance(instance) {

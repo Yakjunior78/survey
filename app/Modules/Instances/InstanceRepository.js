@@ -36,13 +36,35 @@ class InstanceRepository {
 		
 		let instance = await this.create(survey, channel, data);
 		
-		Event.fire('NewInstance::created', instance);
-		
 		return {
 			status: 201,
 			message: 'Survey instance created successfully',
 			instance: instance
 		};
+	}
+	
+	async create(survey, channel, data) {
+		
+		let instances = await survey.instances().count('* as total');
+		
+		let status = await StatusModel.query().where('slug', 'active').first();
+		
+		let instance = await InstanceModel.create({
+			description: 'Instance ' + (instances[0].total + 1) + ' of this survey.',
+			survey_id: survey.id,
+			start_at: moment(data.start_at).format('YYYY-MM-DD HH:mm:ss'),
+			end_at: moment(data.end_at).format('YYYY-MM-DD HH:mm:ss'),
+			group_id: data.group_id ? data.group_id : null,
+			channel_id: channel.id,
+			created_by: data.created_by,
+			created_by_name: data.created_by_name,
+			status_id: status.id,
+			sender_id: data.sender_id ? data.sender_id : null
+		});
+		
+		await this.attachQuestions(instance);
+		
+		return instance;
 	}
 	
 	async update(id, data)
@@ -77,36 +99,6 @@ class InstanceRepository {
 			'message': 'Survey instance deleted successfully',
 			'status': 201
 		}
-	}
-	
-	async create(survey, channel, data) {
-		
-		let instances = await survey.instances().count('* as total');
-		
-		let status = await StatusModel.query().where('slug', 'active').first();
-		
-		let instance = await InstanceModel.create({
-			description: 'Instance ' + (instances[0].total + 1) + ' of this survey.',
-			survey_id: survey.id,
-			start_at: moment(data.start_at).format('YYYY-MM-DD HH:mm:ss'),
-			end_at: moment(data.end_at).format('YYYY-MM-DD HH:mm:ss'),
-			group_id: data.group_id ? data.group_id : null,
-			channel_id: channel.id,
-			created_by: data.created_by,
-			created_by_name: data.created_by_name,
-			status_id: status.id,
-			sender_id: data.sender_id ? data.sender_id : null
-		});
-		
-		await this.attachQuestions(instance);
-		
-		let send_now = await isNowOrPast(data.start_at);
-		
-		// if(send_now) {
-		// 	Event.fire('new::instance', instance);
-		// }
-		
-		return instance;
 	}
 	
 	async getSurvey(id) {
