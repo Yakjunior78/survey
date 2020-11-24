@@ -21,7 +21,7 @@ class InstanceHandler {
 		}
 		
 		return {
-			message: 'We are here';
+			message: 'We are here'
 		}
 		
 		if(!instance || !instance.should_dispatch) {
