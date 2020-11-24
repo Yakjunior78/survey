@@ -3,6 +3,8 @@
 const { publish } = use('App/Services/Messaging/PubSubHandler');
 const InstanceModel = use('App/Models/Instance');
 
+const { isNowOrPast } = use('App/Helpers/DateHelper');
+
 const Env = use('Env');
 
 class InstanceHandler {
@@ -10,6 +12,13 @@ class InstanceHandler {
 	async handle(id) {
 		
 		let instance = await InstanceModel.query().where('id', id).first();
+		
+		let sendNow = await isNowOrPast(instance.start_at);
+		
+		if(sendNow) {
+			instance.should_dispatch = true;
+			await instance.save();
+		}
 		
 		if(!instance || !instance.should_dispatch) {
 			return {
