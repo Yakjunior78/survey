@@ -18,6 +18,8 @@ class InstanceHandler {
 		if(sendNow) {
 			instance.should_dispatch = true;
 			await instance.save();
+			
+			return instance;
 		}
 		
 		if(!instance || !instance.should_dispatch) {
