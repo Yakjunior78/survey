@@ -20,11 +20,6 @@ class InstanceHandler {
 			await instance.save();
 		}
 		
-		return {
-			message: 'We are here',
-			instance: instance
-		}
-		
 		if(!instance || !instance.should_dispatch) {
 			return {
 				message: 'Unable to dispatch instance'
