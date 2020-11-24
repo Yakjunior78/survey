@@ -27,7 +27,7 @@ class HandleResponse extends Command {
 		
 		const subscription = pubSubClient.subscription(sub);
 		
-		await subscription.on('message', await this.messageHandler);
+		return subscription.on ('message', await this.messageHandler);
 	}
 	
 	async messageHandler(message) {
@@ -41,13 +41,13 @@ class HandleResponse extends Command {
 			
 			await responseHandler.handle(payload.data);
 			
-			message.ack();
-			
 			Logger.info('Response dispatched successfully');
+			
+			return message.ack();
 			
 		} catch (e) {
 			Logger.info(e.message, 'this is the error');
-			message.nack();
+			return message.nack();
 		}
 	}
 }

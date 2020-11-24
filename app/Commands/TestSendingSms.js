@@ -15,13 +15,11 @@ class TestSendingSms extends Command {
         return 'Test sending sms via api call command'
     }
 
-    async handle (args, options) {
-        
+    async handle (args, options)
+    {
         let data = await this.testData ();
         
-        let sent = await SMS.sendBulkSms(data);
-        
-        console.log(sent, 'hi how are you doing');
+        return await SMS.sendBulkSms(data);
     }
     
     async testData() {

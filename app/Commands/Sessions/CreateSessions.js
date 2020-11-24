@@ -26,7 +26,7 @@ class CreateSessions extends Command {
 		
 		const subscription = pubSubClient.subscription(sub);
 		
-		await subscription.on('message', await this.messageHandler);
+		return subscription.on ('message', await this.messageHandler);
 	}
 	
 	async messageHandler(message) {
@@ -38,13 +38,13 @@ class CreateSessions extends Command {
 			
 			await sessionHandler.handle(payload.data);
 			
-			message.ack();
-			
 			Logger.info('Session creation completed');
+			
+			return message.ack();
 			
 		} catch (e) {
 			Logger.info(e.message, 'this is the error');
-			message.nack();
+			return message.nack();
 		}
 	}
 }

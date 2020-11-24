@@ -27,7 +27,7 @@ class DispatchSurveyInstance extends Command {
 		
 		const subscription = pubSubClient.subscription(sub);
 		
-		await subscription.on('message', await this.messageHandler);
+		return subscription.on ('message', await this.messageHandler);
 	}
 	
 	async messageHandler(message) {
@@ -41,13 +41,13 @@ class DispatchSurveyInstance extends Command {
 			
 			await instanceHandler.dispatch(payload.data);
 			
-			message.ack();
-			
 			Logger.info('Instance dispatched successfully');
+			
+			return message.ack();
 			
 		} catch (e) {
 			Logger.info(e.message, 'this is the error');
-			message.nack();
+			return message.nack();
 		}
 	}
 }

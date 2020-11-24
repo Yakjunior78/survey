@@ -14,8 +14,7 @@ class TestAuth extends Command {
     }
 
     async handle (args, options) {
-        let token = await Auth.apiToken();
-        console.log(token, 'this is the api token');
+        return true;
     }
 }
 
