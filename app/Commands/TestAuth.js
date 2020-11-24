@@ -6,7 +6,7 @@ const Auth = new(use('App/Modules/Auth/SMS'))();
 class TestAuth extends Command {
   
     static get signature () {
-        return 'test:auth';
+        return 'scheduler:run';
     }
 
     static get description () {
