@@ -28,15 +28,15 @@ class InstanceHandler {
 			}
 		}
 		
-		if((!instance.clone_job_queued || instance.clone_job_queued) && !instance.cloned) {
+		if(!instance.clone_job_queued) {
 			return await this.clone(instance);
 		}
 		
-		if((!instance.session_job_queued || instance.session_job_queued) && !instance.session_created) {
+		if(!instance.session_job_queued) {
 			return await this.createSessions(instance);
 		}
 		
-		if((!instance.send_sms_job_queued || instance.session_job_queued) && !instance.sms_sent) {
+		if(!instance.send_sms_job_queued) {
 			return await this.dispatch(instance);
 		}
 		
