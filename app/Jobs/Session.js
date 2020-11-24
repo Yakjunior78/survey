@@ -1,6 +1,9 @@
 const GroupModel = use('App/Models/Group');
 const ContactModel = use('App/Models/Contact');
 const SessionModel = use('App/Models/Session');
+const StatusModel = use('App/Models/Status');
+
+const Database = use('Database');
 
 class Sessions {
 	
@@ -14,23 +17,33 @@ class Sessions {
 			return instance;
 		}
 		
+		let survey = await instance.survey().first();
+		
+		let question = await survey.questions().first();
+		
+		let status = await StatusModel.query().where('slug', 'active').first();
+		
 		let contacts = await ContactModel.query()
-			.where('group_id', group.code)
+			.where('group_id', group.id)
 			.fetch();
 		
 		contacts = contacts.toJSON();
 		
-		for(let i in contacts.rows) {
+		let sessions = []
+		
+		contacts.forEach( (contact) => {
 			let cont = {
 				instance_id: instance.id,
-				contact_id: contacts.rows[i],
+				contact_id: contact.id,
 				sender_id: instance.sender_id,
+				question_id: question.id,
+				status_id: status.id
 			}
 			
-			contacts.push(cont);
-		}
+			sessions.push(cont);
+		});
 		
-		return SessionModel.createMany(contacts);
+		return await Database.insert(sessions).into('sessions');
 	}
 }
 

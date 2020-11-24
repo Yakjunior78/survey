@@ -3,10 +3,19 @@
 const {PubSub} = require('@google-cloud/pubsub');
 const timeout = 60;
 const topic = 'test-topic';
+const Database = use('Database');
 
 const Message = new(use('App/Modules/Messages/Message'))();
 const SMS = new(use('App/Modules/Surveys/SMS'))();
 const Auth = new(use('App/Modules/Auth/SMS'))();
+
+const ContactModel = use('App/Models/Contact');
+const SessionModel = use('App/Models/Session');
+const InstanceModel = use('App/Models/Instance');
+const GroupModel = use('App/Models/Group');
+const StatusModel = use('App/Models/Status');
+
+const sessionHandler = new(use('App/Jobs/Session'))();
 
 class TestController {
 	
@@ -35,6 +44,15 @@ class TestController {
 			'status' : 200,
 			'token' : token
 		});
+	}
+	
+	async createSession({ params, response })
+	{
+		let id = params.id;
+		
+		let instance = await InstanceModel.query().where('id', id).first();
+		
+		
 	}
 }
 
