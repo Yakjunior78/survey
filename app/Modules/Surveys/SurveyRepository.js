@@ -47,12 +47,21 @@ class SurveyRepository {
 			return SurveyForm.error(validation);
 		}
 		
+		let company = await this.company();
+		
+		if(!company) {
+			return {
+				status: 406,
+				message: 'Survey is not enabled for this account'
+			}
+		}
+		
 		let status = await StatusModel.query().where('slug', 'active').first();
 		
 		let survey = await SurveyModel.create({
 			title: data.title,
 			description: data.description,
-			company_id: data.company_id,
+			company_id: company.id,
 			created_by: data.created_by,
 			category_id: data.category_id,
 			status_id: status ? status.id : null
@@ -103,6 +112,11 @@ class SurveyRepository {
 			'message': 'Survey deleted successfully',
 			'status': 201
 		}
+	}
+	
+	async company(identity)
+	{
+		return CompanyModel.query ().where ('identity', identity).first ();
 	}
 }
 
