@@ -20,10 +20,10 @@ class Sessions {
 		
 		contacts = contacts.toJSON();
 		
-		for(let contact in contacts) {
+		for(let i in contacts.rows) {
 			let cont = {
 				instance_id: instance.id,
-				contact_id: contact.id,
+				contact_id: contacts.rows[i],
 				sender_id: instance.sender_id,
 			}
 			
