@@ -47,7 +47,7 @@ class SurveyRepository {
 			return SurveyForm.error(validation);
 		}
 		
-		let company = await this.company();
+		let company = await this.company(data.identity);
 		
 		if(!company) {
 			return {
