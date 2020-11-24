@@ -16,13 +16,19 @@ class Sessions {
 		
 		let contacts = await ContactModel.query()
 			.where('group_id', group.code)
-			.map( (contact) => {
-				return {
-					instance_id: instance.id,
-					contact_id: contact.id,
-					sender_id: instance.sender_id,
-				}
-			});
+			.fetch();
+		
+		contacts = contacts.toJSON();
+		
+		for(let contact in contacts) {
+			let cont = {
+				instance_id: instance.id,
+				contact_id: contact.id,
+				sender_id: instance.sender_id,
+			}
+			
+			contacts.push(cont);
+		}
 		
 		return SessionModel.createMany(contacts);
 	}
