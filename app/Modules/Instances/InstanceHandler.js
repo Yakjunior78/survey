@@ -29,6 +29,9 @@ class InstanceHandler {
 		}
 		
 		if(!instance.clone_job_queued && !instance.cloned) {
+			return {
+				message: 'should be able to clone';
+			}
 			return await this.clone(instance);
 		}
 		
