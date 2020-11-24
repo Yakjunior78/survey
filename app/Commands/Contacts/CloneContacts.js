@@ -1,12 +1,12 @@
 'use strict';
 
+const Env = use('Env');
+const Logger = use('Logger');
+
 const { Command } = require('@adonisjs/ace');
 const {PubSub} = require('@google-cloud/pubsub');
 const pubSubClient = new PubSub();
 const sub = Env.get('CLONE_SURVEY_CONTACTS_SUBSCRIPTION');
-
-const Env = use('Env');
-const Logger = use('Logger');
 
 const contactHandler = new(use('App/Jobs/Contacts'))();
 
