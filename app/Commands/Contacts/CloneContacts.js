@@ -26,7 +26,7 @@ class CloneContacts extends Command {
 		
 		const subscription = pubSubClient.subscription(sub);
 		
-		return subscription.on ('message', await this.messageHandler);
+		subscription.on ('message', await this.messageHandler);
 	}
 	
 	async messageHandler(message) {
