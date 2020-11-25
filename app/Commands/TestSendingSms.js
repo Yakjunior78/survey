@@ -8,7 +8,7 @@ const SMS = new(use('App/Modules/Surveys/SMS'))();
 class TestSendingSms extends Command {
     
     static get signature () {
-        return 'test:sending:sms'
+        return 'sending:sms'
     }
 
     static get description () {
