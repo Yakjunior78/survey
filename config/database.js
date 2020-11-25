@@ -57,34 +57,6 @@ module.exports = {
       database: Env.get('DB_DATABASE', 'adonis')
     }
   },
-    
-    mysqlContacts: {
-        client: 'mysql',
-        connection: {
-            host: Env.get('DB_HOST_TEST', '35.240.42.252'),
-            port: Env.get('DB_PORT_TEST', '3306'),
-            user: Env.get('DB_USER_TEST', 'emalify'),
-            password: Env.get('DB_PASSWORD_TEST', 'emalify@2019'),
-            database: Env.get('DB_DATABASE_CONTACTS', 'ext_contacts')
-        },
-        pool: {
-            acquireTimeoutMillis: 60 * 1000,
-        }
-    },
-    
-    mysqlSMS: {
-        client: 'mysql',
-        connection: {
-            host: Env.get('DB_HOST_TEST', '35.240.42.252'),
-            port: Env.get('DB_PORT_TEST', '3306'),
-            user: Env.get('DB_USER_TEST', 'emalify'),
-            password: Env.get('DB_PASSWORD_TEST', 'emalify@2019'),
-            database: Env.get('DB_DATABASE_SMS', 'rt_sms')
-        },
-        pool: {
-            acquireTimeoutMillis: 60 * 1000,
-        }
-    },
 
   /*
   |--------------------------------------------------------------------------
