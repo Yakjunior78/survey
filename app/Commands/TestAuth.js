@@ -6,7 +6,7 @@ const Auth = new(use('App/Modules/Auth/SMS'))();
 class TestAuth extends Command {
   
     static get signature () {
-        return 'scheduler:run';
+        return 'say:hi';
     }
 
     static get description () {
@@ -14,7 +14,7 @@ class TestAuth extends Command {
     }
 
     async handle (args, options) {
-        console.log('this scheduler is running');
+        console.log('Hi how are you doing?');
     }
 }
 
