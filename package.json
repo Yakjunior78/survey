@@ -34,7 +34,9 @@
     "mysql": "^2.18.1",
     "sqlite3": "^5.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@adonisjs/ace": "^5.0.8"
+  },
   "autoload": {
     "App": "./app"
   }
