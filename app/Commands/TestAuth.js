@@ -14,6 +14,7 @@ class TestAuth extends Command {
     }
 
     async handle (args, options) {
+        console.log('this scheduler is running');
         return true;
     }
 }
