@@ -9,7 +9,7 @@ const sub = Env.get('SEND_SURVEY_INSTANCE_SMS_SUBSCRIPTION');
 
 const pubSubClient = new PubSub();
 
-const instanceHandler = new(use('App/Jobs/Instance'))();
+const job = new(use('App/Jobs/Instance'))();
 
 class DispatchSurveyConsumer extends Command {
   
@@ -39,7 +39,7 @@ class DispatchSurveyConsumer extends Command {
       
       Logger.info('Sent for processing');
       
-      await instanceHandler.dispatch(payload.data);
+      await job.dispatch(payload.data);
       
       Logger.info('Instance dispatched successfully');
       
