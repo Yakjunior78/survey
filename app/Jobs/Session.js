@@ -12,6 +12,10 @@ class Sessions {
 	{
 		instance = await InstanceModel.query().where('id', instance.id).first();
 		
+		if(!instance) {
+			return;
+		}
+		
 		let group = await GroupModel.query().where('code', instance.group_id).first();
 		
 		if(!group) {
