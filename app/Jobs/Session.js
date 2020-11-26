@@ -6,6 +6,7 @@ const InstanceModel = use('App/Models/Instance');
 
 const Database = use('Database');
 const moment = use('moment');
+const { shortToken } = use('App/Helpers/Emalify');
 
 class Sessions {
 	
