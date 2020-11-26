@@ -1,18 +1,51 @@
-'use strict'
+'use strict';
 
-const { Command } = require('@adonisjs/ace')
+const Env = use('Env');
+const Logger = use('Logger');
+
+const { Command } = require('@adonisjs/ace');
+const {PubSub} = require('@google-cloud/pubsub');
+const pubSubClient = new PubSub();
+const sub = Env.get('CLONE_SURVEY_CONTACTS_SUBSCRIPTION');
+
+const contactHandler = new(use('App/Jobs/Contacts'))();
 
 class CloneContactsConsumer extends Command {
+  
   static get signature () {
     return 'clone:contacts:consumer'
   }
-
+  
   static get description () {
-    return 'Tell something helpful about this command'
+    return 'Clone contact groups to survey contacts';
   }
-
+  
   async handle (args, options) {
-    this.info('Dummy implementation for clone:contacts:consumer command')
+    
+    Logger.info('Contacts clone handler');
+    
+    const subscription = pubSubClient.subscription(sub);
+    
+    return subscription.on ('message', await this.messageHandler);
+  }
+  
+  async messageHandler(message) {
+    
+    Logger.info('Contacts cloning started');
+    
+    try {
+      const payload = JSON.parse(Buffer.from(message.data, 'utf-8').toString());
+      
+      await contactHandler.clone(payload.data);
+      
+      Logger.info('Contacts cloned completed');
+      
+      return message.ack();
+      
+    } catch (e) {
+      Logger.info(e.message, 'this is the error');
+      return message.nack();
+    }
   }
 }
 

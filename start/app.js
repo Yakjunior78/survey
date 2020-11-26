@@ -60,7 +60,10 @@ const aliases = {}
 |
 */
 const commands = [
-    'App/Commands/CloneContactsConsumer'
+    'App/Commands/CloneContactsConsumer',
+    'App/Commands/CreateContactsSessionsConsumer',
+    'App/Commands/DispatchSurveyConsumer',
+    'App/Commands/SurveyResponseConsumer'
 ]
 
 module.exports = { providers, aceProviders, aliases, commands }
