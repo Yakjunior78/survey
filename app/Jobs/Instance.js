@@ -28,7 +28,6 @@ class Instance {
 		
 		console.log('we are here');
 		
-		return;
 		let data = await this.messageData(group, instance);
 		
 		await SMS.handle(data);
@@ -46,6 +45,8 @@ class Instance {
 			.query()
 			.where('group_id',  group.id)
 			.fetch();
+		
+		console.log(contacts, 'these are the contacts');
 		
 		let messages = []
 		
