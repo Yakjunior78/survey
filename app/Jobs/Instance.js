@@ -1,5 +1,8 @@
 const GroupModel = use('App/Models/Group');
 const InstanceModel = use('App/Models/Instance');
+const SessionModel = use('App/Models/Session');
+const ContactModel = use('App/Models/Contact');
+
 const SMS = new(use('App/Services/SMS/Send'))();
 
 const QuestionRepo = new(use('App/Modules/Questions/QuestionRepository'))();
@@ -11,25 +14,57 @@ class Instance {
 	
 	async dispatch(instance)
 	{
+		instance = await InstanceModel.query().where('id', instance.id).first();
+		
+		if(!instance) {
+			return;
+		}
+		
 		let group = await GroupModel.query().where('code', instance.group_id).first();
+		
+		if(!group) {
+			return instance;
+		}
 		
 		let data = await this.messageData(group, instance);
 		
-		return await SMS.handle(data);
+		await SMS.handle(data);
+		
+		instance.sms_sent = true;
+		
+		return instance.save();
 	}
 	
 	async messageData(group, instance) {
 		
 		let message = await this.message(instance);
 		
+		let contacts = await ContactModel
+			.query()
+			.whereHas('group', (group) => {
+				group.where('id', group.id);
+			})
+			.whereHas('session', (session) => {
+				session.where('instance_id', instance.id)
+			})
+			.fetch();
+		
+		contacts = contacts.toJSON();
+		
+		let messages = []
+		
+		contacts.forEach( (contact) => {
+			let recipient = {
+				recipient: contact.msisdn,
+				message: message
+			}
+			
+			messages.push(recipient);
+		});
+		
 		return {
 			from: Env.get('DEFAULT_SHORT_CODE'),
-			messages: [
-				{
-					recipient: '254704664119',
-					message: message
-				}
-			]
+			messages: messages
 		}
 	}
 	
