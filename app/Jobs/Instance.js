@@ -42,7 +42,7 @@ class Instance {
 		let contacts = await ContactModel
 			.query()
 			.whereHas('group', (group) => {
-				group.where('id', group.id);
+				group.where('group_id', group.id);
 			})
 			.whereHas('session', (session) => {
 				session.where('instance_id', instance.id)
