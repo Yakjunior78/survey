@@ -35,10 +35,10 @@ class Instance {
 	
 	async messageData(group, instance) {
 
-		return await ContactModel
+		return ContactModel
 			.query ()
-			.where ('group_id', group.id)
-			.fetch ();
+			.where('group_id', group.id)
+			.fetch();
 	}
 	
 	async message(instance)
