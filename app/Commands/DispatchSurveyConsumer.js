@@ -5,7 +5,7 @@ const {PubSub} = require('@google-cloud/pubsub');
 
 const Env = use('Env');
 const Logger = use('Logger');
-const sub = Env.get('DISPATCH_SURVEY_INSTANCE_SUBSCRIPTION');
+const sub = Env.get('SEND_SURVEY_INSTANCE_SMS_SUBSCRIPTION');
 
 const pubSubClient = new PubSub();
 
