@@ -17,7 +17,7 @@ class Sessions {
 			return;
 		}
 		
-		let group = await GroupModel.query().where('id', instance.group_id).first();
+		let group = await GroupModel.query().where('code', instance.group_id).first();
 		
 		if(!group) {
 			return instance;
