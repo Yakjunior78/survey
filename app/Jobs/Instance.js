@@ -46,17 +46,19 @@ class Instance {
 		
 		console.log(contacts, 'these are the contacts');
 		
+		contacts = contacts.toJSON();
+		
 		let messages = []
 
-		contacts.forEach( (contact) => {
+		for (const contact of contacts) {
 			let recipient = {
 				recipient: contact.msisdn,
 				message: message
 			}
 
 			messages.push(recipient);
-		});
-
+		}
+		
 		return {
 			from: Env.get('DEFAULT_SHORT_CODE'),
 			messages: messages
