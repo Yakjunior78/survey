@@ -12,41 +12,41 @@ const contactHandler = new(use('App/Jobs/Contacts'))();
 
 class CloneContactsConsumer extends Command {
   
-  static get signature () {
-    return 'clone:contacts:consumer'
-  }
-  
-  static get description () {
-    return 'Clone contact groups to survey contacts';
-  }
-  
-  async handle (args, options) {
-    
-    Logger.info('Contacts clone handler');
-    
-    const subscription = pubSubClient.subscription(sub);
-    
-    return subscription.on ('message', await this.messageHandler);
-  }
-  
-  async messageHandler(message) {
-    
-    Logger.info('Contacts cloning started');
-    
-    try {
-      const payload = JSON.parse(Buffer.from(message.data, 'utf-8').toString());
-      
-      await contactHandler.clone(payload.data);
-      
-      Logger.info('Contacts cloned completed');
-      
-      return message.ack();
-      
-    } catch (e) {
-      Logger.info(e.message, 'this is the error');
-      return message.nack();
+    static get signature () {
+        return 'clone:contacts:consumer'
     }
-  }
+    
+    static get description () {
+        return 'Clone contact groups to survey contacts';
+    }
+    
+    async handle (args, options) {
+      
+        Logger.info('Contacts clone handler');
+        
+        const subscription = pubSubClient.subscription(sub);
+        
+        return subscription.on ('message', await this.messageHandler);
+    }
+  
+    async messageHandler(message) {
+      
+        Logger.info('Contacts cloning started');
+        
+        try {
+            const payload = JSON.parse(Buffer.from(message.data, 'utf-8').toString());
+            
+            await contactHandler.clone(payload.data);
+            
+            Logger.info('Contacts cloned completed');
+            
+            return message.ack();
+          
+        } catch (e) {
+            Logger.info(e.message, 'this is the error');
+            return message.nack();
+        }
+    }
 }
 
 module.exports = CloneContactsConsumer

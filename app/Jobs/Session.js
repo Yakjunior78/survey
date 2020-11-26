@@ -2,6 +2,7 @@ const GroupModel = use('App/Models/Group');
 const ContactModel = use('App/Models/Contact');
 const SessionModel = use('App/Models/Session');
 const StatusModel = use('App/Models/Status');
+const InstanceModel = use('App/Models/Instance');
 
 const Database = use('Database');
 
