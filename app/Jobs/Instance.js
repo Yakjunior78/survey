@@ -44,8 +44,6 @@ class Instance {
 			.where('group_id',  group.id)
 			.fetch();
 		
-		console.log(contacts, 'these are the contacts');
-		
 		contacts = contacts.toJSON();
 		
 		let messages = []
