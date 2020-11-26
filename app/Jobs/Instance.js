@@ -22,7 +22,7 @@ class Instance {
 		
 		let group = await GroupModel.query().where('code', instance.group_id).first();
 		
-		console.log(group, 'this is the group');
+		console.log(group, 'this is the group')
 		
 		if(!group) {
 			return instance;

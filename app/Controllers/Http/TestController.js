@@ -48,6 +48,12 @@ class TestController {
 	
 	async createSession({ params, response })
 	{
+		
+		return ContactModel
+			.query ()
+			.where('group_id', 16)
+			.fetch();
+		
 		let id = params.id;
 		
 		let instance = await InstanceModel.query().where('id', id).first();
