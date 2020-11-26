@@ -42,10 +42,9 @@ class Instance {
 		let contacts = await ContactModel
 			.query()
 			.where('group_id',  group.id)
-			.whereHas('sessions', (session) => {
-				session.where('instance_id', instance.id);
-			})
 			.fetch();
+		
+		console.log(contacts, 'these are the contacts');
 		
 		contacts = contacts.toJSON();
 		
