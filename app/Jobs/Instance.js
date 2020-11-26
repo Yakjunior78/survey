@@ -26,6 +26,9 @@ class Instance {
 			return instance;
 		}
 		
+		console.log('we are here');
+		
+		return;
 		let data = await this.messageData(group, instance);
 		
 		await SMS.handle(data);
