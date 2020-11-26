@@ -13,6 +13,10 @@ class Contact extends Model {
 	group() {
 		return this.belongsTo('App/Models/Group');
 	}
+	
+	sessions() {
+		return this.hasMany('App/Models/Session');
+	}
 }
 
 module.exports = Contact
