@@ -12,6 +12,7 @@ const pubSubClient = new PubSub();
 const instanceHandler = new(use('App/Jobs/Instance'))();
 
 class DispatchSurveyConsumer extends Command {
+  
   static get signature () {
     return 'dispatch:survey:consumer'
   }

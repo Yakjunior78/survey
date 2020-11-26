@@ -4,6 +4,8 @@ const GroupModel = use('App/Models/Group');
 const ContactModel = use('App/Models/Contact');
 const InstanceModel = use('App/Models/Instance');
 
+const InstanceHandler = new(use('App/Modules/Instances/InstanceHandler'))();
+
 class Contacts {
 	
 	async clone(instance)
@@ -27,7 +29,10 @@ class Contacts {
 		await this.contactGroup(group, company, file);
 		
 		instance.cloned = true;
-		return instance.save ();
+		
+		await instance.save ();
+		
+		return await InstanceHandler.handle(instance.id);
 	}
 	
 	async group(id)

@@ -4,6 +4,8 @@ const SessionModel = use('App/Models/Session');
 const StatusModel = use('App/Models/Status');
 const InstanceModel = use('App/Models/Instance');
 
+const InstanceHandler = new(use('App/Modules/Instances/InstanceHandler'))();
+
 class Sessions {
 	
 	async handle(instance)
@@ -54,7 +56,9 @@ class Sessions {
 		
 		instance.sessions_created = true;
 		
-		return instance.save();
+		await instance.save();
+		
+		return await InstanceHandler.handle(instance.id);
 	}
 }
 

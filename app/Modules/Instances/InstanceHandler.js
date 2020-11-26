@@ -11,8 +11,6 @@ class InstanceHandler {
 	
 	async handle(id) {
 		
-		console.log('Instance is being handled');
-		
 		let instance = await InstanceModel.query().where('id', id).first();
 		
 		let sendNow = await isNowOrPast(instance.start_at);
