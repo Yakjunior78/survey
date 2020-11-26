@@ -38,8 +38,8 @@ class DispatchSurveyConsumer extends Command {
       const payload = JSON.parse(Buffer.from(message.data, 'utf-8').toString());
       
       Logger.info('Sent for processing');
-      console.log(payload.data, 'this is the payload data');
-      // await instanceHandler.dispatch(payload.data);
+      
+      await instanceHandler.dispatch(payload.data);
       
       Logger.info('Instance dispatched successfully');
       
