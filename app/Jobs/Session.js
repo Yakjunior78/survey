@@ -20,8 +20,6 @@ class Sessions {
 			return instance;
 		}
 		
-		console.log(group, 'this is the group');
-		
 		let survey = await instance.survey().first();
 		
 		let question = await survey.questions().first();
@@ -38,8 +36,6 @@ class Sessions {
 		
 		contacts = contacts.toJSON();
 		
-		console.log(contacts, 'these are the contacts');
-		
 		let sessions = []
 		
 		contacts.forEach( (contact) => {
@@ -54,7 +50,11 @@ class Sessions {
 			sessions.push(cont);
 		});
 		
-		return SessionModel.createMany (sessions);
+		await SessionModel.createMany (sessions);
+		
+		instance.sessions_created = true;
+		
+		return instance.save();
 	}
 }
 
