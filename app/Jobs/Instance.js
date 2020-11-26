@@ -28,6 +28,9 @@ class Instance {
 		
 		let data = await this.messageData(group, instance);
 		
+		console.log(data, 'these are the contacts');
+
+		return instance;
 		// await SMS.handle(data);
 		//
 		// instance.sms_sent = true;
@@ -44,7 +47,9 @@ class Instance {
 			.where('group_id',  group.id)
 			.fetch();
 		
-		console.log(contacts, 'these are the contacts');
+		return contacts;
+		
+		// console.log(contacts, 'these are the contacts');
 		
 		// contacts = contacts.toJSON();
 		//
