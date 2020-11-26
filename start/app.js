@@ -60,7 +60,6 @@ const aliases = {}
 |
 */
 const commands = [
-    'App/Commands/Quote',
     'App/Commands/CloneContactsConsumer'
 ]
 
