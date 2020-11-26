@@ -22,25 +22,43 @@ class Instance {
 		
 		let group = await GroupModel.query().where('code', instance.group_id).first();
 		
-		console.log(group, 'this is the group')
-		
 		if(!group) {
 			return instance;
 		}
 		
 		let data = await this.messageData(group, instance);
 		
-		console.log(data, 'these are the contacts');
-
-		return instance;
+		await SMS.handle(data);
+		
+		instance.sms_sent = true;
+		
+		return instance.save();
 	}
 	
 	async messageData(group, instance) {
-
-		return ContactModel
-			.query ()
-			.where('group_id', group.id)
+		
+		let message = await this.message(instance);
+		
+		let contacts = await ContactModel
+			.query()
+			.where('group_id',  group.id)
 			.fetch();
+		
+		let messages = []
+		
+		contacts.forEach( (contact) => {
+			let recipient = {
+				recipient: contact.msisdn,
+				message: message
+			}
+			
+			messages.push(recipient);
+		});
+		
+		return {
+			from: Env.get('DEFAULT_SHORT_CODE'),
+			messages: messages
+		}
 	}
 	
 	async message(instance)
