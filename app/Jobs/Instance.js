@@ -78,7 +78,7 @@ class Instance {
 		
 		let question = await QuestionRepo.get(survey, 1);
 		
-		console.log(survey, 'this is the question');
+		console.log(question, 'this is the question');
 		
 		return await smsReply(question);
 	}
