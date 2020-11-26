@@ -28,11 +28,11 @@ class Instance {
 		
 		let data = await this.messageData(group, instance);
 		
-		await SMS.handle(data);
-		
-		instance.sms_sent = true;
-		
-		return instance.save();
+		// await SMS.handle(data);
+		//
+		// instance.sms_sent = true;
+		//
+		// return instance.save();
 	}
 	
 	async messageData(group, instance) {
@@ -46,23 +46,23 @@ class Instance {
 		
 		console.log(contacts, 'these are the contacts');
 		
-		contacts = contacts.toJSON();
-		
-		let messages = []
-		
-		contacts.forEach( (contact) => {
-			let recipient = {
-				recipient: contact.msisdn,
-				message: message
-			}
-			
-			messages.push(recipient);
-		});
-		
-		return {
-			from: Env.get('DEFAULT_SHORT_CODE'),
-			messages: messages
-		}
+		// contacts = contacts.toJSON();
+		//
+		// let messages = []
+		//
+		// contacts.forEach( (contact) => {
+		// 	let recipient = {
+		// 		recipient: contact.msisdn,
+		// 		message: message
+		// 	}
+		//
+		// 	messages.push(recipient);
+		// });
+		//
+		// return {
+		// 	from: Env.get('DEFAULT_SHORT_CODE'),
+		// 	messages: messages
+		// }
 	}
 	
 	async message(instance)
