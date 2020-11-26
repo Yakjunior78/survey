@@ -20,6 +20,8 @@ class Sessions {
 			return instance;
 		}
 		
+		console.log(group, 'this is the group');
+		
 		let survey = await instance.survey().first();
 		
 		let question = await survey.questions().first();
@@ -35,6 +37,8 @@ class Sessions {
 			.fetch();
 		
 		contacts = contacts.toJSON();
+		
+		console.log(contacts, 'these are the contacts');
 		
 		let sessions = []
 		
