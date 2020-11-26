@@ -5,6 +5,7 @@ const StatusModel = use('App/Models/Status');
 const InstanceModel = use('App/Models/Instance');
 
 const Database = use('Database');
+const moment = use('moment');
 
 class Sessions {
 	
@@ -16,7 +17,7 @@ class Sessions {
 			return;
 		}
 		
-		let group = await GroupModel.query().where('code', instance.group_id).first();
+		let group = await GroupModel.query().where('id', instance.group_id).first();
 		
 		if(!group) {
 			return instance;
@@ -25,6 +26,10 @@ class Sessions {
 		let survey = await instance.survey().first();
 		
 		let question = await survey.questions().first();
+		
+		if(!question) {
+			return instance;
+		}
 		
 		let status = await StatusModel.query().where('slug', 'active').first();
 		
@@ -36,13 +41,19 @@ class Sessions {
 		
 		let sessions = []
 		
+		let token = await shortToken();
+		
 		contacts.forEach( (contact) => {
+			
 			let cont = {
+				uuid: token,
 				instance_id: instance.id,
 				contact_id: contact.id,
 				sender_id: instance.sender_id,
 				question_id: question.id,
-				status_id: status.id
+				status_id: status.id,
+				created_at: moment(Date.now()).format('YY:MM:DD h:m:s'),
+				updated_at: moment(Date.now()).format('YY:MM:DD h:m:s'),
 			}
 			
 			sessions.push(cont);
