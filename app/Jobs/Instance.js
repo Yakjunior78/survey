@@ -37,9 +37,14 @@ class Instance {
 		return instance.save();
 	}
 	
-	async messageData(group, instance) {
+	async messageData(group, instance)
+	{
+		
+		console.log('we are also here');
 		
 		let message = await this.message(instance);
+		
+		
 		
 		let contacts = await ContactModel
 			.query()
@@ -48,21 +53,21 @@ class Instance {
 		
 		console.log(contacts, 'these are the contacts');
 		
-		let messages = []
-		
-		contacts.forEach( (contact) => {
-			let recipient = {
-				recipient: contact.msisdn,
-				message: message
-			}
-			
-			messages.push(recipient);
-		});
-		
-		return {
-			from: Env.get('DEFAULT_SHORT_CODE'),
-			messages: messages
-		}
+		// let messages = []
+		//
+		// contacts.forEach( (contact) => {
+		// 	let recipient = {
+		// 		recipient: contact.msisdn,
+		// 		message: message
+		// 	}
+		//
+		// 	messages.push(recipient);
+		// });
+		//
+		// return {
+		// 	from: Env.get('DEFAULT_SHORT_CODE'),
+		// 	messages: messages
+		// }
 	}
 	
 	async message(instance)
