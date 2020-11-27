@@ -55,6 +55,8 @@ class ResponseHandler {
 	{
 		let response = await this.record(session, data, channel);
 		
+		console.log('response recorded');
+		
 		let next = await Question.handle(session, response);
 		
 		console.log(next, 'this is the next question');

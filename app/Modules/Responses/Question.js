@@ -11,6 +11,8 @@ class Question {
 	{
 		let current = await this.current(session);
 		
+		console.log(current, 'this is the current question');
+		
 		if(!current) {
 			return null;
 		}
