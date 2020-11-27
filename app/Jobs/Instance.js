@@ -69,11 +69,7 @@ class Instance {
 		
 		let survey = await instance.survey().first();
 		
-		console.log(survey, 'this is the survey');
-		
 		let question = await QuestionRepo.get(survey, 1);
-		
-		console.log(question, 'this is the question');
 		
 		return await smsReply(question);
 	}
