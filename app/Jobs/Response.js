@@ -16,9 +16,7 @@ class Response {
 		
 		let session = await ResponseHandler.session(data, channel);
 		
-		if(!session) {
-			return null;
-		};
+		if(!session) return null;
 		
 		let response = await ResponseHandler.response(session, data, channel);
 		
