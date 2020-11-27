@@ -53,13 +53,11 @@ class ResponseHandler {
 	
 	async response(session, data, channel)
 	{
-		console.log(channel, 'this is the channel');
-		
 		let response = await this.record(session, data, channel);
 		
 		let next = await Question.handle(session, response);
 		
-		console.log(next, 'this is the next question');
+		console.log(next ? next.question : 'there is no next', 'this is the next question');
 		
 		await this.updateSession(session, next);
 		

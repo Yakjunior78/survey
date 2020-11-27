@@ -11,6 +11,8 @@ class Question {
 	{
 		let current = await session.question ().with ('conditions').first ();
 		
+		console.log(current ? current.question : 'no current question', 'this is the current question');
+		
 		if(!current) {
 			return null;
 		}
