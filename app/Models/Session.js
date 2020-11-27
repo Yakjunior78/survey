@@ -30,8 +30,8 @@ class Session extends Model {
 		return this.belongsTo('App/Models/Status');
 	}
 	
-	sessionTrails() {
-		return this.hasMany('App/Models/SessionTrail');
+	question() {
+		return this.belongsTo('App/Models/Question');
 	}
 }
 
