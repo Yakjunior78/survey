@@ -10,13 +10,15 @@ class SessionHandler {
 	
 	async get(data) {
 		
+		let sender = await SenderModel.where('code', data.shortCode).first();
+		
 		return SessionModel
 			.query ()
 			.whereHas ('contact', (contact) => {
 				contact.where ('msisdn', data.phoneNumber);
 			})
 			.whereHas ('sender', (sender) => {
-				sender.where ('code', data.shortCode);
+				sender.where ('id', sender.id);
 			})
 			.whereHas ('status', (status) => {
 				status.where ('slug', 'open');

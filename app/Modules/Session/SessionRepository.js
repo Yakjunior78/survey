@@ -20,13 +20,10 @@ class SessionRepository {
 			.query ()
 			.whereIn ('contact_id', contact_ids)
 			.whereIn ('instance_id', instance_ids)
-			.whereHas ('sessionTrails', (sessionTrails) => {
-				sessionTrails.where ('consent', true);
-			})
 			.whereHas ('status', (status) => {
 				status.where ('slug', 'active');
 			})
-			.orderBy ('updated_at', 'desc')
+			.orderBy ('updated_at', 'asc')
 			.first ();
 	}
 	
