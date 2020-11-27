@@ -24,7 +24,7 @@ class ResponseHandler {
 				return await this.publish(data, channel);
 			case 'web':
 			case 'chat':
-				return await this.response(data, channel);
+				return await this.respond(data, channel);
 			default:
 				return 'unknown survey channel';
 		}
@@ -42,25 +42,45 @@ class ResponseHandler {
 		);
 	}
 	
-	async response(data, channel)
+	async respond(data, channel)
+	{
+		let session = await this.session(data, channel);
+		
+		if(!session) return null;
+		
+		return this.response (session, data, channel);
+	}
+	
+	async response(session, data, channel)
+	{
+		let response = await this.record(session, data, channel);
+		
+		let next = await Question.handle(session, response);
+		
+		await this.updateSession(session, next)
+		
+		return await this.reply(next, channel);
+	}
+	
+	async session(data, channel)
 	{
 		let contacts = await ContactHandler.find(data, channel);
 		
 		let instances = await Instance.find(data, contacts, channel);
 		
-		if(!instances) return 'Unable to proceed';
-		
-		let session = await SessionHandler.handle(contacts, instances);
-		
-		if(!session) return null;
-		
-		let response = await Response.record(session, data, channel);
-		
-		let next = await Question.handle(session, response);
-		
-		await SessionHandler.update(session, next);
-		
-		return await this.reply(next, channel);
+		if(!instances) return null;
+
+		return await SessionHandler.handle (contacts, instances);
+	}
+	
+	async updateSession(session, question)
+	{
+		return await SessionHandler.update(session, question);
+	}
+	
+	async record(session, data, channel)
+	{
+		return Response.record (session, data, channel);
 	}
 	
 	async reply(question, channel)

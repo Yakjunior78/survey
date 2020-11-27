@@ -1,38 +1,47 @@
 const ResponseHandler = new(use('App/Modules/Responses/ResponseHandler'))();
 const SMS = new(use('App/Services/SMS/Send'))();
+const SenderModel = use('App/Models/Sender');
 
 const Env = use('Env');
 
 class Response {
+	
 	async handle(data)
 	{
 		let channel = data.channel;
 		
 		data = data.data;
 		
-		let response = await ResponseHandler.response(data, channel);
+		let session = await ResponseHandler.session(data, channel);
 		
-		await this.reply(response)
+		if(!session) return null;
+		
+		let response = await ResponseHandler.response(session, data, channel);
+		
+		let contact = await session.contact;
+		
+		if(!contact) return null;
+		
+		await this.reply(response, contact, data)
 	}
 	
-	async reply(response)
+	async reply(response, contact, data)
 	{
-		let data = await this.messageData(response);
+		let sender = await SenderModel.where('code', data.shortCode).first();
 		
-		return await SMS.handle(data);
-	}
-	
-	async messageData(response)
-	{
-		return {
-			from: Env.get('DEFAULT_SHORT_CODE'),
+		let from = sender ? sender.code : Env.get('DEFAULT_SHORT_CODE');
+		
+		let payload = {
+			from: from,
 			messages: [
 				{
-					recipient: '254704664119',
+					recipient: contact.msisdn,
 					message: response
 				}
 			]
 		}
+		
+		return await SMS.handle(payload);
 	}
 }
 
