@@ -12,9 +12,11 @@ const smsReply = async (question) => {
 	
 	let description = question.question;
 	
-	let type = await question.type().first();
+	let type = await question.type;
 	
 	let choice_string = '';
+	
+	console.log('this is the first slug');
 	
 	switch(type.slug) {
 		case 'multiple_choice':
