@@ -4,6 +4,7 @@ const InstanceModel = use('App/Models/Instance');
 const ResponseModel = use('App/Models/Response');
 
 class Response {
+	
 	async record(session, data, channel)
 	{
 		let sessionTrail = await session

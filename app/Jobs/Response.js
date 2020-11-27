@@ -14,9 +14,13 @@ class Response {
 		
 		let session = await ResponseHandler.session(data, channel);
 		
+		console.log(session, 'this is the session');
+		
 		if(!session) return null;
 		
 		let response = await ResponseHandler.response(session, data, channel);
+		
+		
 		
 		let contact = await session.contact;
 		
