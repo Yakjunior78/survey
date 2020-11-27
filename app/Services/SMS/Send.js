@@ -16,9 +16,11 @@ class Send {
 		
 		return await axios.post(base_url + '/projects/'+projectId+'/sms/bulk', data, { headers: headers })
 			.then( ({ data }) => {
+				console.log(data, 'sms sent successfully');
 				return data;
 			})
 			.catch( (resp) => {
+				console.log(resp, 'Failed to send sms');
 				return resp;
 			});
 	}
