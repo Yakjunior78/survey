@@ -1,6 +1,7 @@
 const ResponseHandler = new(use('App/Modules/Responses/ResponseHandler'))();
 const SMS = new(use('App/Services/SMS/Send'))();
 const SenderModel = use('App/Models/Sender');
+const ContactModel = use('App/Models/Contact');
 
 const Env = use('Env');
 const Logger = use('Logger');
