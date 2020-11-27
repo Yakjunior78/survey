@@ -33,7 +33,7 @@ class Response {
 	
 	async reply(response, contact, data)
 	{
-		let sender = await SenderModel.where('code', data.shortCode).first();
+		let sender = await SenderModel.query().where('code', data.shortCode).first();
 		
 		let from = sender ? sender.code : Env.get('DEFAULT_SHORT_CODE');
 		
