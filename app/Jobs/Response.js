@@ -24,9 +24,7 @@ class Response {
 		
 		let response = await ResponseHandler.response(session, data, channel);
 		
-		console.log(response, 'this is the response');
-		
-		let contact = await session.contact;
+		let contact = await ContactModel.query().where('id', session.contact_id).first();
 		
 		if(!contact) return null;
 		
@@ -42,7 +40,7 @@ class Response {
 		
 		let from = sender ? sender.code : Env.get('DEFAULT_SHORT_CODE');
 		
-		console.log(from, 'this is the sender id');
+		console.log(contact, 'this is the contact');
 		
 		let messages = [];
 		
