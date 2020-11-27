@@ -14,6 +14,8 @@ class Send {
 		
 		let headers = await Auth.headers();
 		
+		console.log(data, 'this is the data');
+		
 		return await axios.post(base_url + '/projects/'+projectId+'/sms/bulk', data, { headers: headers })
 			.then( ({ data }) => {
 				console.log(data, 'sms sent successfully');
