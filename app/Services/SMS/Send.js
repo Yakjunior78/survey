@@ -22,7 +22,7 @@ class Send {
 				return data;
 			})
 			.catch( (resp) => {
-				console.log(resp, 'Failed to send sms');
+				console.log(resp.data, 'Failed to send sms');
 				return resp;
 			});
 	}

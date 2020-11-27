@@ -44,17 +44,17 @@ class Response {
 		
 		console.log(from, 'this is the sender id');
 		
-		let payload = {
-			from: from,
-			messages: [
-				{
-					recipient: contact.msisdn,
-					message: response
-				}
-			]
-		}
+		let messages = [];
 		
-		return await SMS.handle(payload);
+		messages.push({
+			recipient: contact.msisdn,
+			message: response
+		});
+		
+		return await SMS.handle({
+			from: from,
+			messages: messages
+		});
 	}
 }
 
