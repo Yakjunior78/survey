@@ -7,13 +7,7 @@ class Response {
 	
 	async record(session, data, channel)
 	{
-		let sessionTrail = await session
-			.sessionTrails()
-			.whereNull('replied')
-			.orderBy('created_at', 'desc')
-			.first();
-		
-		let question = await sessionTrail.question().first();
+		let question = await session.question().first();
 		
 		if(!question) return null;
 		
