@@ -13,22 +13,11 @@ class SessionHandler {
 	
 	async update(session, next)
 	{
-		let latestTrail = await session
-			.sessionTrails()
-			.orderBy('created_at', 'desc')
-			.first();
-		
-		latestTrail.replied = true;
-		
-		await latestTrail.save();
-		
 		if(!next) return await this.deactivateSession(session);
 		
-		return await SessionTrailModel.create({
-			session_id: session.id,
-			question_id: next.id,
-			consent: false
-		});
+		session.question_id = next.id;
+		
+		return session.save();
 	}
 	
 	async deactivateSession(session)

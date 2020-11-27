@@ -59,8 +59,6 @@ class ResponseHandler {
 		
 		let next = await Question.handle(session, response);
 		
-		console.log(next, 'this is the next question');
-		
 		await this.updateSession(session, next)
 		
 		return await this.reply(next, channel);
