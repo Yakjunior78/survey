@@ -16,12 +16,9 @@ const smsReply = async (question) => {
 	
 	let choice_string = '';
 	
-	console.log(type.slug, 'this is the slug');
-	
 	switch(type.slug) {
 		case 'multiple_choice':
 			let choices = await question.choices().fetch();
-			console.log(choices, 'these are the choices');
 			choice_string = await formatChoices(choices);
 			break;
 		case 'open_ended':
