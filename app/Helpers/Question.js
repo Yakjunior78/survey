@@ -16,8 +16,6 @@ const smsReply = async (question) => {
 	
 	let choice_string = '';
 	
-	console.log('this is the first slug');
-	
 	switch(type.slug) {
 		case 'multiple_choice':
 			let choices = question.choices;
@@ -36,7 +34,7 @@ const smsReply = async (question) => {
 
 async function formatChoices(choices)
 {
-	if(choices) {
+	if(!choices) {
 		return '';
 	}
 	
