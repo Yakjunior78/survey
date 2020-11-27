@@ -17,11 +17,8 @@ class Response {
 		let session = await ResponseHandler.session(data, channel);
 		
 		if(!session) {
-			console.log('no session found');
 			return null;
 		};
-		
-		console.log('session found');
 		
 		let response = await ResponseHandler.response(session, data, channel);
 		
@@ -40,8 +37,6 @@ class Response {
 			.first();
 		
 		let from = sender ? sender.code : Env.get('DEFAULT_SHORT_CODE');
-		
-		console.log(contact, 'this is the contact');
 		
 		let messages = [];
 		
