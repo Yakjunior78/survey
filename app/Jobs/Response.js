@@ -16,6 +16,8 @@ class Response {
 		
 		if(!session) return null;
 		
+		console.log('session found');
+		
 		let response = await ResponseHandler.response(session, data, channel);
 		
 		let contact = await session.contact;
