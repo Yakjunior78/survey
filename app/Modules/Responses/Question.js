@@ -9,9 +9,7 @@ class Question {
 
 	async handle(session, response)
 	{
-		let current = await this.current(session);
-		
-		console.log(current, 'this is the current question');
+		let current = await session.question ().with ('conditions').first ();
 		
 		if(!current) {
 			return null;
@@ -20,16 +18,6 @@ class Question {
 		let condition = await this.condition(current, response);
 
 		return await this.next (session, current, condition);
-	}
-	
-	async current(session)
-	{
-		let sessionTrail = await session
-			.sessionTrails()
-			.orderBy('created_at', 'desc')
-			.first();
-		
-		return sessionTrail ? sessionTrail.question ().with ('conditions').first () : null;
 	}
 	
 	async condition(current, response)
