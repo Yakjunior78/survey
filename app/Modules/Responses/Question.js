@@ -55,7 +55,7 @@ class Question {
 		
 		let question = null;
 		
-		console.log(condition, 'this is the condition');
+		console.log(condition ? condition.id : 'no condition', 'this is the condition');
 		
 		if(condition && condition.end) {
 			return null;
