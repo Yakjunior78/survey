@@ -16,11 +16,11 @@ class Response {
 		let session = await ResponseHandler.session(data, channel);
 		
 		if(!session) {
-			Logger.log('no session found');
-			return null
+			console.log('no session found');
+			return null;
 		};
 		
-		Logger.log('session found');
+		console.log('session found');
 		
 		let response = await ResponseHandler.response(session, data, channel);
 		

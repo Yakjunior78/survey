@@ -37,11 +37,11 @@ class SurveyResponseConsumer extends Command {
     try {
       const payload = JSON.parse(Buffer.from(message.data, 'utf-8').toString());
       
-      Logger.info('Sent for processing');
+      console.log('Sent for processing');
       
       await responseHandler.handle(payload.data);
-      
-      Logger.info('Response dispatched successfully');
+  
+      console.log('Response dispatched successfully');
       
       return message.ack();
       
