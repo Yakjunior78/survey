@@ -55,15 +55,15 @@ class ResponseHandler {
 	{
 		let response = await this.record(session, data, channel);
 		
-		console.log('response recorded');
+		Logger.info('response recorded');
 		
 		let next = await Question.handle(session, response);
 		
-		console.log('next question found');
+		Logger.info('next question found');
 		
 		await this.updateSession(session, next);
 		
-		console.log('session updated');
+		Logger.info('session updated');
 		
 		return await this.reply(next, channel);
 	}

@@ -3,6 +3,7 @@ const SMS = new(use('App/Services/SMS/Send'))();
 const SenderModel = use('App/Models/Sender');
 
 const Env = use('Env');
+const Logger = use('Logger');
 
 class Response {
 	
@@ -14,9 +15,12 @@ class Response {
 		
 		let session = await ResponseHandler.session(data, channel);
 		
-		if(!session) return null;
+		if(!session) {
+			Logger.log('no session found');
+			return null
+		};
 		
-		console.log('session found');
+		Logger.log('session found');
 		
 		let response = await ResponseHandler.response(session, data, channel);
 		
