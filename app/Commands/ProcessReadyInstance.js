@@ -26,7 +26,9 @@ class ProcessReadyInstance extends Command {
         
         instances = instances.toJSON();
         
-        for (const instance of instances) {
+        for (let instance of instances) {
+            
+            instance = await Instance.find(instance.id);
             
             Logger.info('processing instance if id ' + instance.id);
             
