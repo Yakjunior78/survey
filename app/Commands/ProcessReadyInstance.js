@@ -25,12 +25,19 @@ class ProcessReadyInstance extends Command {
         
         for (const instance of instances) {
             
+            console.log('processing instance if id ' + instance.id);
+            
             if(instance.clone_job_queued) {
+                console.log('Instance already queued');
                 return;
             }
     
+            console.log('Processing the instance');
+    
             await Dispatch.handle (instance);
         }
+        
+        console.log('Processing completed')
     }
 }
 
