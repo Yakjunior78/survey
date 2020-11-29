@@ -1,3 +1,4 @@
+const QuestionModel = use('App/Models/Question');
 const QuestionRepo = new(use('App/Modules/Questions/QuestionRepository'))();
 const { smsReply } = use('App/Helpers/Question');
 
@@ -26,7 +27,13 @@ class InstanceQuestionHandler {
 	{
 		let survey = await instance.survey().first();
 		
-		let question = await QuestionRepo.get(survey, 1);
+		let question = instance.consent_question_id
+			? await QuestionModel.find(instance.consent_question_id)
+			:   await QuestionRepo.get(survey, 1);
+		
+		if(!question) {
+			return 'Would you wish to partake in this survey?';
+		}
 		
 		return await smsReply(question);
 	}
