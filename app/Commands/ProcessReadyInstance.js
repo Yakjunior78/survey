@@ -18,6 +18,8 @@ class ProcessReadyInstance extends Command {
     }
   
     async handle (args, options) {
+    
+        Logger.info('Started to process');
         
         let instances = await Instance
             .query()
