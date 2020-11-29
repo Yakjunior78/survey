@@ -49,10 +49,12 @@ class InstanceRepository {
 		
 		let status = await StatusModel.query().where('slug', 'active').first();
 		
+		let start = data.start_at ? data.start_at : Date.now();
+		
 		let instance = await InstanceModel.create({
 			description: 'Instance ' + (instances[0].total + 1) + ' of this survey.',
 			survey_id: survey.id,
-			start_at: moment(data.start_at).format('YYYY-MM-DD HH:mm:ss'),
+			start_at: moment(start).format('YYYY-MM-DD HH:mm:ss'),
 			end_at: moment(data.end_at).format('YYYY-MM-DD HH:mm:ss'),
 			group_id: data.group_id ? data.group_id : null,
 			channel_id: channel.id,

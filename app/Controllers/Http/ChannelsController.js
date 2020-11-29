@@ -4,6 +4,7 @@ const ChannelModel = use('App/Models/Channel');
 const InteractionModel = use('App/Models/Interaction');
 
 class ChannelsController {
+	
 	async index({ response })
 	{
 		let channels = await ChannelModel.all();
