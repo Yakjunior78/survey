@@ -16,6 +16,11 @@ class Sessions {
 			return;
 		}
 		
+		if(instance.sessions_created) {
+			console.log('instance sessions has already been created');
+			return;
+		}
+		
 		let group = await GroupModel.query().where('code', instance.group_id).first();
 		
 		if(!group) {

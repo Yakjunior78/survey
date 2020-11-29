@@ -20,6 +20,11 @@ class Instance {
 			return;
 		}
 		
+		if(instance.sms_sent) {
+			console.log('sms for the instance has already been dispatched');
+			return;
+		}
+		
 		let group = await GroupModel.query().where('code', instance.group_id).first();
 		
 		if(!group) {
