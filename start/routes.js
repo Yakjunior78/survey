@@ -49,6 +49,7 @@ Route.group( () => {
 	Route.resource('/categories', 'CategoryController');
 	Route.resource('/operands', 'OperandsController');
 	Route.resource('/channels', 'ChannelsController');
+	Route.get('/interaction-modes', 'ChannelsController.interactionModes');
 	Route.resource('/statuses', 'StatusesController');
 	
 	/**
