@@ -3,6 +3,7 @@
 const { Command } = require('@adonisjs/ace');
 const Dispatch = new(use('App/Services/Survey/Dispatch'))();
 const Instance = use('App/Models/Instance');
+const { isNowOrPast } = use('App/Helpers/DateHelper');
 
 const Logger = use('Logger');
 
@@ -31,6 +32,11 @@ class ProcessReadyInstance extends Command {
         for (let instance of instances) {
             
             instance = await Instance.find(instance.id);
+            
+            if(!isNowOrPast(instance.start_at)) {
+                Logger.info('Instance start time not yet');
+                return;
+            }
             
             Logger.info('processing instance if id ' + instance.id);
             

@@ -3,8 +3,6 @@
 const { publish } = use('App/Services/Messaging/PubSubHandler');
 const InstanceModel = use('App/Models/Instance');
 
-const { isNowOrPast } = use('App/Helpers/DateHelper');
-
 const Env = use('Env');
 const Event = use('Event');
 
