@@ -4,10 +4,8 @@ const SessionModel = use('App/Models/Session');
 const ContactModel = use('App/Models/Contact');
 
 const SMS = new(use('App/Services/SMS/Send'))();
+const InstanceQuestion = new( use('App/Modules/Questions/InstanceQuestionHandler'))();
 
-const QuestionRepo = new(use('App/Modules/Questions/QuestionRepository'))();
-
-const { smsReply } = use('App/Helpers/Question');
 const Env = use('Env');
 
 class Instance {
@@ -42,7 +40,7 @@ class Instance {
 	
 	async messageData(group, instance)
 	{
-		let message = await this.message(instance);
+		let message = await InstanceQuestion.handle(instance);
 		
 		let contacts = await ContactModel
 			.query()
@@ -66,17 +64,6 @@ class Instance {
 			from: Env.get('DEFAULT_SHORT_CODE'),
 			messages: messages
 		}
-	}
-	
-	async message(instance)
-	{
-		instance = await InstanceModel.query().where('id', instance.id).first();
-		
-		let survey = await instance.survey().first();
-		
-		let question = await QuestionRepo.get(survey, 1);
-		
-		return await smsReply(question);
 	}
 }
 
