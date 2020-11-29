@@ -18,18 +18,20 @@ class ProcessReadyInstance extends Command {
     }
   
     async handle (args, options) {
-        
-        let instances = await Instance
-            .query()
-            .whereNotNull('should_dispatch')
-            .whereNull('clone_job_queued')
-            .fetch();
-        
-        Logger.info('Finished fetching the instances');
-        
-        instances = instances.toJSON();
     
-        Logger.info(instances, 'Finished fetching the instances');
+        Logger.info('Just processing nothing');
+        
+        // let instances = await Instance
+        //     .query()
+        //     .whereNotNull('should_dispatch')
+        //     .whereNull('clone_job_queued')
+        //     .fetch();
+        //
+        // Logger.info('Finished fetching the instances');
+        //
+        // instances = instances.toJSON();
+        //
+        // Logger.info(instances, 'Finished fetching the instances');
         
         // for (let instance of instances) {
         //
