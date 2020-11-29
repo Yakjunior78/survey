@@ -18,43 +18,39 @@ class ProcessReadyInstance extends Command {
     }
   
     async handle (args, options) {
+        
+        let instances = await Instance
+            .query()
+            .whereNotNull('should_dispatch')
+            .whereNull('clone_job_queued')
+            .fetch();
+        
+        Logger.info('Finished fetching the instances');
+        
+        instances = instances.toJSON();
+        
+        for (let instance of instances) {
+            
+            instance = await Instance.find(instance.id);
+            
+            if(!isNowOrPast(instance.start_at)) {
+                Logger.info('Instance start time not yet');
+                return;
+            }
+            
+            Logger.info('processing instance if id ' + instance.id);
+            
+            if(instance.clone_job_queued) {
+                Logger.info('Instance already queued');
+                return;
+            }
     
-        Logger.info('Just processing nothing');
+            Logger.info('Processing the instance');
+    
+            await Dispatch.handle (instance);
+        }
         
-        // let instances = await Instance
-        //     .query()
-        //     .whereNotNull('should_dispatch')
-        //     .whereNull('clone_job_queued')
-        //     .fetch();
-        //
-        // Logger.info('Finished fetching the instances');
-        //
-        // instances = instances.toJSON();
-        //
-        // Logger.info(instances, 'Finished fetching the instances');
-        
-        // for (let instance of instances) {
-        //
-        //     instance = await Instance.find(instance.id);
-        //
-        //     if(!isNowOrPast(instance.start_at)) {
-        //         Logger.info('Instance start time not yet');
-        //         return;
-        //     }
-        //
-        //     Logger.info('processing instance if id ' + instance.id);
-        //
-        //     if(instance.clone_job_queued) {
-        //         Logger.info('Instance already queued');
-        //         return;
-        //     }
-        //
-        //     Logger.info('Processing the instance');
-        //
-        //     await Dispatch.handle (instance);
-        // }
-        //
-        // Logger.info('Processing completed');
+        Logger.info('Processing completed');
     }
 }
 
