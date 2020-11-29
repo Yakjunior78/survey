@@ -37,7 +37,7 @@ class Contacts {
 		
 		await instance.save ();
 		
-		return await Dispatch.handle(instance.id);
+		return await Dispatch.handle(instance);
 	}
 	
 	async group(id)
