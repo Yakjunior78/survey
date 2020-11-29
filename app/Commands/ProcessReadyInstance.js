@@ -2,7 +2,7 @@
 
 const { Command } = require('@adonisjs/ace');
 const Dispatch = use('App/Services/Survey/Dispatch');
-const Instance = use('App/Modules/Instance');
+const Instance = use('App/Models/Instance');
 
 const Logger = use('Logger');
 
