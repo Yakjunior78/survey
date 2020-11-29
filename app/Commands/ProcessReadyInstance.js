@@ -2,6 +2,9 @@
 
 const { Command } = require('@adonisjs/ace');
 const Dispatch = use('App/Services/Survey/Dispatch');
+const Instance = use('App/Modules/Instance');
+
+const Logger = use('Logger');
 
 class ProcessReadyInstance extends Command {
   
@@ -25,19 +28,19 @@ class ProcessReadyInstance extends Command {
         
         for (const instance of instances) {
             
-            console.log('processing instance if id ' + instance.id);
+            Logger.info('processing instance if id ' + instance.id);
             
             if(instance.clone_job_queued) {
-                console.log('Instance already queued');
+                Logger.info('Instance already queued');
                 return;
             }
     
-            console.log('Processing the instance');
+            Logger.info('Processing the instance');
     
             await Dispatch.handle (instance);
         }
         
-        console.log('Processing completed')
+        Logger.info('Processing completed');
     }
 }
 
