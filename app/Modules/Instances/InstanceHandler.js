@@ -17,9 +17,9 @@ class InstanceHandler {
 		
 		await instance.save ();
 		
-		// if(isNowOrPast(instance.start_at)) {
-		// 	Event.fire('instance::ready', instance);
-		// }
+		if(isNowOrPast(instance.start_at)) {
+			Event.fire('instance::ready', instance);
+		}
 		
 		return {
 			status: 201,
