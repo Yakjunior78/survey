@@ -12,6 +12,11 @@ class Contacts {
 	{
 		instance = await InstanceModel.query().where('id', instance.id).first();
 		
+		if(instance.clone_job_queued) {
+			console.log('Instance already cloned');
+			return;
+		}
+		
 		let group = await this.group(instance.group_id);
 		
 		if(!group) {
