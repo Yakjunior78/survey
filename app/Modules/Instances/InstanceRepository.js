@@ -64,7 +64,7 @@ class InstanceRepository {
 			sender_id: data.sender_id ? data.sender_id : null,
 			consent_question_id: data.consent_question_id,
 			introductory_message: data.introductory_message,
-			interaction_mode_id: data.interaction_mode_id
+			interaction_id: data.interaction_mode_id
 		});
 		
 		await this.attachQuestions(instance);
