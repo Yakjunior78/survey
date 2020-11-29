@@ -30,6 +30,10 @@ class Instance extends Model {
 		return this.belongsTo('App/Models/Channel');
 	}
 	
+	interaction() {
+		return this.belongsTo('App/Models/Interaction');
+	}
+	
 	status() {
 		return this.belongsTo('App/Models/Status');
 	}

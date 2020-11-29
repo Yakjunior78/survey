@@ -6,75 +6,27 @@ const InstanceModel = use('App/Models/Instance');
 const { isNowOrPast } = use('App/Helpers/DateHelper');
 
 const Env = use('Env');
+const Event = use('Event');
 
 class InstanceHandler {
 	
-	async handle(id) {
+	async ready(id) {
 		
 		let instance = await InstanceModel.query().where('id', id).first();
 		
-		let sendNow = await isNowOrPast(instance.start_at);
+		instance.should_dispatch = true;
 		
-		if(sendNow) {
-			instance.should_dispatch = true;
-			await instance.save();
+		await instance.save ();
+		
+		if(isNowOrPast(instance.start_at)) {
+			Event.fire('instance::ready', instance);
 		}
 		
-		if(!instance || !instance.should_dispatch) {
-			return {
-				message: 'Unable to dispatch instance'
-			}
+		return {
+			status: 201,
+			message: 'Instance marked as ready',
+			instance: instance
 		}
-		
-		if(!instance.clone_job_queued) {
-			return await this.clone(instance);
-		}
-		
-		if(!instance.session_job_queued) {
-			return await this.createSessions(instance);
-		}
-		
-		if(!instance.send_sms_job_queued) {
-			return await this.dispatch(instance);
-		}
-		
-		return instance;
-	}
-	
-	async clone(instance)
-	{
-		instance.clone_job_queued = true;
-		await instance.save();
-		
-		return await publish(
-			instance,
-			Env.get('CLONE_SURVEY_CONTACTS'),
-			'clone_survey_contacts'
-		);
-	}
-	
-	async createSessions(instance)
-	{
-		instance.session_job_queued = true;
-		await instance.save();
-		
-		return await publish(
-			instance,
-			Env.get('CREATE_SURVEY_INSTANCE_SESSIONS'),
-			'create_survey_instance_sessions'
-		);
-	}
-	
-	async dispatch(instance)
-	{
-		instance.send_sms_job_queued = true;
-		await instance.save();
-		
-		return await publish(
-			instance,
-			Env.get('SEND_SURVEY_INSTANCE_SMS'),
-			'send_survey_instance_sms'
-		);
 	}
 }
 

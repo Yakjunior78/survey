@@ -42,7 +42,7 @@ Route.group( () => {
 }).prefix('api');
 
 Route.group( () => {
-	Route.get('/instance/:id/dispatch', 'DispatchSurveyController.dispatch');
+	Route.get('/instance/:id/dispatch', 'InstanceController.dispatch');
 }).prefix('api');
 
 Route.group( () => {
@@ -52,7 +52,6 @@ Route.group( () => {
 Route.group( () => {
 	Route.get('/senders', 'SendersController.index');
 }).prefix('api');
-
 
 Route.group( () => {
 	Route.post('test', 'TestController.publish');

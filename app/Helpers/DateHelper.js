@@ -8,9 +8,10 @@ const isNowOrPast = async (dateTime) => {
 		return true;
 	}
 	
-	let now = new Date();
-	
-	return !!(moment (dateTime) < moment (now) || moment (dateTime).isSame (moment (now), 'time'));
+	return !!(
+		moment (dateTime) < moment (new Date()) ||
+		moment (dateTime).isSame (moment (now), 'time')
+	);
 }
 
 module.exports = {
