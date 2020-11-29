@@ -4,7 +4,7 @@ const GroupModel = use('App/Models/Group');
 const ContactModel = use('App/Models/Contact');
 const InstanceModel = use('App/Models/Instance');
 
-const InstanceHandler = new(use('App/Modules/Instances/InstanceHandler'))();
+const Dispatch = new(use('App/Services/Survey/Dispatch'))();
 
 class Contacts {
 	
@@ -37,7 +37,7 @@ class Contacts {
 		
 		await instance.save ();
 		
-		return await InstanceHandler.handle(instance.id);
+		return await Dispatch.handle(instance.id);
 	}
 	
 	async group(id)
