@@ -19,64 +19,42 @@ const Route = use('Route')
 Route.on('/').render('welcome');
 
 Route.group( () => {
-	/**
-	 * Survey
-	 */
 	Route.resource('/surveys', 'SurveysController');
 	
-	/**
-	 * Instance, Statistics
-	 */
 	Route.resource('/instances', 'InstanceController');
-	
-	Route.get('/instance/:id/dispatch', 'InstanceController.dispatch');
 	
 	Route.post('/instances/initialize', 'InstanceController.initialize');
 	Route.post('/statistics', 'StatisticsController.instance');
-	
-	/**
-	 * Questions, Choices, Ratings, Conditions, Ranks
-	 */
+
 	Route.resource('/questions', 'QuestionsController');
 	Route.resource('/question-choices', 'ChoicesController');
 	Route.resource('/question-max-rating', 'RatingsController');
 	Route.resource('/question-conditions', 'ConditionsController');
 	Route.post('/questions/update-rank', 'QuestionsController.updateRank');
-	
-	/**
-	 * Categories, Operands, Channels, Statuses
-	 */
+
 	Route.resource('/categories', 'CategoryController');
 	Route.resource('/operands', 'OperandsController');
 	Route.resource('/channels', 'ChannelsController');
 	Route.get('/interaction-modes', 'ChannelsController.interactionModes');
 	Route.resource('/statuses', 'StatusesController');
 	
-	/**
-	 * Question types
-	 */
 	Route.get('/question-types', 'QuestionTypesController.all');
 }).prefix('api');
 
 Route.group( () => {
-	/**
-	 * Response hook
-	 */
+	Route.get('/instance/:id/dispatch', 'DispatchSurveyController.dispatch');
+}).prefix('api');
+
+Route.group( () => {
 	Route.post('/response', 'ResponsesController.handle');
 }).prefix('api');
 
 Route.group( () => {
-	/**
-	 * Response hook
-	 */
 	Route.get('/senders', 'SendersController.index');
 }).prefix('api');
 
 
 Route.group( () => {
-	/**
-	 * Test routes
-	 */
 	Route.post('test', 'TestController.publish');
 	Route.get('session/:id', 'TestController.createSession');
 	Route.post('send', 'TestController.sendSms');
