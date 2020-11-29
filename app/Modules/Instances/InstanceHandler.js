@@ -18,10 +18,6 @@ class InstanceHandler {
 		
 		await instance.save ();
 		
-		if(isNowOrPast(instance.start_at)) {
-			Event.fire('instance::ready', instance);
-		}
-		
 		return {
 			status: 201,
 			message: 'Instance marked as ready',
