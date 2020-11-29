@@ -28,29 +28,31 @@ class ProcessReadyInstance extends Command {
         Logger.info('Finished fetching the instances');
         
         instances = instances.toJSON();
-        
-        for (let instance of instances) {
-            
-            instance = await Instance.find(instance.id);
-            
-            if(!isNowOrPast(instance.start_at)) {
-                Logger.info('Instance start time not yet');
-                return;
-            }
-            
-            Logger.info('processing instance if id ' + instance.id);
-            
-            if(instance.clone_job_queued) {
-                Logger.info('Instance already queued');
-                return;
-            }
     
-            Logger.info('Processing the instance');
-    
-            await Dispatch.handle (instance);
-        }
+        Logger.info(instances, 'Finished fetching the instances');
         
-        Logger.info('Processing completed');
+        // for (let instance of instances) {
+        //
+        //     instance = await Instance.find(instance.id);
+        //
+        //     if(!isNowOrPast(instance.start_at)) {
+        //         Logger.info('Instance start time not yet');
+        //         return;
+        //     }
+        //
+        //     Logger.info('processing instance if id ' + instance.id);
+        //
+        //     if(instance.clone_job_queued) {
+        //         Logger.info('Instance already queued');
+        //         return;
+        //     }
+        //
+        //     Logger.info('Processing the instance');
+        //
+        //     await Dispatch.handle (instance);
+        // }
+        //
+        // Logger.info('Processing completed');
     }
 }
 
