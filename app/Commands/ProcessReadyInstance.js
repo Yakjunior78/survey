@@ -1,7 +1,7 @@
 'use strict';
 
 const { Command } = require('@adonisjs/ace');
-const Dispatch = use('App/Services/Survey/Dispatch');
+const Dispatch = new(use('App/Services/Survey/Dispatch'))();
 const Instance = use('App/Models/Instance');
 
 const Logger = use('Logger');
