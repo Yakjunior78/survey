@@ -26,7 +26,7 @@ class ProcessReadyInstance extends Command {
         for (const instance of instances) {
             
             if(instance.clone_job_queued) {
-                continue;
+                return;
             }
     
             await Dispatch.handle (instance);
