@@ -10,10 +10,10 @@ class ChannelsController {
 		return response.json(channels);
 	}
 	
-	async interactionModes()
+	async interactionModes({ response })
 	{
 		let modes = await InteractionModel.all();
-		return response.json(channels);
+		return response.json(modes);
 	}
 }
 
