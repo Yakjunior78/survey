@@ -1,7 +1,7 @@
 'use strict';
 
 const { Command } = require('@adonisjs/ace');
-const Instance = use('App/Models/Instance');
+const Dispatch = use('App/Services/Survey/Dispatch');
 
 class ProcessReadyInstance extends Command {
   
