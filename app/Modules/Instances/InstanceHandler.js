@@ -3,6 +3,8 @@
 const { publish } = use('App/Services/Messaging/PubSubHandler');
 const InstanceModel = use('App/Models/Instance');
 
+const { isNowOrPast } = use('App/Helpers/DateHelper');
+
 const Env = use('Env');
 const Event = use('Event');
 
@@ -15,6 +17,10 @@ class InstanceHandler {
 		instance.should_dispatch = true;
 		
 		await instance.save ();
+		
+		if(isNowOrPast(instance.start_at)) {
+			Event.fire('instance::ready', instance);
+		}
 		
 		return {
 			status: 201,
