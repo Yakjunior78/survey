@@ -24,6 +24,8 @@ class ProcessReadyInstance extends Command {
             .whereNull('clone_job_queued')
             .fetch();
         
+        Logger.info('Finished fetching the instances');
+        
         instances = instances.toJSON();
         
         for (let instance of instances) {
