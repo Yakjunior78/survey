@@ -42,6 +42,8 @@ class Instance {
 	{
 		let message = await InstanceQuestion.handle(instance);
 		
+		console.log(message, 'this is the message');
+		
 		let channel = await instance.channel().first();
 		
 		let contacts = await ContactModel
