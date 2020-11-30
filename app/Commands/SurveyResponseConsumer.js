@@ -14,41 +14,41 @@ const responseHandler = new(use('App/Jobs/Response'))();
 class SurveyResponseConsumer extends Command {
   
   static get signature () {
-    return 'survey:response:consumer'
+      return 'survey:response:consumer'
   }
   
   static get description () {
-    return 'Dispatch survey instance';
+      return 'Dispatch survey instance';
   }
   
   async handle (args, options) {
     
-    Logger.info('Listening to messages');
-    
-    const subscription = pubSubClient.subscription(sub);
-    
-    return subscription.on ('message', await this.messageHandler);
+      Logger.info('Listening to messages');
+      
+      const subscription = pubSubClient.subscription(sub);
+      
+      return subscription.on ('message', await this.messageHandler);
   }
   
   async messageHandler(message) {
     
-    Logger.info('handling message');
-    
-    try {
-      const payload = JSON.parse(Buffer.from(message.data, 'utf-8').toString());
+      Logger.info('handling message');
       
-      console.log('Sent for processing');
+      try {
+          const payload = JSON.parse(Buffer.from(message.data, 'utf-8').toString());
+          
+          console.log('Sent for processing');
+          
+          await responseHandler.handle(payload.data);
       
-      await responseHandler.handle(payload.data);
-  
-      console.log('Response dispatched successfully');
-      
-      return message.ack();
-      
-    } catch (e) {
-      Logger.info(e.message, 'this is the error');
-      return message.nack();
-    }
+          console.log('Response dispatched successfully');
+          
+          return message.ack();
+        
+      } catch (e) {
+          Logger.info(e.message, 'this is the error');
+          return message.nack();
+      }
   }
 }
 

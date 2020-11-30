@@ -1,5 +1,6 @@
 const QuestionModel = use('App/Models/Question');
 const QuestionRepo = new(use('App/Modules/Questions/QuestionRepository'))();
+const Link = new(use('App/Modules/Instances/Link'))();
 const { smsReply } = use('App/Helpers/Question');
 
 const Env = use('Env');
@@ -16,7 +17,7 @@ class InstanceQuestionHandler {
 				return await this.sms(instance);
 			
 			case 'web-link':
-				return await this.link(instance);
+				return Link.generate(instance);
 			
 			default:
 				return null;
@@ -36,21 +37,6 @@ class InstanceQuestionHandler {
 		}
 		
 		return await smsReply(question);
-	}
-	
-	async link(instance)
-	{
-		let survey = await instance.survey().first();
-		
-		let message = instance.introductory_message;
-		
-		if(message === '') {
-			message = 'Hello, below is the link to '+ survey.title;
-		}
-		
-		let link = Env.get('SURVEY_WEB_URI')+'/survey/'+survey.uuid;
-		
-		return message + '\n' + link;
 	}
 }
 

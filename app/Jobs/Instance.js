@@ -42,6 +42,8 @@ class Instance {
 	{
 		let message = await InstanceQuestion.handle(instance);
 		
+		let channel = await instance.channel().first();
+		
 		let contacts = await ContactModel
 			.query()
 			.where('group_id',  group.id)
@@ -54,7 +56,7 @@ class Instance {
 		for (const contact of contacts) {
 			let recipient = {
 				recipient: contact.msisdn,
-				message: message
+				message: message + '?cid='+contact.uuid+'&channel='+channel.id
 			}
 
 			messages.push(recipient);
