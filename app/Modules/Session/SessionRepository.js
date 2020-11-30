@@ -54,20 +54,13 @@ class SessionRepository {
 		let question = await QuestionRepo.get(survey, 1);
 		
 		if(!question) return null;
-		
-		let session = await SessionModel.create ({
-			instance_id : instance.id,
-			contact_id : selectedContact.id,
-			status_id :  status ? status.id : null
+
+		return await SessionModel.create ({
+			instance_id: instance.id,
+			contact_id: selectedContact.id,
+			status_id: status ? status.id : null,
+			question_id: question ? question.id : null
 		});
-		
-		await SessionTrailModel.create({
-			session_id: session.id,
-			question_id: question.id,
-			consent: true
-		});
-		
-		return session;
 	}
 	
 	async checkExpiry(contact, instance)

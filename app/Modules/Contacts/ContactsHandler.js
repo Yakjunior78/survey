@@ -14,6 +14,19 @@ class ContactsHandler {
 				return null;
 		}
 	}
+	
+	async validate(data)
+	{
+		let contact = await ContactModel.query().where('uuid', data.cid).first();
+		
+		if(!contact) {
+			return await repo.createSingleContact(data);
+		}
+		
+		return contact;
+	}
+	
+	
 }
 
 module.exports = ContactsHandler;

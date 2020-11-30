@@ -2,6 +2,7 @@
 
 const InstanceRepository = new(use('App/Modules/Instances/InstanceRepository'))();
 const InstanceHandler = new(use('App/Modules/Instances/InstanceHandler'))();
+const Initialize = new(use('App/Services/Survey/Initialize'))();
 
 class InstanceController {
 	
@@ -28,9 +29,7 @@ class InstanceController {
 	
 	async initialize({ request, response })
 	{
-		let data = request.all();
-		
-		let result = await InstanceRepository.initialize(request.all());
+		let result = await Initialize.handle(request.all());
 		
 		return response.json(result);
 	}

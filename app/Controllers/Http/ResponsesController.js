@@ -11,7 +11,9 @@ class ResponsesController {
 		
 		let channel = await ChannelModel.query().where ('service', req.type).first();
 		
-		return await ResponseHandler.handle(req.data, channel);
+		let result = await ResponseHandler.handle(req.data, channel);
+		
+		return response.json(result);
 	}
 }
 
