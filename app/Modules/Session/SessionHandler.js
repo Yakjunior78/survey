@@ -13,6 +13,8 @@ class SessionHandler {
 	
 	async update(session, next)
 	{
+		console.log(next, 'this is the next question mf');
+		
 		if(!next) return await this.deactivateSession(session);
 		
 		session.question_id = next.id;

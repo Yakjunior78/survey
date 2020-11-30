@@ -11,16 +11,12 @@ class Question {
 	{
 		let current = await session.question ().with ('conditions').first ();
 		
-		console.log(current ? current.question : 'no current question', 'this is the current question');
-		
 		if(!current) {
 			return null;
 		}
 		
 		let condition = await this.condition(current, response);
 		
-		console.log(condition ? condition.id : 'no condition', 'this is the condition');
-
 		return await this.next (session, current, condition);
 	}
 	
@@ -61,12 +57,14 @@ class Question {
 			return null;
 		}
 		
-		console.log('should not end');
-		
 		if(condition && condition.next_question_id) {
 			question = await QuestionModel.find(condition.next_question_id);
 		} else {
 			question = await QuestionRepo.nextQuestion(survey, current.rank);
+		}
+		
+		if(!question) {
+			return question;
 		}
 		
 		return await transform(question, 'Question');

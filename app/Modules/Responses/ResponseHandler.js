@@ -1,5 +1,6 @@
 const SessionRepo = new(use('App/Modules/Session/SessionRepository'))();
 const ChannelModel = use('App/Models/Channel');
+const InstanceModel = use('App/Models/Instance');
 const SessionModel = use('App/Models/Session');
 
 const Instance = new(use('App/Modules/Responses/Instance'))();
@@ -66,7 +67,14 @@ class ResponseHandler {
 	{
 		let contacts = await ContactHandler.find(data, channel);
 		
-		let instances = await Instance.find(data, contacts, channel);
+		let instances = null;
+		
+		if(data.instanceId) {
+			instances = await InstanceModel.query().where('uuid', data.instanceId).fetch();
+			
+		} else {
+			let instances = await Instance.find(data, contacts, channel);
+		}
 		
 		if(!instances) return null;
 

@@ -31,10 +31,12 @@ class Initialize {
 		
 		let question = await this.question(instance, contact);
 		
+		question = question ? await transform(question, 'Question') : null;
+		
 		return {
 			status: 201,
 			survey: survey,
-			question: await transform(question, 'Question'),
+			question: question,
 			contact: contact,
 			instance: instance
 		};
@@ -47,6 +49,12 @@ class Initialize {
 			.where('instance_id', instance.id)
 			.where('contact_id', contact.id)
 			.first();
+		
+		let status = await session.status().first();
+		
+		if(status.slug === 'closed') {
+			return null;
+		}
 		
 		if(!session)  {
 			session = await sessionRepo.create(contact, instance);
