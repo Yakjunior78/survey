@@ -55,6 +55,8 @@ class Instance {
 		
 		let mode = await instance.interaction().first();
 		
+		console.log(mode, 'this is the mode');
+		
 		let messages = []
 
 		for (const contact of contacts) {
