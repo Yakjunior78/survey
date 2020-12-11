@@ -30,36 +30,28 @@ class ContactsHandler {
 		return contact;
 	}
 	
-	async clone(group, company, file)
+	async clone(group, company, table)
 	{
-		Logger.info('started at : ' + Date.now());
+		let contactGroup = await GroupHandler.store({
+			title: '',
+			code: group.id,
+			company_id: company.id
+		});
 		
-		let contactGroup = await GroupHandler.getByCode(group.id);
-		
-		if(!contactGroup) {
-			
-			contactGroup = await GroupHandler.store({
-				title: '',
-				code: group.id,
-				company_id: company.id
-			});
-			
-			return await this.cloneContacts(contactGroup, company, file.table_name);
-		}
-		
-		return contactGroup;
-	}
-	
-	async cloneContacts(group, company, table)
-	{
 		let contacts = await Database
 			.connection('mysqlContacts')
 			.select('msisdn', 'fname', 'lname', 'network')
 			.from(table);
 		
+		let query = "SELECT msisdn, fname, lname, network FROM ${table}";
+		
+		let data = Database.connection('mysqlContacts').execute(query);
+		
+		console.log(data, 'this is the data');
+		
 		for (const contact of contacts) {
 			await ContactModel.create({
-				group_id: group.id,
+				group_id: contactGroup.id,
 				company_id: company.id,
 				msisdn: contact.msisdn,
 				fname: contact.fname,
@@ -67,8 +59,14 @@ class ContactsHandler {
 			});
 		}
 		
-		Logger.info('ended at : ' + Date.now())
+		Logger.info('ended at : ' + Date.now());
+		
 		return true;
+	}
+	
+	async contactFile()
+	{
+	
 	}
 }
 

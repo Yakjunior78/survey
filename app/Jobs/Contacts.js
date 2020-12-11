@@ -7,6 +7,8 @@ const InstanceModel = use('App/Models/Instance');
 const Dispatch = new(use('App/Services/Survey/Dispatch'))();
 const ContactHandler = new(use('App/Modules/Contacts/ContactsHandler'))();
 
+const GroupHandler = new(use('App/Modules/Contacts/Group'))();
+
 class Contacts {
 	
 	async clone(instance)
@@ -34,7 +36,11 @@ class Contacts {
 		
 		let company = await this.company(group.customer_account);
 		
-		await ContactHandler.clone(group, company, file);
+		let contactGroup = await GroupHandler.getByCode(group.id);
+		
+		if(!contactGroup) {
+			await ContactHandler.clone(group, company, file);
+		}
 		
 		instance.cloned = true;
 		
