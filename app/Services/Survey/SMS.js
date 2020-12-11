@@ -9,16 +9,15 @@ class SMS {
 			return await this.clone(instance);
 		}
 		
+		if(!instance.session_job_queued) {
+			return await this.createSessions(instance);
+		}
+
+		if(!instance.send_sms_job_queued) {
+			return await this.dispatch(instance);
+		}
+
 		return instance;
-		// if(!instance.session_job_queued) {
-		// 	return await this.createSessions(instance);
-		// }
-		//
-		// if(!instance.send_sms_job_queued) {
-		// 	return await this.dispatch(instance);
-		// }
-		//
-		// return instance;
 	}
 	
 	async clone(instance)
