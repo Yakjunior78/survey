@@ -2,6 +2,7 @@ const ContactModel = use('App/Models/Contact');
 const repo = new(use('App/Modules/Contacts/ContactRepository'))();
 const GroupHandler = new(use('App/Modules/Contacts/Group'))();
 
+const Database = use('Database');
 const Logger = use('Logger');
 
 class ContactsHandler {
