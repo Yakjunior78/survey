@@ -43,12 +43,12 @@ class ContactsHandler {
 			.select('msisdn', 'fname', 'lname', 'network')
 			.from(table);
 		
-		let query = "SELECT * INTO OUTFILE '/tmp/result.csv'\n" +
-			"  FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"'\n" +
-			"  LINES TERMINATED BY '\\n'\n" +
+		let query = "SELECT * INTO OUTFILE '/tmp/result.csv'" +
+			"  FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY ''" +
+			"  LINES TERMINATED BY '\n'" +
 			"  FROM "+table;
 		
-		let data = Database.connection('mysqlContacts').raw(query);
+		let data = await Database.connection('mysqlContacts').raw(query);
 		
 		console.log(data, 'this is the data');
 		
