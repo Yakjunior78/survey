@@ -43,6 +43,8 @@ class ContactsHandler {
 			.select('*')
 			.from(table);
 		
+		console.log(contacts, 'these are the contacts');
+		
 		// let query = "SELECT * INTO OUTFILE 'tmp/result.csv' FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '' LINES TERMINATED BY '\n' FROM "+table.table_name;
 		//
 		// let data = await Database.connection('mysqlContacts').raw(query);
