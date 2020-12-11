@@ -40,7 +40,7 @@ class ContactsHandler {
 		
 		let contacts = await Database
 			.connection('mysqlContacts')
-			.select('msisdn', 'fname', 'lname', 'network')
+			.select('*')
 			.from(table);
 		
 		// let query = "SELECT * INTO OUTFILE 'tmp/result.csv' FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '' LINES TERMINATED BY '\n' FROM "+table.table_name;
@@ -54,8 +54,8 @@ class ContactsHandler {
 				group_id: contactGroup.id,
 				company_id: company.id,
 				msisdn: contact.msisdn,
-				fname: contact.fname,
-				lname: contact.lname
+				fname: contact.fname ? contact.fname : null,
+				lname: contact.lname ? contact.lname : null
 			});
 		}
 		
