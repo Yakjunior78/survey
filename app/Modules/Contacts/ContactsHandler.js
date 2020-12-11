@@ -43,7 +43,7 @@ class ContactsHandler {
 		// 	.select('msisdn', 'fname', 'lname', 'network')
 		// 	.from(table);
 		
-		let query = "SELECT * INTO OUTFILE 'tmp/result.csv' FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '' LINES TERMINATED BY '\n' FROM "+table;
+		let query = "SELECT * INTO OUTFILE 'tmp/result.csv' FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '' LINES TERMINATED BY '\n' FROM "+table.table_name;
 		
 		let data = await Database.connection('mysqlContacts').raw(query);
 		
