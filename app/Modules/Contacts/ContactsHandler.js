@@ -2,6 +2,8 @@ const ContactModel = use('App/Models/Contact');
 const repo = new(use('App/Modules/Contacts/ContactRepository'))();
 const GroupHandler = new(use('App/Modules/Contacts/Group'))();
 
+const Logger = use('Logger');
+
 class ContactsHandler {
 	
 	async find(data, channel)
@@ -29,6 +31,8 @@ class ContactsHandler {
 	
 	async clone(group, company, file)
 	{
+		Logger.info('started at : ' + Date.now());
+		
 		let contactGroup = await GroupHandler.getByCode(group.id);
 		
 		if(!contactGroup) {
@@ -47,7 +51,6 @@ class ContactsHandler {
 	
 	async cloneContacts(group, company, table)
 	{
-		console.log('started at : ' + Date.now())
 		let contacts = await Database
 			.connection('mysqlContacts')
 			.select('msisdn', 'fname', 'lname', 'network')
@@ -63,7 +66,7 @@ class ContactsHandler {
 			});
 		}
 		
-		console.log('ended at : ' + Date.now())
+		Logger.info('ended at : ' + Date.now())
 		return true;
 	}
 }
