@@ -38,10 +38,10 @@ class ContactsHandler {
 			company_id: company.id
 		});
 		
-		let contacts = await Database
-			.connection('mysqlContacts')
-			.select('msisdn', 'fname', 'lname', 'network')
-			.from(table);
+		// let contacts = await Database
+		// 	.connection('mysqlContacts')
+		// 	.select('msisdn', 'fname', 'lname', 'network')
+		// 	.from(table);
 		
 		let query = "SELECT * INTO OUTFILE 'tmp/result.csv' FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '' LINES TERMINATED BY '\n' FROM "+table;
 		
