@@ -47,6 +47,8 @@ class ContactsHandler {
 		
 		let data = await Database.connection('mysqlContacts').raw(query);
 		
+		console.log(data, 'this is the data');
+		
 		for (const contact of contacts) {
 			await ContactModel.create({
 				group_id: contactGroup.id,
