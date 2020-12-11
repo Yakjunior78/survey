@@ -53,8 +53,11 @@ class TestController {
 		let instance =await InstanceModel.find(16);
 		
 		await job.dispatch(instance);
-		
-		
+	}
+	
+	async cloneContacts()
+	{
+	
 	}
 }
 

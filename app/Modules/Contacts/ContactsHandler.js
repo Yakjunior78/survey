@@ -1,5 +1,6 @@
 const ContactModel = use('App/Models/Contact');
 const repo = new(use('App/Modules/Contacts/ContactRepository'))();
+const GroupHandler = new(use('App/Modules/Contacts/Group'))();
 
 class ContactsHandler {
 	
@@ -26,7 +27,45 @@ class ContactsHandler {
 		return contact;
 	}
 	
+	async clone(group, company, file)
+	{
+		let contactGroup = await GroupHandler.getByCode(group.id);
+		
+		if(!contactGroup) {
+			
+			contactGroup = await GroupHandler.store({
+				title: '',
+				code: group.id,
+				company_id: company.id
+			});
+			
+			return await this.cloneContacts(contactGroup, company, file.table_name);
+		}
+		
+		return contactGroup;
+	}
 	
+	async cloneContacts(group, company, table)
+	{
+		console.log('started at : ' + Date.now())
+		let contacts = await Database
+			.connection('mysqlContacts')
+			.select('msisdn', 'fname', 'lname', 'network')
+			.from(table);
+		
+		for (const contact of contacts) {
+			await ContactModel.create({
+				group_id: group.id,
+				company_id: company.id,
+				msisdn: contact.msisdn,
+				fname: contact.fname,
+				lname: contact.lname
+			});
+		}
+		
+		console.log('ended at : ' + Date.now())
+		return true;
+	}
 }
 
 module.exports = ContactsHandler;
