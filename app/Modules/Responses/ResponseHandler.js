@@ -80,8 +80,10 @@ class ResponseHandler {
 			let instances = await Instance.find(data, contacts, channel);
 		}
 		
+		console.log(instances, 'instances found');
+		
 		if(!instances) {
-			console.log('there is no instance found');
+			console.log(instances, 'there is no instance found');
 			return null
 		};
 
