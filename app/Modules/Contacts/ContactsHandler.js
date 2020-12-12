@@ -40,8 +40,8 @@ class ContactsHandler {
 		
 		let contacts = await Database
 			.connection('mysqlContacts')
-			.select('*')
-			.from(table);
+			.select('msisdn')
+			.from(table.table_name);
 		
 		console.log(contacts, 'these are the contacts');
 		
