@@ -65,7 +65,11 @@ class ResponseHandler {
 	
 	async session(data, channel)
 	{
+		console.log(data, 'this is the data');
+		
 		let contacts = await ContactHandler.find(data, channel);
+		
+		console.log(contacts, 'this is the contact');
 		
 		let instances = null;
 		
@@ -76,7 +80,10 @@ class ResponseHandler {
 			let instances = await Instance.find(data, contacts, channel);
 		}
 		
-		if(!instances) return null;
+		if(!instances) {
+			console.log('there is no instance found');
+			return null
+		};
 
 		return await SessionHandler.handle (contacts, instances);
 	}
