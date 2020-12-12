@@ -37,9 +37,6 @@ class Instance {
 		
 		return await InstanceModel
 			.query()
-			.whereHas('sender', (sender) => {
-				sender.where('code', data.shortCode);
-			})
 			.whereHas('status', (status) => {
 				status.where('slug', 'active');
 			})
