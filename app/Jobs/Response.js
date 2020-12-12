@@ -24,7 +24,7 @@ class Response {
 		
 		if(!contact) return null;
 		
-		await this.reply(response, contact, data)
+		return await this.reply(response, contact, data)
 	}
 	
 	async reply(response, contact, data)
@@ -42,6 +42,8 @@ class Response {
 			recipient: contact.msisdn,
 			message: response
 		});
+		
+		console.log(messages, 'these are the messages for reply');
 		
 		return await SMS.handle({
 			from: from,
