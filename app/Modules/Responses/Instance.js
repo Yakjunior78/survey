@@ -37,9 +37,6 @@ class Instance {
 		
 		return await InstanceModel
 			.query()
-			.whereHas('status', (status) => {
-				status.where('slug', 'active');
-			})
 			.orderBy('updated_at', 'asc')
 			.fetch();
 	}
