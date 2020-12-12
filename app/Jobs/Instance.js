@@ -55,14 +55,12 @@ class Instance {
 		
 		let mode = await instance.interaction().first();
 		
-		console.log(mode, 'this is the mode');
-		
 		let messages = []
 
 		for (const contact of contacts) {
 			let recipient = {
 				recipient: contact.msisdn,
-				message: message  + mode.slug === 'web-link' ? '?cid='+contact.uuid+'&channel='+channel.id : ''
+				message: message  + mode.slug === 'web-link' ? '?cid='+contact.uuid+'&channel='+channel.id : message
 			}
 
 			messages.push(recipient);
