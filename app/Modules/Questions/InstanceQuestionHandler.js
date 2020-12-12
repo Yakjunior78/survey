@@ -11,6 +11,8 @@ class InstanceQuestionHandler {
 	{
 		let mode = await instance.interaction().first();
 		
+		console.log(mode, '3:Mode found')
+		
 		switch(mode.slug) {
 			
 			case 'sms':
@@ -27,6 +29,7 @@ class InstanceQuestionHandler {
 	async sms(instance)
 	{
 		let survey = await instance.survey().first();
+		console.log('4:Survey found');
 		
 		let question = instance.consent_question_id
 			? await QuestionModel.find(instance.consent_question_id)
@@ -35,6 +38,8 @@ class InstanceQuestionHandler {
 		if(!question) {
 			return 'Would you wish to partake in this survey?';
 		}
+		
+		console.log('4:Question found');
 		
 		return await smsReply(question);
 	}
