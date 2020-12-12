@@ -26,11 +26,14 @@ class Instance {
 		let group = await GroupModel.query().where('code', instance.group_id).first();
 		
 		if(!group) {
+			console.log('group was not found');
 			return instance;
 		}
 		
 		let data = await this.messageData(group, instance);
+		console.log(data, 'this is the data');
 		
+		console.log('dispatching the sms')
 		await SMS.handle(data);
 		
 		instance.sms_sent = true;
