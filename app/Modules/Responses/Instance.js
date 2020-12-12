@@ -35,7 +35,11 @@ class Instance {
 	{
 		console.log('fetching for sms');
 		
-		return await InstanceModel.all();
+		let instances = await InstanceModel.all();
+		
+		console.log(instances, 'thesea re the instances dude');
+		
+		return instances;
 	}
 	
 	async forWeb(id, channel)
