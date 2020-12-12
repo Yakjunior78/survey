@@ -37,7 +37,7 @@ class Instance {
 		
 		let instances = await InstanceModel.all();
 		
-		console.log(instances, 'thesea re the instances dude');
+		console.log(instances.toJSON(), 'thesea re the instances dude');
 		
 		return instances;
 	}
