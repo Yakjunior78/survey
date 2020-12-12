@@ -67,7 +67,7 @@ class Instance {
 		for (const contact of contacts) {
 			let recipient = {
 				recipient: contact.msisdn,
-				message: message  + mode.slug === 'web-link' ? '?cid='+contact.uuid+'&channel='+channel.id : message
+				message: mode.slug === 'web-link' ? message + '?cid='+contact.uuid+'&channel='+channel.id : message
 			}
 
 			messages.push(recipient);
