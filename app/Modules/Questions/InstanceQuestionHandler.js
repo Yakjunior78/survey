@@ -11,7 +11,7 @@ class InstanceQuestionHandler {
 	{
 		let mode = await instance.interaction().first();
 		
-		console.log(mode, '3:Mode found')
+		console.log(mode.slug, '3:Mode found')
 		
 		switch(mode.slug) {
 			
