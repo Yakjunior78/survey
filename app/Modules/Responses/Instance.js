@@ -12,9 +12,13 @@ class Instance {
 		
 		let group_ids = await mapIds(contacts.toJSON(), 'group_id');
 		
+		console.log(group_ids, 'grou ids');
+		
 		let groups = await GroupModel.query().whereIn('id', group_ids).fetch();
 		
 		let ids = await mapIds(groups.toJSON(), 'code');
+		
+		console.log(ids, 'ids found')
 		
 		switch(channel.slug) {
 			case 'sms':
@@ -29,6 +33,8 @@ class Instance {
 	
 	async forSms(data, group_ids)
 	{
+		console.log('fetching for sms');
+		
 		return await InstanceModel
 			.query()
 			.whereHas('sender', (sender) => {
