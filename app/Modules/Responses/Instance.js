@@ -35,10 +35,7 @@ class Instance {
 	{
 		console.log('fetching for sms');
 		
-		return await InstanceModel
-			.query()
-			.orderBy('updated_at', 'asc')
-			.fetch();
+		return await InstanceModel.all();
 	}
 	
 	async forWeb(id, channel)
