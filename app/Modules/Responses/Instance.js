@@ -40,7 +40,6 @@ class Instance {
 			.whereHas('sender', (sender) => {
 				sender.where('code', data.shortCode);
 			})
-			.whereIn('group_id', group_ids)
 			.whereHas('status', (status) => {
 				status.where('slug', 'active');
 			})
