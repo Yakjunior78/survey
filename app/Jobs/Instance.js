@@ -23,12 +23,16 @@ class Instance {
 			return;
 		}
 		
+		console.log('1:Found instance');
+		
 		let group = await GroupModel.query().where('code', instance.group_id).first();
 		
 		if(!group) {
 			console.log('group was not found');
 			return instance;
 		}
+		
+		console.log('2:Found group');
 		
 		let data = await this.messageData(group, instance);
 		console.log(data, 'this is the data');
