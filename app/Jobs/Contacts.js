@@ -39,6 +39,7 @@ class Contacts {
 		let contactGroup = await GroupHandler.getByCode(group.id);
 		
 		if(!contactGroup) {
+			console.log('Cloning the contacts');
 			await ContactHandler.clone(group, company, file);
 		}
 		
