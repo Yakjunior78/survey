@@ -77,7 +77,7 @@ class ResponseHandler {
 			instances = await InstanceModel.query().where('uuid', data.instanceId).fetch();
 			
 		} else {
-			let instances = await Instance.find(data, contacts, channel);
+			instances = await Instance.find(data, contacts, channel);
 		}
 		
 		console.log(instances, 'instances found');
