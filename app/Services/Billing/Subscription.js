@@ -41,6 +41,7 @@ class Subscription {
 					}
 				})
 				.then ( (data) => {
+					console.log(data, 'this is the subscription');
 					return data.subscription;
 				})
 				.catch ((err) => {
