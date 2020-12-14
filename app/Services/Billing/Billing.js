@@ -15,26 +15,23 @@ class Billing {
 		
 		if(!subscriptions) {
 			
-			let subscription_ids = await mapIds(subscriptions.subscriptions, 'id');
+			let subscription = await Subscription.create(account);
 			
-			console.log(subscription_ids, 'ids');
+			prePayment = await Prepayment.create(account, subscription);
 			
-			prePayment = await Prepayment.create(account, subscription_ids);
+			console.log(prePayment, 'prepayment under if - created');
+			
 		} else {
 			
-			console.log('in the else statement');
+			let subscription = await Subscription.create(account);
 			
-			let subscription = await Subscription.create(account, subscriptions);
+			prePayment = await Prepayment.update(account, subscription);
 			
-			console.log(subscription, 'prepayment under else');
+			console.log(prePayment, 'prepayment under else - updated');
 			
-			prePayment = await Prepayment.update(account, subscriptions);
-			
-			console.log(prePayment, 'prepayment under else');
 		}
 		
 		console.log(prePayment, 'this is the prepayment');
-		
 		
 		/**
 		 * Activate - create a record under user products

@@ -4,10 +4,9 @@ const Env = use('Env');
 
 class PrePayment {
 	
-	async create(account, ids)
+	async create(account, subscription)
 	{
-		let data = await this.newPrepayment(account, ids);
-		console.log(data, 'this is the data');
+		let data = await this.newPrepayment(account, subscription);
 		
 		return axios.get (
 			Env.post ('BILLING_URL') + '/api/pre-payments',
@@ -18,7 +17,7 @@ class PrePayment {
 					Authorization: 'Bearer '+ await auth.token()
 				}
 			})
-			.then (async ({data}) => {
+			.then ( (data) => {
 				return data;
 			})
 			.catch ((err) => {
@@ -26,18 +25,19 @@ class PrePayment {
 			});
 	}
 	
-	async update(user, subscription)
+	async update(account, subscription)
 	{
 		return axios.get (
 			Env.post ('BILLING_URL') + '/pre-payments/' + subscription.id,
-			await this.updatedPrepaymentData(user, subscription),
+			await this.updatedPrepaymentData(account, subscription),
 			{
 				headers: {
 					Accept: 'application/json',
-					Authorization: await auth.token()
+					Authorization: 'Bearer ' + await auth.token()
 				}
 			})
-			.then (async ({data}) => {
+			.then ( ({data}) => {
+				console.log(data, 'pre payment created');
 				return data;
 			})
 			.catch ((err) => {
@@ -45,11 +45,11 @@ class PrePayment {
 			});
 	}
 	
-	async newPrepayment(account, ids)
+	async newPrepayment(account, subscription)
 	{
 		return {
 			"user_id": account.customer_id,
-			"subscriptions": ids,
+			"subscriptions": [ subscription.id ],
 			"payment_number": "2903181913103113-23123512112121345226311",
 			"payment_date": "12/11/2020",
 			"amount": 10000,
@@ -63,14 +63,8 @@ class PrePayment {
 	{
 		return {
 			"user_id": account.customer_id,
-			"subscriptions_to_add": [
-				subscription.id
-			],
-			
-			"subscriptions_to_remove": [
-			
-			],
-			
+			"subscriptions_to_add": [ subscription.id ],
+			"subscriptions_to_remove": [],
 			"notes": "This is a payment for survey usage",
 			"taxes": []
 		}
