@@ -5,17 +5,6 @@ const Env = use('Env');
 
 class Subscription {
 	
-	async handle(account)
-	{
-		let subscription = await this.get(account.customer_id);
-		
-		if(!subscription) {
-			subscription = await this.create(account);
-		}
-		
-		return subscription;
-	}
-	
 	async get(id)
 	{
 		return axios.get (

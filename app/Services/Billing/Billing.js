@@ -8,11 +8,11 @@ class Billing {
 	{
 		let account = await Account.handle(user);
 		
-		console.log(account);
-		
-		return account;
-		
 		let subscription = await Subscription.get(account.customer_id);
+		
+		console.log(subscription, 'this is the subscription');
+		
+		return;
 		
 		let prePayment = null;
 		
