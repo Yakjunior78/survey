@@ -8,20 +8,20 @@ class Billing {
 	{
 		let account = await Account.handle(user);
 		
-		let subscription = await Subscription.get(account.customer_id);
-		
-		console.log(subscription, 'this is the subscription');
-		
-		return;
+		let subscriptions = await Subscription.get(account.customer_id);
 		
 		let prePayment = null;
 		
-		if(subscription) {
+		if(subscriptions) {
 			prePayment = await Prepayment.create();
 		} else {
-			subscription = await Subscription.create(account, subscription);
-			prePayment = await Prepayment.update(account, subscription);
+			subscriptions = await Subscription.create(account, subscriptions);
+			prePayment = await Prepayment.update(account, subscriptions);
 		}
+		
+		
+		console.log(prePayment, 'this is the prepayment');
+		
 		
 		/**
 		 * Activate - create a record under user products

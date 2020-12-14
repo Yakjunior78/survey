@@ -49,7 +49,7 @@ class PrePayment {
 			"subscriptions": ["500"],
 			"payment_number": "2903181913103113-23123512112121345226311",
 			"payment_date": "12/11/2020",
-			"amount": 26000,
+			"amount": 10000,
 			"notes": "Refund",
 			"payment_method_id": "2",
 			"taxes": []
