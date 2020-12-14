@@ -4,6 +4,7 @@ const SenderModel = use('App/Models/Sender');
 const Env = use('Env');
 
 class Sender {
+	
 	async store(user)
 	{
 		let company = await CompanyModel.create({
