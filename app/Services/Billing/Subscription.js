@@ -8,7 +8,7 @@ class Subscription {
 	async get(id)
 	{
 		return axios.get (
-			Env.get ('BILLING_URL') + '/subscriptions/' + id,
+			Env.get('BILLING_URL') + '/subscriptions/customer/' + id,
 				{
 					headers: {
 						Accept: 'application/json',
