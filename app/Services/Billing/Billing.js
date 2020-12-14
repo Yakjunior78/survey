@@ -32,9 +32,7 @@ class Billing {
 		
 		await Plan.store(account, subscription);
 		
-		await UserProduct.store(user);
-		
-		
+		return await UserProduct.store(user);
 	}
 }
 
