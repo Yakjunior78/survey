@@ -30,8 +30,8 @@ class Subscription {
 	{
 		let data = await this.data(account);
 		
-		return axios.get (
-			Env.post ('BILLING_URL') + '/api/subscriptions',
+		return axios.post (
+			Env.get('BILLING_URL')+'/api/subscriptions',
 				data,
 				{
 					headers: {
