@@ -1,6 +1,7 @@
 const Account = new(use('App/Services/Billing/Account'))();
 const Subscription = new(use('App/Services/Billing/Subscription'))();
 const Prepayment = new(use('App/Services/Billing/PrePayment'))();
+const { mapIds } = use('App/Helpers/Emalify');
 
 class Billing {
 	
@@ -15,6 +16,10 @@ class Billing {
 		let prePayment = null;
 		
 		if(subscriptions) {
+			let subscription_ids = await mapIds(subscriptions, 'customer_id');
+			
+			console.log(subscription_ids, 'ids');
+			
 			prePayment = await Prepayment.create();
 		} else {
 			subscriptions = await Subscription.create(account, subscriptions);
