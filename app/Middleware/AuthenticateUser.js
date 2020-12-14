@@ -33,11 +33,7 @@ class AuthenticateUser {
 			.then( async ({ data }) => {
 				
 				if(data.status === 200) {
-					request.user = {
-						id: data.user.id,
-						uuid: data.user.uuid,
-						account: data.user.customer_account,
-					};
+					request.user = data.user;
 				}
 				
 				await next();
