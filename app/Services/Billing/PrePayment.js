@@ -14,7 +14,8 @@ class PrePayment {
 			{
 				headers: {
 					Accept: 'application/json',
-					Authorization: 'Bearer '+ await auth.token()
+					Authorization: 'Bearer '+ await auth.token(),
+					company: 1
 				}
 			})
 			.then ( (data) => {
@@ -32,13 +33,14 @@ class PrePayment {
 	{
 		let data = await this.updatedPrepaymentData(account, subscription);
 		
-		return axios.put (
+		return axios.post (
 			Env.get ('BILLING_URL') + '/pre-payments/'+account.prepayment_id,
 			data,
 			{
 				headers: {
 					Accept: 'application/json',
-					Authorization: 'Bearer ' + await auth.token()
+					Authorization: 'Bearer ' + await auth.token(),
+					company: 1
 				}
 			})
 			.then ( (data) => {
