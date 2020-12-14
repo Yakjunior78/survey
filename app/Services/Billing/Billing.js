@@ -18,13 +18,13 @@ class Billing {
 		
 		if(!subscriptions) {
 			
-			let subscription = await Subscription.create(account);
+			subscription = await Subscription.create(account);
 			
 			prePayment = await Prepayment.create(account, subscription);
 			
 		} else {
 			
-			let subscription = await Subscription.create(account);
+			subscription = await Subscription.create(account);
 			
 			prePayment = await Prepayment.update(account, subscription);
 		}
