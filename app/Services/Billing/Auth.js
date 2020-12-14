@@ -17,6 +17,8 @@ class Auth {
 				}
 			})
 			.then(({ data }) => {
+				
+				console.log(data, 'this is the token')
 				return data.access_token;
 			})
 			.catch( (res) => {
