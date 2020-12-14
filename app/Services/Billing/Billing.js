@@ -14,6 +14,7 @@ class Billing {
 		let subscriptions = await Subscription.get(account.customer_id);
 		
 		let prePayment = null;
+		let subscription = null;
 		
 		if(!subscriptions) {
 			
@@ -28,7 +29,7 @@ class Billing {
 			prePayment = await Prepayment.update(account, subscription);
 		}
 		
-		await Plan.create();
+		await Plan.create(account, subscription);
 		/**
 		 * Activate - create a record under user products
 		 * Update plan

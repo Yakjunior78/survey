@@ -44,7 +44,7 @@ class PrePayment {
 				}
 			})
 			.then ( (data) => {
-				console.log(data.prepayment, 'pre payment updated');
+				console.log(data, 'pre payment updated');
 				return data.prepayment;
 			})
 			.catch ((err) => {
