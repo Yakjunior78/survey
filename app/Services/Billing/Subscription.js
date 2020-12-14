@@ -14,11 +14,13 @@ class Subscription {
 				{
 					headers: {
 						Accept: 'application/json',
+						'Content-Type': 'application/json',
 						Authorization: await auth.token(),
 						company: 1
 					}
 				})
 				.then ( data   => {
+					console.log('something here');
 					return data;
 				})
 				.catch ((err) => {
