@@ -6,13 +6,16 @@ class PrePayment {
 	
 	async create(account, ids)
 	{
+		let data = await this.newPrepayment(account, ids);
+		console.log(data, 'this is the data');
+		
 		return axios.get (
-			Env.post ('BILLING_URL') + '/api/subscriptions',
-			await this.newPrepayment(account, ids),
+			Env.post ('BILLING_URL') + '/api/pre-payments',
+			data,
 			{
 				headers: {
 					Accept: 'application/json',
-					Authorization: 'Bearer '+await auth.token()
+					Authorization: 'Bearer '+ await auth.token()
 				}
 			})
 			.then (async ({data}) => {
@@ -56,18 +59,19 @@ class PrePayment {
 		}
 	}
 	
-	async updatedPrepaymentData(user, subscription)
+	async updatedPrepaymentData(account, subscription)
 	{
 		return {
-			"user_id": "971",
+			"user_id": account.customer_id,
 			"subscriptions_to_add": [
-				"623"
+				subscription.id
 			],
 			
 			"subscriptions_to_remove": [
 			
 			],
-			"notes": "This is a payment for the three items the customer is using",
+			
+			"notes": "This is a payment for survey usage",
 			"taxes": []
 		}
 	}

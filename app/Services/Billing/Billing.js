@@ -15,15 +15,21 @@ class Billing {
 		
 		let prePayment = null;
 		
-		if(subscriptions) {
+		if(!subscriptions) {
+			
 			let subscription_ids = await mapIds(subscriptions.subscriptions, 'id');
 			
 			console.log(subscription_ids, 'ids');
 			
 			prePayment = await Prepayment.create(account, subscription_ids);
 		} else {
-			subscriptions = await Subscription.create(account, subscriptions);
+			let subscription = await Subscription.create(account, subscriptions);
+			
+			console.log(subscription, 'prepayment under else');
+			
 			prePayment = await Prepayment.update(account, subscriptions);
+			
+			console.log(prePayment, 'prepayment under else');
 		}
 		
 		
