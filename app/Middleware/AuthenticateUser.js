@@ -32,6 +32,7 @@ class AuthenticateUser {
 			})
 			.then( async ({ data }) => {
 				
+				console.log(data, 'this is the data');
 				if(data.status === 200) {
 					request.user = data.user;
 				}
@@ -39,6 +40,7 @@ class AuthenticateUser {
 				await next();
 			})
 			.catch( (err) => {
+				console.log(err, 'this is the data');
 				return this.unauthorised(response, err);
 			});
 	}
