@@ -25,9 +25,7 @@ class Plan {
 			subscription_id: subscription.id,
 			amount: 0,
 			item_id: 1,
-			network: null,
-			created_at: Date.now (),
-			updated_at: Date.now ()
+			network: null
 		}
 	}
 }
