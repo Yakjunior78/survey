@@ -15,7 +15,7 @@ class Subscription {
 					headers: {
 						Accept: 'application/json',
 						Authorization: await auth.token(),
-						Company: 1
+						company: 1
 					}
 				})
 				.then ( data   => {
