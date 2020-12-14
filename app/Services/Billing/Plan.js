@@ -16,6 +16,7 @@ class Plan {
 	
 	async data(account, subscription)
 	{
+		return account;
 		return {
 			plan_id: 12,
 			name: 'Prepaid',
