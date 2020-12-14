@@ -32,7 +32,7 @@ class PrePayment {
 	{
 		let data = await this.updatedPrepaymentData(account, subscription);
 		
-		return axios.update (
+		return axios.put (
 			Env.get ('BILLING_URL') + '/pre-payments/'+account.prepayment_id,
 			data,
 			{
