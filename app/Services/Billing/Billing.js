@@ -1,7 +1,7 @@
 const Account = new(use('App/Services/Billing/Account'))();
 const Subscription = new(use('App/Services/Billing/Subscription'))();
 const Prepayment = new(use('App/Services/Billing/PrePayment'))();
-const Plan = new(use('App/Services/Billing/Plam'))();
+const Plan = new(use('App/Services/Billing/Plan'))();
 
 const { mapIds } = use('App/Helpers/Emalify');
 
