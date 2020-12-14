@@ -17,8 +17,7 @@ class Subscription {
 						company: 1
 					}
 				})
-				.then ( data   => {
-					console.log('something here');
+				.then ( ({data})   => {
 					return data;
 				})
 				.catch ((err) => {
