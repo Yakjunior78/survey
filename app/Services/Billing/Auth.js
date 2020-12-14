@@ -4,6 +4,8 @@ const Env = use('Env');
 class Auth {
 	async token()
 	{
+		console.log('we are here at the api');
+		
 		return await axios.post(
 			Env.post('BILLING_URL') + '/api/auth/login',
 			{
