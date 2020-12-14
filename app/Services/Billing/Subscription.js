@@ -41,7 +41,6 @@ class Subscription {
 					}
 				})
 				.then ( ({ data }) => {
-					console.log(data, 'this is the subscription');
 					return data.subscription;
 				})
 				.catch ((err) => {
@@ -55,7 +54,7 @@ class Subscription {
 		return {
 			"name": "Subscription for survey",
 			"plans": [
-				"34"
+				"33"
 			],
 			"customer_id": account.customer_id,
 			"description": "Default subscription for survey",
