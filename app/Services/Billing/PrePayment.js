@@ -30,10 +30,9 @@ class PrePayment {
 	async update(account, subscription)
 	{
 		let data = await this.updatedPrepaymentData(account, subscription);
-		console.log(data, 'this is the data');
 		
-		return axios.get (
-			Env.post ('BILLING_URL') + '/pre-payments/' + subscription.id,
+		return axios.post (
+			Env.post ('BILLING_URL') + '/pre-payments/'+subscription.id,
 			data,
 			{
 				headers: {
