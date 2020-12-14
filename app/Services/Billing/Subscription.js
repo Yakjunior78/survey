@@ -38,14 +38,17 @@ class Subscription {
 				{
 					headers: {
 						Accept: 'application/json',
+						'Content-Type': 'application/json',
 						Authorization: 'Bearer ' + await auth.token()
 					}
 				})
-				.then (async (data) => {
+				.then ( (data) => {
 					console.log(data, 'this is the data after creation');
 					return data;
 				})
 				.catch ((err) => {
+					
+					console.log(err, 'this is the error');
 					return null;
 				});
 	}
