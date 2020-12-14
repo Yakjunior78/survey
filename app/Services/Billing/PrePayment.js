@@ -29,16 +29,19 @@ class PrePayment {
 	
 	async update(account, subscription)
 	{
+		let data = await this.updatedPrepaymentData(account, subscription);
+		console.log(data, 'this is the data');
+		
 		return axios.get (
 			Env.post ('BILLING_URL') + '/pre-payments/' + subscription.id,
-			await this.updatedPrepaymentData(account, subscription),
+			data,
 			{
 				headers: {
 					Accept: 'application/json',
 					Authorization: 'Bearer ' + await auth.token()
 				}
 			})
-			.then ( ({data}) => {
+			.then ( (data) => {
 				console.log('pre payment updated');
 				return data;
 			})
