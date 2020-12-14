@@ -7,7 +7,7 @@ class PrePayment {
 	async create(user, subscription)
 	{
 		return axios.get (
-			Env.post ('BILLING_URL') + '/subscriptions',
+			Env.post ('BILLING_URL') + '/api/subscriptions',
 			await this.newPrepayment(user, subscription),
 			{
 				headers: {

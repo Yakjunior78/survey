@@ -8,7 +8,7 @@ class Subscription {
 	async get(id)
 	{
 		return axios.get (
-			Env.get('BILLING_URL') + '/subscriptions/customer/' + id,
+			Env.get('BILLING_URL') + '/api/subscriptions/customer/' + id,
 				{
 					headers: {
 						Accept: 'application/json',
@@ -28,7 +28,7 @@ class Subscription {
 		let data = await this.data(account);
 		
 		return axios.get (
-			Env.post ('BILLING_URL') + '/subscriptions',
+			Env.post ('BILLING_URL') + '/api/subscriptions',
 				data,
 				{
 					headers: {
