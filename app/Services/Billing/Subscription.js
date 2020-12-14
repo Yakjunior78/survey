@@ -8,7 +8,6 @@ class Subscription {
 	async get(id)
 	{
 		return axios.get (
-			
 			Env.get ('BILLING_URL') + '/subscriptions/' + id,
 				{
 					headers: {
@@ -16,7 +15,7 @@ class Subscription {
 						Authorization: await auth.token()
 					}
 				})
-				.then (async ({data}) => {
+				.then ( ({data})  => {
 					return data;
 				})
 				.catch ((err) => {
