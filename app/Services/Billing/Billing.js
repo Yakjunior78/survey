@@ -11,11 +11,11 @@ class Billing {
 		
 		let subscriptions = await Subscription.get(account.customer_id);
 		
-		console.log(subscriptions, 'these are the subscriptions');
+		console.log(subscriptions.length, 'this is the length');
 		
 		let prePayment = null;
 		
-		if(!subscriptions) {
+		if(subscriptions.length === 0) {
 			
 			let subscription_ids = await mapIds(subscriptions.subscriptions, 'id');
 			
@@ -31,7 +31,6 @@ class Billing {
 			
 			console.log(prePayment, 'prepayment under else');
 		}
-		
 		
 		console.log(prePayment, 'this is the prepayment');
 		
