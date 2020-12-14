@@ -24,6 +24,7 @@ class Subscription {
 					return data;
 				})
 				.catch ((err) => {
+					console.log(err, 'this is an error');
 					return null;
 				});
 	}
