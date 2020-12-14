@@ -54,6 +54,12 @@ Route.group( () => {
 }).prefix('api');
 
 Route.group( () => {
+	Route.get('/subscribe', 'SubscriptionController.subscribe')
+		.middleware(['user_auth'])
+		.prefix('api');
+});
+
+Route.group( () => {
 	Route.post('test', 'TestController.publish');
 	Route.get('session/:id', 'TestController.createSession');
 	Route.post('send', 'TestController.sendSms');

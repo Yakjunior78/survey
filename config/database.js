@@ -72,6 +72,20 @@ module.exports = {
         }
     },
     
+    mysqlAuth: {
+        client: 'mysql',
+        connection: {
+            host: Env.get('DB_HOST_TEST', '35.240.42.252'),
+            port: Env.get('DB_PORT_TEST', '3306'),
+            user: Env.get('DB_USER_TEST', 'emalify'),
+            password: Env.get('DB_PASSWORD_TEST', 'emalify@2019'),
+            database: Env.get('DB_DATABASE_AUTH', 'emalify_auth_staging')
+        },
+        pool: {
+            acquireTimeoutMillis: 60 * 1000,
+        }
+    },
+    
     mysqlSMS: {
         client: 'mysql',
         connection: {

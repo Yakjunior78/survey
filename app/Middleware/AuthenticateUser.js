@@ -1,0 +1,60 @@
+'use strict';
+
+const Env = use('Env');
+const axios = require('axios');
+
+class AuthenticateUser {
+	
+	async handle ({ request, response }, next)
+	{
+		let token = request.header('Authorization');
+		
+		return await this.validate(request, response, token, next);
+	}
+	
+	async wsHandle ({ request, response }, next )
+	{
+		let req = request.all();
+		let token = req.token;
+		
+		return await this.validate(request, response, token, next);
+	}
+	
+	async validate(request, response, token, next)
+	{
+		return await axios.get(
+			Env.get('APP_AUTH_URL') + '/api/user/details',
+			{
+				headers: {
+					Accept: 'application/json',
+					Authorization: token
+				}
+			})
+			.then( async ({ data }) => {
+				
+				if(data.status === 200) {
+					request.user = {
+						id: data.user.id,
+						uuid: data.user.uuid,
+						account: data.user.customer_account,
+					};
+				}
+				
+				await next();
+			})
+			.catch( (err) => {
+				return this.unauthorised(response, err);
+			});
+	}
+	
+	async unauthorised(response, err)
+	{
+		return response.status(401).json({
+			status: 401,
+			message: 'Unauthorised',
+			err: err
+		});
+	}
+}
+
+module.exports = AuthenticateUser
