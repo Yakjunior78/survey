@@ -15,7 +15,7 @@ class Subscription {
 						Authorization: await auth.token()
 					}
 				})
-				.then ( ({ data })  => {
+				.then ( ( data )  => {
 					return data;
 				})
 				.catch ((err) => {
