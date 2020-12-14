@@ -20,7 +20,7 @@ class Billing {
 			
 			console.log(subscription_ids, 'ids');
 			
-			prePayment = await Prepayment.create();
+			prePayment = await Prepayment.create(account, subscription_ids);
 		} else {
 			subscriptions = await Subscription.create(account, subscriptions);
 			prePayment = await Prepayment.update(account, subscriptions);

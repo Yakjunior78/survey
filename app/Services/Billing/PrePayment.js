@@ -4,11 +4,11 @@ const Env = use('Env');
 
 class PrePayment {
 	
-	async create(account, subscription)
+	async create(account, ids)
 	{
 		return axios.get (
 			Env.post ('BILLING_URL') + '/api/subscriptions',
-			await this.newPrepayment(account, subscription),
+			await this.newPrepayment(account, ids),
 			{
 				headers: {
 					Accept: 'application/json',
@@ -42,13 +42,11 @@ class PrePayment {
 			});
 	}
 	
-	async newPrepayment(account, subscriptions)
+	async newPrepayment(account, ids)
 	{
-		let subscriptions =
-		
 		return {
 			"user_id": account.customer_id,
-			"subscriptions": ["500"],
+			"subscriptions": ids,
 			"payment_number": "2903181913103113-23123512112121345226311",
 			"payment_date": "12/11/2020",
 			"amount": 10000,
