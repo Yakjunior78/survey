@@ -16,14 +16,12 @@ class Plan {
 	
 	async data(account, subscription)
 	{
-		return account;
 		return {
 			plan_id: 12,
 			name: 'Prepaid',
-			slug: '',
+			slug: 'prepaid',
 			description: 'Pre payment plan for surveys',
 			customer_id: account.customer_id,
-			subscription_id: subscription.id,
 			amount: 0,
 			item_id: 1,
 			network: null
