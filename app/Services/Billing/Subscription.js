@@ -10,7 +10,7 @@ class Subscription {
 		console.log(id, 'this is the customer id');
 		
 		return axios.get (
-			Env.get('BILLING_URL') + '/api/subscriptions/customer/' + id,
+			Env.get('BILLING_URL')+'/api/subscriptions/customer/'+id,
 				{
 					headers: {
 						Accept: 'application/json',
