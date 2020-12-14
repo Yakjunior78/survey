@@ -1,4 +1,5 @@
 const Database = use('Database');
+const moment = use('moment');
 
 class Plan {
 	async store(account, subscription)
@@ -24,7 +25,9 @@ class Plan {
 			subscription_id: subscription.id,
 			amount: 0,
 			item_id: 1,
-			network: null
+			network: null,
+			created_at: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
+			updated_at: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
 		}
 	}
 }
