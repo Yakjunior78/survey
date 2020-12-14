@@ -29,7 +29,9 @@ class Billing {
 			prePayment = await Prepayment.update(account, subscription);
 		}
 		
-		await Plan.create(account, subscription);
+		let plan = await Plan.create(account, subscription);
+		
+		console.log(plan, 'this is the plan');
 		/**
 		 * Activate - create a record under user products
 		 * Update plan
