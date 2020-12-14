@@ -13,7 +13,7 @@ class Subscription {
 					headers: {
 						Accept: 'application/json',
 						'Content-Type': 'application/json',
-						Authorization: await auth.token(),
+						Authorization: 'Bearer ' + await auth.token(),
 						company: 1
 					}
 				})
@@ -37,7 +37,7 @@ class Subscription {
 				{
 					headers: {
 						Accept: 'application/json',
-						Authorization: await auth.token()
+						Authorization: 'Bearer ' + await auth.token()
 					}
 				})
 				.then (async ({data}) => {
