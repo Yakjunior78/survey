@@ -7,8 +7,6 @@ class Subscription {
 	
 	async get(id)
 	{
-		console.log(id, 'this is the customer id');
-		
 		return axios.get (
 			Env.get('BILLING_URL')+'/api/subscriptions/customer/'+id,
 				{

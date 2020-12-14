@@ -4,14 +4,11 @@ const Env = use('Env');
 class Auth {
 	async token()
 	{
-		return Env.get('BILLING_ACCESS_TOKEN');
-		
 		return await axios.post(
-			Env.get('BILLING_URL') + '/api/oauth/token',
+			Env.post('BILLING_URL') + '/api/auth/login',
 			{
-				'client_id': Env.get('BILLING_CLIENT_ID'),
-				'client_secret': Env.get('BILLING_CLIENT_SECRET'),
-				'grant_type': 'client_credentials',
+				'username': Env.get('BILLING_API_USERNAME'),
+				'password': Env.get('BILLING_API_PASSWORD'),
 			},
 			{
 				headers: {
@@ -20,7 +17,6 @@ class Auth {
 				}
 			})
 			.then(({ data }) => {
-				console.log(data, 'this is the account')
 				return data.access_token;
 			})
 			.catch( (res) => {
