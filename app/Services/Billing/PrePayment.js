@@ -23,6 +23,7 @@ class PrePayment {
 				return data;
 			})
 			.catch ((err) => {
+				console.log(err, 'this is the error');
 				return null;
 			});
 	}
@@ -45,6 +46,7 @@ class PrePayment {
 				return data;
 			})
 			.catch ((err) => {
+				console.log(err, 'this is the error');
 				return null;
 			});
 	}
