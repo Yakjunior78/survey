@@ -41,8 +41,7 @@ class Subscription {
 					}
 				})
 				.then ( (data) => {
-					console.log(data, 'this is the data after creation');
-					return data;
+					return data.subscription;
 				})
 				.catch ((err) => {
 					console.log(err, 'this is the error');

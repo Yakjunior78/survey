@@ -28,7 +28,6 @@ class Billing {
 			prePayment = await Prepayment.update(account, subscription);
 			
 			console.log(prePayment, 'prepayment under else - updated');
-			
 		}
 		
 		console.log(prePayment, 'this is the prepayment');
