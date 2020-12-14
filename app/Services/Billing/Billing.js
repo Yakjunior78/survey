@@ -16,7 +16,7 @@ class Billing {
 		let prePayment = null;
 		
 		if(subscriptions) {
-			let subscription_ids = await mapIds(subscriptions, 'customer_id');
+			let subscription_ids = await mapIds(subscriptions.subscriptions, 'id');
 			
 			console.log(subscription_ids, 'ids');
 			
