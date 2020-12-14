@@ -1,4 +1,4 @@
-const Billing = new(use('App/Services/Billing/Account'))();
+const Billing = new(use('App/Services/Billing/Billing'))();
 
 class SubscriptionRepository {
 	async subscribe(user) {
