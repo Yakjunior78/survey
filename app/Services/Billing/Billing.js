@@ -29,6 +29,8 @@ class Billing {
 			prePayment = await Prepayment.update(account, subscription);
 		}
 		
+		console.log('we are here with you');
+		
 		let plan = await Plan.create(account, subscription);
 		
 		console.log(plan, 'this is the plan');
