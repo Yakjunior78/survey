@@ -33,7 +33,7 @@ class PrePayment {
 		let data = await this.updatedPrepaymentData(account, subscription);
 		
 		return axios.update (
-			Env.get ('BILLING_URL') + '/pre-payments/'+subscription.id,
+			Env.get ('BILLING_URL') + '/pre-payments/'+account.prepayment_id,
 			data,
 			{
 				headers: {
@@ -42,7 +42,7 @@ class PrePayment {
 				}
 			})
 			.then ( (data) => {
-				console.log('pre payment updated');
+				console.log(data, 'pre payment updated');
 				return data;
 			})
 			.catch ((err) => {
