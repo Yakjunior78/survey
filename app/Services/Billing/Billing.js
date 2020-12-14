@@ -31,7 +31,7 @@ class Billing {
 		
 		console.log('we are here with you');
 		
-		let plan = await Plan.create(account, subscription);
+		let plan = await Plan.store(account, subscription);
 		
 		console.log(plan, 'this is the plan');
 		/**

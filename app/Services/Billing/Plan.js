@@ -1,8 +1,9 @@
 const Database = use('Database');
 
 class Plan {
-	async create(account, subscription)
+	async store(account, subscription)
 	{
+		console.log('we are here at the plan')
 		let data = await this.data(account, subscription);
 		
 		console.log(data, 'this is the data');
