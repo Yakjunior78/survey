@@ -14,10 +14,11 @@ class Subscription {
 				{
 					headers: {
 						Accept: 'application/json',
-						Authorization: await auth.token()
+						Authorization: await auth.token(),
+						Company: 1
 					}
 				})
-				.then ( (data)   => {
+				.then ( data   => {
 					return data;
 				})
 				.catch ((err) => {
