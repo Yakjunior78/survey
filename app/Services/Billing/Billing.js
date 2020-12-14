@@ -10,6 +10,8 @@ class Billing {
 		
 		let subscriptions = await Subscription.get(account.customer_id);
 		
+		console.log(subscriptions, 'these are the subscriptions');
+		
 		let prePayment = null;
 		
 		if(subscriptions) {

@@ -12,7 +12,7 @@ class PrePayment {
 			{
 				headers: {
 					Accept: 'application/json',
-					Authorization: await auth.token()
+					Authorization: 'Bearer '+await auth.token()
 				}
 			})
 			.then (async ({data}) => {
