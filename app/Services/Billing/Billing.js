@@ -11,11 +11,9 @@ class Billing {
 		
 		let subscriptions = await Subscription.get(account.customer_id);
 		
-		console.log(subscriptions.length, 'this is the length');
-		
 		let prePayment = null;
 		
-		if(subscriptions.length === 0) {
+		if(!subscriptions) {
 			
 			let subscription_ids = await mapIds(subscriptions.subscriptions, 'id');
 			
@@ -23,6 +21,9 @@ class Billing {
 			
 			prePayment = await Prepayment.create(account, subscription_ids);
 		} else {
+			
+			console.log('in the else statement');
+			
 			let subscription = await Subscription.create(account, subscriptions);
 			
 			console.log(subscription, 'prepayment under else');
