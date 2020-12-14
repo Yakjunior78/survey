@@ -40,7 +40,7 @@ class Subscription {
 						Authorization: 'Bearer ' + await auth.token()
 					}
 				})
-				.then ( (data) => {
+				.then ( ({ data }) => {
 					console.log(data, 'this is the subscription');
 					return data.subscription;
 				})
@@ -55,7 +55,7 @@ class Subscription {
 		return {
 			"name": "Subscription for survey",
 			"plans": [
-				"68"
+				"65"
 			],
 			"customer_id": account.customer_id,
 			"description": "Default subscription for survey",
