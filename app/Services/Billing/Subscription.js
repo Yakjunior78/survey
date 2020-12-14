@@ -30,6 +30,8 @@ class Subscription {
 	{
 		let data = await this.data(account);
 		
+		console.log(data, 'this is the data');
+		
 		return axios.get (
 			Env.post ('BILLING_URL') + '/api/subscriptions',
 				data,
@@ -39,7 +41,8 @@ class Subscription {
 						Authorization: 'Bearer ' + await auth.token()
 					}
 				})
-				.then (async ({data}) => {
+				.then (async (data) => {
+					console.log(data, 'this is the data after creation');
 					return data;
 				})
 				.catch ((err) => {
