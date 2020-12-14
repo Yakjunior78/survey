@@ -8,7 +8,7 @@ class PrePayment {
 	{
 		let data = await this.newPrepayment(account, subscription);
 		
-		return axios.put (
+		return axios.post (
 			Env.get ('BILLING_URL') + '/api/pre-payments',
 			data,
 			{
@@ -18,10 +18,10 @@ class PrePayment {
 					company: 1
 				}
 			})
-			.then ( (data) => {
+			.then ( ({data}) => {
 				
-				console.log('pre payment created');
-				return data;
+				console.log(data, 'pre payment created');
+				return data.prepayment;
 			})
 			.catch ((err) => {
 				console.log(err, 'this is the error');
@@ -44,8 +44,8 @@ class PrePayment {
 				}
 			})
 			.then ( (data) => {
-				console.log(data, 'pre payment updated');
-				return data;
+				console.log(data.prepayment, 'pre payment updated');
+				return data.prepayment;
 			})
 			.catch ((err) => {
 				console.log(err, 'this is the error');
