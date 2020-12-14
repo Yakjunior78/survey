@@ -17,6 +17,8 @@ class Billing {
 			
 			let subscription = await Subscription.create(account);
 			
+			console.log(subscription, 'subscription created - created');
+			
 			prePayment = await Prepayment.create(account, subscription);
 			
 			console.log(prePayment, 'prepayment under if - created');
@@ -24,6 +26,8 @@ class Billing {
 		} else {
 			
 			let subscription = await Subscription.create(account);
+			
+			console.log(subscription, 'subscription created - updated');
 			
 			prePayment = await Prepayment.update(account, subscription);
 			
