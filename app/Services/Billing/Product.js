@@ -10,7 +10,7 @@ class Product {
 		return Database
 			.connection ('mysqlAuth')
 			.table ('user_products')
-			.insert ();
+			.insert (data);
 	}
 	
 	async data(user)
