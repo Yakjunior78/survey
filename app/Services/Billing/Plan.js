@@ -3,10 +3,10 @@ const Database = use('Database');
 class Plan {
 	async create(account, subscription)
 	{
-		return await Database
-			.connection('mysqlAuth')
-			.table('plans')
-			.create({
+		return Database
+			.connection ('mysqlAuth')
+			.table ('plans')
+			.insert ({
 				plan_id: 12,
 				name: 'Prepaid',
 				slug: '',
@@ -16,9 +16,9 @@ class Plan {
 				amount: 0,
 				item_id: 1,
 				network: null,
-				created_at: Date.now(),
-				updated_at: Date.now()
-			})
+				created_at: Date.now (),
+				updated_at: Date.now ()
+			});
 	}
 }
 

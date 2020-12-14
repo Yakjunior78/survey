@@ -55,7 +55,7 @@ class Subscription {
 		return {
 			"name": "Subscription for survey",
 			"plans": [
-				"51"
+				"50"
 			],
 			"customer_id": account.customer_id,
 			"description": "Default subscription for survey",
