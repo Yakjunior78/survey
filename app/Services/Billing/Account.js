@@ -9,7 +9,7 @@ class Account {
 		
 		let account = await this.get(user);
 		
-		if(!account) {
+		if(account) {
 			account = await this.create(user);
 		}
 		
