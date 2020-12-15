@@ -59,23 +59,18 @@ class Billing {
 			return ;
 		}
 		
-		let file = await this.file(group.file_details_id);
+		let file = await Database.connection()
+			.from('file_upload_queues')
+			.where('contact_groups_id', group.id)
+			.first();
 		
-		return file ? file.size : 0;
+		return file ? file.count : 0;
 	}
 	
 	async group(id)
 	{
 		return Database.connection ('mysqlSMS')
 			.from ('contact_groups')
-			.where ('id', id)
-			.first ();
-	}
-	
-	async file(id)
-	{
-		return Database.connection ('mysqlSMS')
-			.from ('file_details')
 			.where ('id', id)
 			.first ();
 	}
