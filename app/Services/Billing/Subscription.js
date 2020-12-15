@@ -54,7 +54,7 @@ class Subscription {
 		return {
 			"name": "Subscription for survey",
 			"plans": [
-				"24"
+				Env.get('BILLING_PRE_PAYMENT_PLAN_ID')
 			],
 			"customer_id": account.customer_id,
 			"description": "Default subscription for survey",

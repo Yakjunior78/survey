@@ -1,5 +1,6 @@
 const Database = use('Database');
 const moment = use('moment');
+const Env = use('Env');
 
 class Plan {
 	async store(account, subscription)
@@ -17,10 +18,10 @@ class Plan {
 	async data(account, subscription)
 	{
 		return {
-			plan_id: 12,
+			plan_id: Env.get('BILLING_PRE_PAYMENT_PLAN_ID'),
 			name: 'Prepaid',
 			slug: 'prepaid',
-			description: 'Pre payment plan for surveys',
+			description: 'Pre payment plan for emalify surveys',
 			customer_id: account.customer_id,
 			subscription_id: subscription.id,
 			amount: 0,
