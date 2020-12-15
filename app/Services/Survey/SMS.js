@@ -12,6 +12,10 @@ class SMS {
 		if(!instance.session_job_queued) {
 			return await this.createSessions(instance);
 		}
+		
+		if(!instance.billing_queued) {
+			return await this.deductResources(instance);
+		}
 
 		if(!instance.send_sms_job_queued) {
 			return await this.dispatch(instance);
@@ -41,6 +45,18 @@ class SMS {
 			instance,
 			Env.get('CREATE_SURVEY_INSTANCE_SESSIONS'),
 			'create_survey_instance_sessions'
+		);
+	}
+	
+	async deductResources(instance)
+	{
+		instance.billing_queued = true;
+		await instance.save();
+		
+		return await publish(
+			instance,
+			Env.get('DEDUCT_RESOURCES'),
+			'deduct_resources'
 		);
 	}
 	

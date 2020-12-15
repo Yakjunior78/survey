@@ -31,6 +31,7 @@
     "@radmen/adonis-lucid-soft-deletes": "^0.2.0",
     "axios": "^0.20.0",
     "cuid": "^2.1.8",
+    "custom-id": "^1.2.0",
     "got": "^11.8.0",
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
