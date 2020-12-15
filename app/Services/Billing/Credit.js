@@ -2,6 +2,7 @@ const auth = new(use('App/Services/Billing/Auth'))();
 const axios = use('axios');
 const Database = use('Database');
 const Env = use('Env');
+const moment = use('moment');
 
 class Credit {
 	
@@ -36,14 +37,14 @@ class Credit {
 		return {
 			"subscription_id": plan.subscription_id,
 			"company_id": "1",
-			"unique_id": Math.random().toString(36).substr(2, 9),
+			"unique_id": Math.random().toString(36),
 			"breakdown": [
 				{
 					"plan_id": plan.id,
 					"quantity": quantity
 				}
 			],
-			"timestamp": Database.fn.now(),
+			"timestamp": moment(Date.now()).unix(),
 			"description": description,
 			"metadata": {}
 		}
