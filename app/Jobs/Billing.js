@@ -59,7 +59,7 @@ class Billing {
 			return ;
 		}
 		
-		let file = await Database.connection()
+		let file = await Database.connection('mysqlSMS')
 			.from('file_upload_queues')
 			.where('contact_groups_id', group.id)
 			.first();
