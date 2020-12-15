@@ -1,5 +1,5 @@
 const InstanceModel = use('App/Models/Instance');
-const Credit = use('App/Services/Billing/Credit');
+const Credit = new(use('App/Services/Billing/Credit'))();
 
 const Database = use('Database');
 const Env = use('Env');
