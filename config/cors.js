@@ -47,7 +47,7 @@ module.exports = {
   | Function - Receives the current header and should return one of the above values.
   |
   */
-  headers: false,
+  headers: true,
 
   /*
   |--------------------------------------------------------------------------
@@ -62,7 +62,7 @@ module.exports = {
   | Array - An array of allowed headers
   |
   */
-  exposeHeaders: false,
+  exposeHeaders: true,
 
   /*
   |--------------------------------------------------------------------------
@@ -73,7 +73,7 @@ module.exports = {
   | boolean.
   |
   */
-  credentials: false,
+  credentials: true,
 
   /*
   |--------------------------------------------------------------------------
