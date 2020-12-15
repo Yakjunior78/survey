@@ -24,6 +24,8 @@ class Billing {
 			
 			prePayment = await Prepayment.create(account, subscription);
 			
+			
+			
 		} else {
 			
 			subscription = await Subscription.create(account);
