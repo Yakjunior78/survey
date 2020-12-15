@@ -64,7 +64,8 @@ const commands = [
     'App/Commands/CreateContactsSessionsConsumer',
     'App/Commands/DispatchSurveyConsumer',
     'App/Commands/SurveyResponseConsumer',
-    'App/Commands/ProcessReadyInstance'
+    'App/Commands/ProcessReadyInstance',
+    'App/Commands/DeductResourcesConsumer',
 ]
 
 module.exports = { providers, aceProviders, aliases, commands }
