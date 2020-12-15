@@ -44,7 +44,7 @@ class Credit {
 					"quantity": quantity
 				}
 			],
-			"timestamp": moment(Date.now()).unix(),
+			"timestamp": (moment(Date.now()).unix()).toString(),
 			"description": description,
 			"metadata": {}
 		}
