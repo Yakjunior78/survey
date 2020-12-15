@@ -31,6 +31,8 @@ class Billing {
 			prePayment = await Prepayment.update(account, subscription);
 		}
 		
+		await Account.update(account, prePayment);
+		
 		await Plan.store(account, subscription);
 		
 		await UserProduct.store(user);

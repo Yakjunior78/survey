@@ -25,6 +25,14 @@ class Account {
 			.where('account', user.customer_account)
 			.first();
 	}
+	
+	async update(account, prePayment)
+	{
+		await Database.connection ('mysqlAuth')
+			.table ('account_billings')
+			.where ('id', account.id)
+			.update ({ 'prepayment_id': prePayment.id });
+	}
 }
 
 module.exports = Account;
