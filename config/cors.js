@@ -17,7 +17,7 @@ module.exports = {
   |
   */
   origin: false,
-
+  
   /*
   |--------------------------------------------------------------------------
   | Methods
@@ -30,7 +30,7 @@ module.exports = {
   |
   */
   methods: ['GET', 'PUT', 'PATCH', 'POST', 'DELETE'],
-
+  
   /*
   |--------------------------------------------------------------------------
   | Headers
@@ -48,7 +48,7 @@ module.exports = {
   |
   */
   headers: true,
-
+  
   /*
   |--------------------------------------------------------------------------
   | Expose Headers
@@ -62,8 +62,8 @@ module.exports = {
   | Array - An array of allowed headers
   |
   */
-  exposeHeaders: true,
-
+  exposeHeaders: false,
+  
   /*
   |--------------------------------------------------------------------------
   | Credentials
@@ -73,8 +73,8 @@ module.exports = {
   | boolean.
   |
   */
-  credentials: true,
-
+  credentials: false,
+  
   /*
   |--------------------------------------------------------------------------
   | MaxAge
