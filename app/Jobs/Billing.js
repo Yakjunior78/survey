@@ -1,5 +1,6 @@
 const InstanceModel = use('App/Models/Instance');
 const Credit = new(use('App/Services/Billing/Credit'))();
+const Dispatch = new(use('App/Services/Survey/Dispatch'))();
 
 const Database = use('Database');
 const Env = use('Env');
@@ -29,7 +30,9 @@ class Billing {
 		
 		instance.billed = true;
 		
-		return instance.save();
+		await instance.save();
+		
+		return await Dispatch.handle(instance);
 	}
 	
 	async record(subscription)
