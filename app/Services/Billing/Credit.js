@@ -10,6 +10,8 @@ class Credit {
 	{
 		let data = await this.data(plan, quantity, description);
 		
+		return data;
+		
 		console.log(data, 'this is the usage amount');
 		
 		return axios.post (
@@ -37,7 +39,7 @@ class Credit {
 		return {
 			"subscription_id": plan.subscription_id,
 			"company_id": "1",
-			"unique_id": Math.random().toString(36),
+			"unique_id": Math.random(64),
 			"breakdown": [
 				{
 					"plan_id": plan.plan_id,
