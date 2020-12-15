@@ -1,7 +1,7 @@
 const auth = new(use('App/Services/Billing/Auth'))();
 const axios = use('axios');
 const Database = use('Database');
-const customId = require("custom-id");
+const customId = use("custom-id");
 
 class Credit {
 	
