@@ -40,7 +40,7 @@ class Credit {
 			"unique_id": Math.random().toString(36),
 			"breakdown": [
 				{
-					"plan_id": plan.id,
+					"plan_id": plan.plan_id,
 					"quantity": quantity
 				}
 			],
