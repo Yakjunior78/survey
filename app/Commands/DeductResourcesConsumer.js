@@ -13,7 +13,7 @@ const Billing = new(use('App/Jobs/Billing'))();
 class DeductResourcesConsumer extends Command {
 	
 	static get signature () {
-		return 'clone:contacts:consumer'
+		return 'deduct:resources'
 	}
 	
 	static get description () {
