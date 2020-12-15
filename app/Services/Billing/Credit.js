@@ -1,7 +1,7 @@
 const auth = new(use('App/Services/Billing/Auth'))();
 const axios = use('axios');
 const Database = use('Database');
-const customId = use("custom-id");
+const Math = use('Math');
 
 class Credit {
 	
@@ -36,7 +36,7 @@ class Credit {
 		return {
 			"subscription_id": plan.subscription_id,
 			"company_id": "1",
-			"unique_id": customId({}) + customId({}),
+			"unique_id": Math.random().toString(36).substr(2, 9),
 			"breakdown": [
 				{
 					"plan_id": plan.id,
