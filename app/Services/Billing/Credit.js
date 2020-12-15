@@ -12,7 +12,7 @@ class Credit {
 		console.log(data, 'this is the usage amount');
 		
 		return axios.post (
-			Env.post ('BILLING_URL') + '/api/usage',
+			Env.get ('BILLING_URL') + '/api/usage',
 				data,
 				{
 					headers: {
