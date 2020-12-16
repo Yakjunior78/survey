@@ -80,12 +80,12 @@ class InstanceRepository {
 	{
 		await InstanceModel
 			.query()
-			.where('uuid', id)
+			.where('id', id)
 			.update(data);
 		
 		let instance = await InstanceModel
 			.query()
-			.where('uuid', id)
+			.where('id', id)
 			.first();
 		
 		return {
@@ -100,7 +100,7 @@ class InstanceRepository {
 		let instance = await InstanceModel
 			.query()
 			.where('uuid', id)
-			.first();
+			.find(id);
 		
 		await instance.delete();
 		
