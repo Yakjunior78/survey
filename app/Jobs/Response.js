@@ -19,7 +19,7 @@ class Response {
 		if(!session) {
 			console.log('there is no session');
 			return null;
-		};
+		}
 		
 		let response = await ResponseHandler.response(session, data, channel);
 		
@@ -28,7 +28,7 @@ class Response {
 		if(!contact) {
 			console.log('contact not identified');
 			return null
-		};
+		}
 		
 		return await this.reply(response, contact, data)
 	}
