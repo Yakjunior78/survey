@@ -34,7 +34,11 @@ class InstanceRepository {
 		
 		let channel = await ChannelModel.findOrFail(data.channel_id);
 		
-		let instance = await this.create(survey, channel, data);
+		if(data.id) {
+			return await this.update(data.id, data);
+		}
+		
+		let instance  = await this.create(survey, channel, data);
 		
 		return {
 			status: 201,
