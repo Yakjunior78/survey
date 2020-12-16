@@ -31,7 +31,10 @@ class InstanceTransformer {
 			billed: instance.billed,
 			created_by: instance.created_by_name,
 			created_at: instance.created_at,
-			started_at: instance.start_at
+			start_at: instance.start_at,
+			consent_question_id: instance.consent_question_id,
+			introductory_message: instance.introductory_message,
+			interaction_id: instance.interaction_id
 		}
 	}
 }
