@@ -37,9 +37,19 @@ class Instance {
 		
 		let instances = await InstanceModel.all();
 		
-		console.log(instances.toJSON(), 'thesea re the instances dude');
-		
-		return instances;
+		return await InstanceModel
+			.query()
+			.whereHas('sender', (sender) => {
+				sender.where('code', data.shortCode);
+			})
+			.whereHas('status', (status) => {
+				status.where('slug', 'active');
+			})
+			.whereHas('interaction', (interaction) => {
+				interaction.where('slug', 'sms')
+			})
+			.orderBy('updated_at', 'asc')
+			.fetch();
 	}
 	
 	async forWeb(id, channel)

@@ -70,13 +70,12 @@ class ResponseHandler {
 		if(!contacts) {
 			console.log(instances, 'there are no contacts found');
 			return null
-		};
+		}
 		
 		let instances = null;
 		
 		if(data.instanceId) {
 			instances = await InstanceModel.query().where('uuid', data.instanceId).fetch();
-			
 		} else {
 			instances = await Instance.find(data, contacts, channel);
 		}
@@ -84,7 +83,7 @@ class ResponseHandler {
 		if(!instances) {
 			console.log(instances, 'there are no instances found');
 			return null
-		};
+		}
 
 		return await SessionHandler.handle (contacts, instances);
 	}
