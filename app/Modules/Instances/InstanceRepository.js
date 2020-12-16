@@ -35,6 +35,7 @@ class InstanceRepository {
 		let channel = await ChannelModel.findOrFail(data.channel_id);
 		
 		if(data.id) {
+			data.survey_id = survey.id;
 			return await this.update(data.id, data);
 		}
 		
