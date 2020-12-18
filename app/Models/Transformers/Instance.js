@@ -1,3 +1,5 @@
+const moment = use('moment');
+
 class InstanceTransformer {
 	
 	async transform(instance) {
@@ -31,6 +33,7 @@ class InstanceTransformer {
 			billed: instance.billed,
 			created_by: instance.created_by_name,
 			created_at: instance.created_at,
+			created: moment(instance.created_at).format('LLL'),
 			start_at: instance.start_at,
 			consent_question_id: instance.consent_question_id,
 			introductory_message: instance.introductory_message,
