@@ -5,6 +5,7 @@ const InstanceModel = use('App/Models/Instance');
 const SurveyModel = use('App/Models/Survey');
 const ChannelModel = use('App/Models/Channel');
 const StatusModel = use('App/Models/Status');
+const InteractionModel = use('App/Models/Interaction');
 
 const InstanceForm = new(use('App/Modules/Instances/Form'))();
 const ContactRepository = new(use('App/Modules/Contacts/ContactRepository'))();
@@ -56,6 +57,8 @@ class InstanceRepository {
 		
 		let start = data.start_at ? data.start_at : Date.now();
 		
+		let interaction = await this.interaction(channel, data);
+		
 		let instance = await InstanceModel.create({
 			description: 'Instance ' + (instances[0].total + 1) + ' of this survey.',
 			survey_id: survey.id,
@@ -69,12 +72,27 @@ class InstanceRepository {
 			sender_id: data.sender_id ? data.sender_id : null,
 			consent_question_id: data.consent_question_id,
 			introductory_message: data.introductory_message,
-			interaction_id: data.interaction_id
+			interaction_id: interaction ? interaction.id : null
 		});
 		
 		await this.attachQuestions(instance);
 		
 		return instance;
+	}
+	
+	async interaction(channel, data)
+	{
+		if(data.interaction_id) {
+			return await InteractionModel.find(data.interaction_id);
+		}
+		
+		return await InteractionModel
+			.query()
+			.where('slug', 'web-link')
+			.whereHas('channel', (channel) => {
+				channel.where('id', channel.id);
+			})
+			.first()
 	}
 	
 	async update(id, data)
