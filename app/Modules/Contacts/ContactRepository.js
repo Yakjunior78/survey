@@ -1,4 +1,5 @@
 const ContactModel = use('App/Models/Contact');
+const GroupModel = use('App/Models/Group');
 
 const { shortToken } = use('App/Helpers/Emalify');
 
@@ -58,6 +59,45 @@ class ContactRepository {
 			.where ('uuid', data.id)
 			.orderBy('updated_at', 'asc')
 			.fetch();
+	}
+	
+	async createFbContact(instance, data)
+	{
+		let group = await instance.group().first();
+		
+		if(!group) {
+			group = await this.createGroup(instance);
+		}
+		
+		let contact = await ContactModel
+			.query()
+			.where('fbclid', data.fbclid)
+			.first();
+		
+		if(contact) {
+			return contact;
+		}
+		
+		return ContactModel.create({
+			group_id: group.id,
+			fbclid: data.fbclid ? data.fbclid : data.cid
+		});
+	}
+	
+	async createGroup(instance)
+	{
+		let survey = await instance.survey().first();
+		
+		let group = await GroupModel.create({
+			code: null,
+			company_id: survey.company_id
+		});
+		
+		instance.group_id = group.id;
+		
+		instance.save ();
+		
+		return group;
 	}
 }
 
