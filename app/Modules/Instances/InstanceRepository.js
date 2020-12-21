@@ -89,9 +89,7 @@ class InstanceRepository {
 		return await InteractionModel
 			.query()
 			.where('slug', 'web-link')
-			.whereHas('channel', (channel) => {
-				channel.where('id', channel.id);
-			})
+			.where('channel_id', channel.id)
 			.first()
 	}
 	
