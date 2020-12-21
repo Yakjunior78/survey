@@ -61,7 +61,7 @@ class ContactRepository {
 			.fetch();
 	}
 	
-	async createFbContact(instance, data)
+	async createContact(instance, column, id)
 	{
 		let group = await instance.group().first();
 		
@@ -71,7 +71,7 @@ class ContactRepository {
 		
 		let contact = await ContactModel
 			.query()
-			.where('fbclid', data.fbclid)
+			.where(column, id)
 			.first();
 		
 		if(contact) {
@@ -80,7 +80,7 @@ class ContactRepository {
 		
 		return ContactModel.create({
 			group_id: group.id,
-			fbclid: data.fbclid ? data.fbclid : data.cid
+			[column]: id
 		});
 	}
 	

@@ -74,6 +74,7 @@ class Initialize {
 	async contact(instance, data)
 	{
 		let channel = await instance.channel().first();
+		let id = null;
 		
 		switch (channel.slug) {
 			
@@ -81,7 +82,12 @@ class Initialize {
 				return await ContactModel.query().where('uuid', data.cid).first();
 				
 			case 'facebook':
-				return await contactRepo.createFbContact (data);
+				id = data.fbclid ? data.fbclid : data.cid;
+				return await contactRepo.createContact (instance, 'fbclid', id);
+			
+			case 'web':
+				id =  data.cid;
+				return await contactRepo.createContact (instance, 'cid', id);
 			
 			default:
 				return null;
