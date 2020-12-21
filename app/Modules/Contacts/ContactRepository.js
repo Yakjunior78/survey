@@ -1,7 +1,9 @@
 const ContactModel = use('App/Models/Contact');
 const GroupModel = use('App/Models/Group');
+const SessionModel = use('App/Models/Session');
+const QuestionRepo = new(use('App/Modules/Questions/QuestionRepository'))();
 
-const { shortToken } = use('App/Helpers/Emalify');
+const { shortToken, getStatus } = use('App/Helpers/Emalify');
 
 class ContactRepository {
 	
@@ -78,6 +80,8 @@ class ContactRepository {
 			return contact;
 		}
 		
+		await this.createSession(instance, contact);
+		
 		return ContactModel.create({
 			group_id: group.id,
 			[column]: id
@@ -98,6 +102,34 @@ class ContactRepository {
 		instance.save ();
 		
 		return group;
+	}
+	
+	async createSession(instance, contact)
+	{
+		let session = await SessionModel
+			.query()
+			.where('instance_id', instance.id)
+			.where('contact_id', contact.id)
+			.first();
+		
+		if(session) {
+			return session;
+		}
+		
+		let status = await getStatus('active');
+		
+		let survey = await instance.survey().fetch();
+		
+		let question = await QuestionRepo.get(survey, 1);
+		
+		if(!question) return null;
+		
+		return await SessionModel.create ({
+			instance_id: instance.id,
+			contact_id: contact.id,
+			status_id: status ? status.id : null,
+			question_id: question ? question.id : null
+		});
 	}
 }
 
