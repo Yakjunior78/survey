@@ -2,8 +2,8 @@ const SurveyModel = use('App/Models/Survey');
 const InstanceModel = use('App/Models/Instance');
 const ContactModel = use('App/Models/Contact');
 const SessionModel = use('App/Models/Session');
-const sessionRepo = use('App/Modules/Session/SessionRepository');
-const contactRepo = use('App/Modules/Contacts/ContactRepository');
+const sessionRepo = new(use('App/Modules/Session/SessionRepository'))();
+const contactRepo = new(use('App/Modules/Contacts/ContactRepository'))();
 const { transform } = use('App/Helpers/Transformer');
 
 class Initialize {
