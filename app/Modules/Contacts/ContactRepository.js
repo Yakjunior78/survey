@@ -76,11 +76,11 @@ class ContactRepository {
 			.where(column, id)
 			.first();
 		
+		await this.createSession(instance, contact);
+		
 		if(contact) {
 			return contact;
 		}
-		
-		await this.createSession(instance, contact);
 		
 		return ContactModel.create({
 			group_id: group.id,

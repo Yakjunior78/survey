@@ -39,6 +39,8 @@ class Initialize {
 		
 		let question = await this.question(instance, contact);
 		
+		console.log(question, 'this is the question');
+		
 		question = question ? await transform(question, 'Question') : null;
 		
 		return {
