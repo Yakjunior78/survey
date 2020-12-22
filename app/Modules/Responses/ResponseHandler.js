@@ -25,6 +25,7 @@ class ResponseHandler {
 				return await this.publish(data, channel);
 			case 'web':
 			case 'chat':
+				console.log('we are here at the web and chat response');
 				return await this.respond(data, channel);
 			default:
 				return 'unknown survey channel';
@@ -66,6 +67,8 @@ class ResponseHandler {
 	async session(data, channel)
 	{
 		let contacts = await ContactHandler.find(data, channel);
+		
+		console.log(contacts, 'this is the contact');
 		
 		if(!contacts) {
 			console.log(instances, 'there are no contacts found');

@@ -19,8 +19,8 @@ class Auth {
 	
 	oauthIds() {
 		return {
-			client_id: Env.get('APP_CLIENT_ID'),
-			client_secret: Env.get('APP_CLIENT_SECRET'),
+			client_id: Env.get('SMS_APP_CLIENT_ID'),
+			client_secret: Env.get('SMS_APP_CLIENT_SECRET'),
 			grant_type: 'client_credentials'
 		}
 	}
