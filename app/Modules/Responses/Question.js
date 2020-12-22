@@ -38,7 +38,7 @@ class Question {
 			
 			let condition = await ConditionModel.find(conditions[i].id);
 			
-			let resp = await check(condition, response.response);
+			let resp = await check(condition, (response.response).parseString());
 			
 			if(resp) {
 				appliedCondition = condition;
