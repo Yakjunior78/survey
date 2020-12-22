@@ -17,6 +17,8 @@ class Question {
 		
 		let condition = await this.condition(current, response);
 		
+		console.log(condition, 'this is the condition');
+		
 		return await this.next (session, current, condition);
 	}
 	
@@ -56,6 +58,8 @@ class Question {
 		if(condition && condition.end) {
 			return null;
 		}
+		
+		console.log(condition.next_question_id, 'condition next');
 		
 		if(condition && condition.next_question_id) {
 			question = await QuestionModel.find(condition.next_question_id);
