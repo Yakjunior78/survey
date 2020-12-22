@@ -82,18 +82,22 @@ class Initialize {
 		let channel = await instance.channel().first();
 		let id = null;
 		
+		console.log(channel.slug, 'this is the channel slug');
+		
 		switch (channel.slug) {
 			
 			case 'sms':
 				return await ContactModel.query().where('uuid', data.cid).first();
 				
 			case 'facebook':
+				console.log('at the facebook contacts');
 				id = data.fbclid ? data.fbclid : data.cid;
 				return await contactRepo.createContact (instance, 'fbclid', id);
 			
 			case 'web':
+				console.log('at the web contacts');
 				id =  data.cid;
-				return await contactRepo.createContact (instance, 'cid', id);
+				return await contactRepo.createContact (instance, 'uuid', id);
 			
 			default:
 				return null;
