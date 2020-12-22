@@ -58,14 +58,14 @@ class Initialize {
 			.where('contact_id', contact.id)
 			.first();
 		
+		if(!session)  {
+			session = await sessionRepo.create(contact, instance);
+		}
+		
 		let status = await session.status().first();
 		
 		if(status.slug === 'closed') {
 			return null;
-		}
-		
-		if(!session)  {
-			session = await sessionRepo.create(contact, instance);
 		}
 		
 		return await session.question().first();
