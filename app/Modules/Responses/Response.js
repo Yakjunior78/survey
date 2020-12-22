@@ -13,14 +13,17 @@ class Response {
 		
 		let response = data.message;
 		
+		let choice = null;
+		
 		switch(channel.slug) {
 			case 'sms':
-				let choice = await question.choices().where('rank', data.message).first();
+				choice = await question.choices().where('rank', data.message).first();
 				response = choice && choice.id ? choice.value : data.message;
 				break;
 			case 'web':
 			case 'chat':
-				response = data.message
+				choice = await question.choices().where('id', data.message).first();
+				response = choice && choice.id ? choice.value : data.message;
 				break;
 			default:
 				response = data.message;

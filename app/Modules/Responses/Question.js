@@ -28,9 +28,9 @@ class Question {
 		
 		let conditions = await current.conditions().fetch();
 		
-		console.log(conditions, 'all the conditions');
-		
 		conditions = count > 0 ? conditions.toJSON() : [];
+		
+		console.log(conditions, 'these are the conditions');
 		
 		let appliedCondition = null;
 		
@@ -38,7 +38,7 @@ class Question {
 			
 			let condition = await ConditionModel.find(conditions[i].id);
 			
-			let resp = await check(condition, (response.response).toString());
+			let resp = await check(condition, response.response);
 			
 			if(resp) {
 				appliedCondition = condition;
