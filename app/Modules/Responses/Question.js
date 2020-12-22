@@ -17,11 +17,6 @@ class Question {
 		
 		let condition = await this.condition(current, response);
 		
-		
-		console.log(current, 'this is the current question');
-		console.log(response, 'this is the response');
-		console.log(condition, 'this is the condition');
-		
 		return await this.next (session, current, condition);
 	}
 	
@@ -35,9 +30,7 @@ class Question {
 		
 		console.log(conditions, 'all the conditions');
 		
-		conditions = count ? conditions.toJSON() : [];
-		
-		console.log(conditions, 'the conditions');
+		conditions = count > 0 ? conditions.toJSON() : [];
 		
 		let appliedCondition = null;
 		
@@ -52,6 +45,8 @@ class Question {
 				break;
 			}
 		}
+		
+		console.log(appliedCondition, 'applied condition');
 		
 		return appliedCondition;
 	}
