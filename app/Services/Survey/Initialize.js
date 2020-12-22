@@ -21,6 +21,8 @@ class Initialize {
 		
 		let instance = await InstanceModel.query().where('uuid', data.iid).first();
 		
+		console.log(instance, 'this is the instance');
+		
 		if(!instance) {
 			return {
 				status: 406,
@@ -30,6 +32,8 @@ class Initialize {
 		
 		let contact = await this.contact(instance, data);
 		
+		console.log(contact, 'this is the contact');
+		
 		if(!contact) {
 			return {
 				status: 406,
@@ -38,6 +42,8 @@ class Initialize {
 		}
 		
 		let question = await this.question(instance, contact);
+		
+		console.log(question, 'this is the question');
 		
 		question = question ? await transform(question, 'Question') : null;
 		
