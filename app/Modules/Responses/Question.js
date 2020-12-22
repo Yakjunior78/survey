@@ -55,11 +55,11 @@ class Question {
 		
 		let question = null;
 		
+		console.log(condition, 'this is the condition');
+		
 		if(condition && condition.end) {
 			return null;
 		}
-		
-		console.log(condition.next_question_id, 'condition next');
 		
 		if(condition && condition.next_question_id) {
 			question = await QuestionModel.find(condition.next_question_id);
