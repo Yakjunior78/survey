@@ -68,7 +68,7 @@ class ResponseHandler {
 	{
 		let contacts = await ContactHandler.find(data, channel);
 		
-		console.log(contacts, 'this is the contact');
+		console.log(contacts, 'this is the contacts');
 		
 		if(!contacts) {
 			console.log(instances, 'there are no contacts found');
