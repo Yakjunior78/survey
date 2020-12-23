@@ -4,13 +4,17 @@ const { transform } = use('App/Helpers/Transformer');
 
 class QuestionStatistics {
 
-	async transform(question, channel) {
+	async transform(question, data) {
 
+		let channel = data && data.channel ? data.channel : null;
+		
+		let instance = data && data.instance ? data.instance : null;
+		
 		let type = await question.type().first();
+		
 		let inputType = await question.inputType().first();
-		let responses = channel && channel.id
-			? await question.responses().where('channel_id', channel.id).getCount()
-			: await question.responses().getCount();
+		
+		let response = await this.responses(question, channel, instance);
 
 		let choices = await this.options(question);
 
@@ -25,6 +29,22 @@ class QuestionStatistics {
 		}
 	}
 
+	async responses(question, channel, instance)
+	{
+		
+		if(instance) {
+			return question
+				.responses ()
+				.where ('channel_id', channel.id)
+				.whereHas ('session', (session) => {
+					session.where ('instance_id', instance.id)
+				})
+				.getCount ();
+		}
+		
+		return question.responses ().getCount ();
+	}
+	
 	async options(question)
 	{
 		let choicesCount = await question.choices().getCount();

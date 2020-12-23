@@ -12,7 +12,9 @@ class StatisticsRepository {
 
 		let survey = await SurveyModel.query().where('uuid', survey_id).first();
 
-		let questions = instance ? await instance.questions().orderBy('rank', 'asc').fetch() : await survey.questions().fetch();
+		let questions = instance
+			? await instance.questions().orderBy('rank', 'asc').fetch()
+			: await survey.questions().fetch();
 
 		questions = questions.toJSON();
 
@@ -24,7 +26,13 @@ class StatisticsRepository {
 
 			let question = await QuestionModel.find(questions[i].id);
 
-			let transformedQuestion =  await transform(question, 'QuestionStatistics', channel);
+			let transformedQuestion =  await transform(
+				question,
+				'QuestionStatistics',
+				{
+					channel: channel,
+					instance : instance}
+				)
 
 			await transformedQuestions.push(transformedQuestion);
 		}

@@ -24,7 +24,8 @@ Route.group( () => {
 	Route.resource('/instances', 'InstanceController');
 	
 	Route.post('/instances/initialize', 'InstanceController.initialize');
-	Route.post('/statistics', 'StatisticsController.instance');
+	Route.post('/statistics', 'StatisticsController.questions');
+	Route.post('/stats-summary', 'StatisticsController.summary');
 
 	Route.resource('/questions', 'QuestionsController');
 	Route.resource('/question-choices', 'ChoicesController');
