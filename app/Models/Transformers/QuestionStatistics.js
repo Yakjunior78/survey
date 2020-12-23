@@ -14,7 +14,7 @@ class QuestionStatistics {
 		
 		let inputType = await question.inputType().first();
 		
-		let response = await this.responses(question, channel, instance);
+		let responses = await this.responses(question, channel, instance);
 
 		let choices = await this.options(question);
 
