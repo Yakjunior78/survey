@@ -1,4 +1,5 @@
 const moment = use('moment');
+const Env = use('Env');
 
 class InstanceTransformer {
 	
@@ -8,6 +9,7 @@ class InstanceTransformer {
 		let status = await instance.status().fetch();
 		let group = await instance.group().fetch();
 		let sender = await instance.sender().fetch();
+		let survey = await instance.survey().first();
 		
 		return {
 			id: instance.id,
@@ -17,7 +19,7 @@ class InstanceTransformer {
 			channel: channel,
 			status_id: instance.status_id,
 			status: status,
-			url: instance.url,
+			url: Env.get('SURVEY_WEB_URI')+'/survey/'+survey.uuid+'/'+instance.uuid,
 			group: group,
 			group_id: instance.group_id,
 			sender_id: instance.sender_id,
@@ -37,7 +39,7 @@ class InstanceTransformer {
 			start_at: instance.start_at,
 			consent_question_id: instance.consent_question_id,
 			introductory_message: instance.introductory_message,
-			interaction_id: instance.interaction_id
+			interaction_id: instance.interaction_id,
 		}
 	}
 }
