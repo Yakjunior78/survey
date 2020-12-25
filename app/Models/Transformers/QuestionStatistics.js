@@ -25,7 +25,7 @@ class QuestionStatistics {
 			rank: question.rank,
 			questionType: type ? type.slug : '',
 			responses: responses,
-			choices: []
+			choices: choices
 		}
 	}
 
