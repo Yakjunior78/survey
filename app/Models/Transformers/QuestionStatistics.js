@@ -16,7 +16,7 @@ class QuestionStatistics {
 		
 		let responses = await this.responses(question, channel, instance);
 
-		let choices = await this.options(question);
+		let choices = await this.options(question, instance);
 
 		return {
 			id: question.id,
@@ -45,7 +45,7 @@ class QuestionStatistics {
 		return question.responses ().getCount ();
 	}
 	
-	async options(question)
+	async options(question, instance)
 	{
 		let choicesCount = await question.choices().getCount();
 
@@ -59,7 +59,11 @@ class QuestionStatistics {
 
 			let choice = await ChoiceModel.find(choices[i].id);
 
-			let transformedQuestion =  await transform(choice, 'Choice');
+			let transformedQuestion =  await transform(
+				choice,
+				'Choice', {
+					instance: instance
+				});
 
 			await transformedChoices.push(transformedQuestion);
 		}

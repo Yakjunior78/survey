@@ -1,9 +1,17 @@
 class QuestionTransformer {
 	
-	async transform(choice) {
+	async transform(choice, data) {
 		
 		let question = await choice.question().first();
-		let response = await question.responses().where('response', choice.value).getCount()
+		
+		let instance = data && data.instance ? data.instance : null;
+		
+		let response = await question.responses()
+			.where('response', choice.value)
+			.whereHas('session', (session) => {
+				session.where('instance_id', instance.id)
+			})
+			.getCount()
 		
 		return {
 			id: choice.id,
