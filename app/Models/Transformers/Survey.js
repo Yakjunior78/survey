@@ -27,7 +27,8 @@ class SurveyTransformer {
 			questions: await this.questions(survey),
 			instances: instances,
 			channels: channels,
-			created_by_name: survey.created_by_name
+			created_by_name: survey.created_by_name,
+			sessions: await this.sessions(survey)
 		}
 	}
 	
@@ -93,6 +94,11 @@ class SurveyTransformer {
 		}
 		
 		return transformedInstances;
+	}
+	
+	async sessions(survey)
+	{
+		return [];
 	}
 }
 
