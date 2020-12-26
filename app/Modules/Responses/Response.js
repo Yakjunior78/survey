@@ -12,7 +12,7 @@ class Response {
 		let validator = this.validate(question, data);
 		
 		if(!validator) {
-			return null;
+			return false;
 		}
 		
 		if(!question) return null;
