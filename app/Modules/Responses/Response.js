@@ -62,6 +62,8 @@ class Response {
 				responseArray = response.split('');
 				
 				let exists = await question.choices ().whereIn ('rank', responseArray).getCount ();
+				
+				console.log(exists, 'at the count');
 
 				return exists > 0;
 				
