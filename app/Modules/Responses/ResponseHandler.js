@@ -58,6 +58,8 @@ class ResponseHandler {
 	{
 		let response = await Response.record (session, data, channel);
 		
+		console.log(response, 'this is the response');
+		
 		if(!response) {
 			let current = await session.question ().with ('conditions').first ();
 			return await this.reply(current, channel, true);
