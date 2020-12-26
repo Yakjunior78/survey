@@ -23,14 +23,25 @@ class Response {
 		
 		switch(channel.slug) {
 			case 'sms':
+				
 				choice = await question.choices().where('rank', data.message).first();
+				
+				if(!choice) {
+					choice = await question.choices().where('value', data.message).first();
+				}
+				
 				response = choice && choice.id ? choice.value : data.message;
+				
 				break;
+				
 			case 'web':
 			case 'chat':
+				
 				choice = await question.choices().where('id', data.message).first();
 				response = choice && choice.id ? choice.value : data.message;
+				
 				break;
+				
 			default:
 				response = data.message;
 				break;
@@ -62,6 +73,10 @@ class Response {
 				responseArray = response.split('');
 				
 				let exists = await question.choices ().whereIn ('rank', responseArray).getCount ();
+				
+				if(!exists) {
+					exists = await question.choices ().whereIn ('value', responseArray).getCount ();
+				}
 				
 				return exists > 0;
 				
