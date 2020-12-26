@@ -58,16 +58,10 @@ class ResponseHandler {
 	{
 		let response = await Response.record (session, data, channel);
 		
-		console.log(response, 'this is the response');
-		
 		if(!response) {
-			
-			console.log('response failed validation');
 			let current = await session.question ().with ('conditions').first ();
 			return await this.reply(current, channel, true);
 		}
-		
-		console.log('response passed validation');
 		
 		let nextQuestion = await Question.handle(session, response);
 		

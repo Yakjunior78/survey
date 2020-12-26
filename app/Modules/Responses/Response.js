@@ -9,12 +9,9 @@ class Response {
 	{
 		let question = await session.question().first();
 		
-		let validator = this.validate(question, data);
-		
-		console.log(validator, 'this is the validator');
+		let validator = await this.validate(question, data);
 		
 		if(!validator) {
-			console.log(validator, 'at the fi validator');
 			return false;
 		}
 		
@@ -66,8 +63,6 @@ class Response {
 				
 				let exists = await question.choices ().whereIn ('rank', responseArray).getCount ();
 				
-				console.log(exists, 'at the count');
-
 				return exists > 0;
 				
 			case 'closed_ended':
