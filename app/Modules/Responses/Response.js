@@ -15,8 +15,6 @@ class Response {
 			return null;
 		}
 		
-		return validator;
-		
 		if(!question) return null;
 		
 		let response = data.message;
@@ -71,7 +69,6 @@ class Response {
 				return response !== '' || response !== undefined || true
 			default:
 				return true;
-				break;
 		}
 	}
 }
