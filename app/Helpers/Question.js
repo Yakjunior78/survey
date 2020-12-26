@@ -2,7 +2,7 @@
 
 const QuestionModel = use('App/Models/Question');
 
-const smsReply = async (question) => {
+const smsReply = async (question, repeat) => {
 	
 	if(!question || (question && !question.id)) {
 		return 'Thank you for participating in our survey. Good bye.'
@@ -10,7 +10,13 @@ const smsReply = async (question) => {
 	
 	question = await QuestionModel.query().where('id', question.id).first();
 	
-	let description = question.question;
+	let additional = '';
+	
+	if(repeat) {
+		additional = 'Kindly respond with correct value as below: ';
+	}
+	
+	let description = additional + '' + question.question;
 	
 	let type = await question.type().first();
 	
@@ -54,11 +60,20 @@ async function formatChoices(choices)
 	return reply;
 }
 
-const jsonReply = async (question) =>
+const jsonReply = async (question, repeat) =>
 {
+	let additional = '';
+	
+	if(repeat) {
+		additional = 'Kindly respond with correct value as below: ';
+	}
+	
+	let description = additional + '' + question.question;
+	
 	return {
 		status: 201,
 		message: 'Response saved successfully',
+		note: description,
 		question: question
 	}
 }

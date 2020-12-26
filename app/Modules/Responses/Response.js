@@ -9,6 +9,14 @@ class Response {
 	{
 		let question = await session.question().first();
 		
+		let validator = this.validate(question, data);
+		
+		if(!validator) {
+			return null;
+		}
+		
+		return validator;
+		
 		if(!question) return null;
 		
 		let response = data.message;
@@ -37,6 +45,34 @@ class Response {
 			session_id: session.id,
 			channel_id: channel.id
 		});
+	}
+	
+	async validate(question, data)
+	{
+		let response = data.message;
+		
+		let type = await question.type().first();
+		
+		let responseArray = [];
+		
+		switch(type.slug) {
+			case 'multiple_choice':
+			case 'rating_scale':
+			case 'image_choice':
+			case 'ranking':
+				
+				responseArray = response.split('');
+
+				return await question.choices ().whereIn ('rank', responseArray).first ();
+				
+			case 'closed_ended':
+			case 'open_ended':
+			case 'demographic':
+				return response !== '' || response !== undefined || true
+			default:
+				return true;
+				break;
+		}
 	}
 }
 

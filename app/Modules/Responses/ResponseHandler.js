@@ -25,7 +25,6 @@ class ResponseHandler {
 				return await this.publish(data, channel);
 			case 'web':
 			case 'chat':
-				console.log('we are here at the web and chat response');
 				return await this.respond(data, channel);
 			default:
 				return 'unknown survey channel';
@@ -48,6 +47,8 @@ class ResponseHandler {
 	{
 		let session = await this.session(data, channel);
 		
+		console.log(session, 'this is the session');
+		
 		if(!session) return null;
 		
 		return this.response (session, data, channel);
@@ -55,13 +56,20 @@ class ResponseHandler {
 	
 	async response(session, data, channel)
 	{
-		let response = await this.record(session, data, channel);
+		let response = await Response.record (session, data, channel);
 		
-		let next = await Question.handle(session, response);
+		if(!response) {
+			let current = await session.question ().with ('conditions').first ();
+			return await this.reply(current, channel, true);
+		}
 		
-		await this.updateSession(session, next);
+		return response;
 		
-		return await this.reply(next, channel);
+		let nextQuestion = await Question.handle(session, response);
+		
+		await this.updateSession(session, nextQuestion);
+		
+		return await this.reply(nextQuestion, channel);
 	}
 	
 	async session(data, channel)
@@ -94,19 +102,14 @@ class ResponseHandler {
 		return await SessionHandler.update(session, question);
 	}
 	
-	async record(session, data, channel)
-	{
-		return Response.record (session, data, channel);
-	}
-	
-	async reply(question, channel)
+	async reply(question, channel, repeat)
 	{
 		switch(channel.slug) {
 			case 'sms':
-				return await smsReply(question);
+				return await smsReply(question, repeat);
 			case 'web':
 			case 'chat':
-				return await jsonReply(question);
+				return await jsonReply(question, repeat);
 			default:
 				return null;
 		}

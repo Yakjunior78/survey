@@ -24,8 +24,6 @@ class Question {
 	{
 		let count = await current.conditions().getCount();
 		
-		console.log(count, 'condition count');
-		
 		let conditions = await current.conditions().fetch();
 		
 		conditions = count > 0 ? conditions.toJSON() : [];
