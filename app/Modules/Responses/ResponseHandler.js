@@ -58,6 +58,8 @@ class ResponseHandler {
 	{
 		let response = await Response.record (session, data, channel);
 		
+		console.log(response, 'this is the response');
+		
 		if(!response) {
 			
 			console.log('response failed validation');
