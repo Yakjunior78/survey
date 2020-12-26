@@ -60,8 +60,11 @@ class Response {
 			case 'ranking':
 				
 				responseArray = response.split('');
+				
+				let exists = await question.choices ().whereIn ('rank', responseArray).first ();
+				console.log(exists, 'the response exists');
 
-				return await question.choices ().whereIn ('rank', responseArray).first ();
+				return !!exists
 				
 			case 'closed_ended':
 			case 'open_ended':
