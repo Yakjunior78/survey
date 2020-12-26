@@ -75,8 +75,10 @@ class Response {
 				let exists = await question.choices ().whereIn ('rank', responseArray).getCount ();
 				
 				if(!exists) {
-					exists = await question.choices ().whereIn ('value', responseArray).getCount ();
+					exists = await question.choices ().where ('value', response).getCount ();
 				}
+				
+				console.log(exists, 'validator')
 				
 				return exists > 0;
 				
