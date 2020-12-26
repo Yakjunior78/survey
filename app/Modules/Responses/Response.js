@@ -11,7 +11,10 @@ class Response {
 		
 		let validator = this.validate(question, data);
 		
+		console.log(validator, 'this is the validator');
+		
 		if(!validator) {
+			console.log(validator, 'at the fi validator');
 			return false;
 		}
 		
