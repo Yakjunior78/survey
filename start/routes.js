@@ -69,4 +69,4 @@ Route.group( () => {
 Route.group( () => {
 	Route.post('test', 'TestController.publish');
 	Route.post('test-contacts-clone', 'TestController.cloneContacts');
-});
+}).prefix('api');
