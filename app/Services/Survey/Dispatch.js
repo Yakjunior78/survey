@@ -12,6 +12,8 @@ class Dispatch {
 	async handle(instance)
 	{
 		let channel = await instance.channel().first();
+		
+		return channel;
 	
 		switch(channel.slug) {
 			

@@ -49,7 +49,7 @@ class Contacts {
 		
 		return // stop sending of the survey sms - construction ahead
 		
-		return await Dispatch.handle(instance);
+		// return await Dispatch.handle(instance);
 	}
 	
 	async group(id)
