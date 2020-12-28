@@ -61,8 +61,12 @@ Route.group( () => {
 });
 
 Route.group( () => {
-	Route.post('test', 'TestController.publish');
 	Route.get('session/:id', 'TestController.createSession');
 	Route.post('send', 'TestController.sendSms');
 	Route.get('token', 'TestController.token');
 }).prefix('api');
+
+Route.group( () => {
+	Route.post('test', 'TestController.publish');
+	Route.post('test-contacts-clone', 'TestController.cloneContacts');
+});

@@ -18,6 +18,7 @@ const StatusModel = use('App/Models/Status');
 const job = new(use('App/Jobs/Instance'))();
 
 const sessionHandler = new(use('App/Jobs/Session'))();
+const contactsClone = new(use('App/Modules/Contacts/ContactsClone'))();
 
 class TestController {
 	
@@ -55,9 +56,18 @@ class TestController {
 		await job.dispatch(instance);
 	}
 	
-	async cloneContacts()
+	async cloneContacts({ request, response })
 	{
-	
+		let instance = InstanceModel.find(181);
+		
+		if(instance.cloned) {
+			console.log('Instance already cloned');
+			return;
+		}
+		
+		return response.json({
+			data: await contactsClone.handle(instance)
+		});
 	}
 }
 
