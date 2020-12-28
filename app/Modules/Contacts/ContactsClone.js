@@ -11,6 +11,8 @@ class ContactsClone {
 	{
 		let group = await this.group(instance.group_id);
 		
+		console.log(group, 'this is the group');
+		
 		if(!group) {
 			console.log('Contact group was not identified');
 			return;

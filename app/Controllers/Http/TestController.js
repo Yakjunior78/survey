@@ -60,6 +60,8 @@ class TestController {
 	{
 		let instance = InstanceModel.find(181);
 		
+		console.log(instance, 'this is the instance')
+		
 		if(instance.cloned) {
 			console.log('Instance already cloned');
 			return;
