@@ -1,9 +1,13 @@
 'use strict';
 
 const Database = use('Database');
+const Logger = use('Logger');
 
 const CompanyModel = use('App/Models/Company');
+const ContactModel = use('App/Models/Contact');
+
 const GroupHandler = new(use('App/Modules/Contacts/Group'))();
+const ContactHandler = new(use('App/Modules/Contacts/ContactsHandler'))();
 
 class ContactsClone {
 	
@@ -26,8 +30,16 @@ class ContactsClone {
 		}
 		
 		let company = await this.company(group.customer_account);
-
-		return await GroupHandler.getByCode (group.id);
+		
+		let contactGroup = await GroupHandler.getByCode(group.id);
+		
+		if(contactGroup) {
+			console.log('Contacts already cloned');
+			return;
+		}
+		
+		console.log('Cloning contacts');
+		return await ContactHandler.clone(group, company, file);;
 	}
 	
 	async group(id)
@@ -60,6 +72,34 @@ class ContactsClone {
 		}
 		
 		return company;
+	}
+	
+	async clone(group, company, table)
+	{
+		let contactGroup = await GroupHandler.store({
+			title: '',
+			code: group.id,
+			company_id: company.id
+		});
+		
+		let contacts = await Database
+			.connection('mysqlContacts')
+			.select('msisdn')
+			.from(table.table_name);
+		
+		for (const contact of contacts) {
+			await ContactModel.create({
+				group_id: contactGroup.id,
+				company_id: company.id,
+				msisdn: contact.msisdn,
+				fname: contact.fname ? contact.fname : null,
+				lname: contact.lname ? contact.lname : null
+			});
+		}
+		
+		Logger.info('ended at : ' + Date.now());
+		
+		return true;
 	}
 }
 
