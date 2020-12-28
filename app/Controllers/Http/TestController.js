@@ -58,7 +58,7 @@ class TestController {
 	
 	async cloneContacts({ request, response })
 	{
-		let instance = InstanceModel.find(181);
+		let instance = await InstanceModel.find(181);
 		
 		console.log(instance, 'this is the instance')
 		
