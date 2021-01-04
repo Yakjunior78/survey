@@ -13,8 +13,6 @@ class Dispatch {
 	{
 		let channel = await instance.channel().first();
 		
-		return channel;
-	
 		switch(channel.slug) {
 			
 			case 'sms':
