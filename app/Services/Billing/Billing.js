@@ -34,10 +34,11 @@ class Billing {
 		}
 		
 		if(prePayment) {
+			
 			await Account.update(account, prePayment);
+			
+			await Plan.store(account, subscription);
 		}
-		
-		await Plan.store(account, subscription);
 		
 		await UserProduct.store(user);
 		
