@@ -28,7 +28,9 @@ class Billing {
 			
 			subscription = await Subscription.create(account);
 			
-			prePayment = await Prepayment.update(account, subscription);
+			if(subscription) {
+				prePayment = await Prepayment.update(account, subscription);
+			}
 		}
 		
 		if(prePayment) {
