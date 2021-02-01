@@ -31,7 +31,7 @@ class Billing {
 			prePayment = await Prepayment.update(account, subscription);
 		}
 		
-		if(!prePayment) {
+		if(prePayment) {
 			await Account.update(account, prePayment);
 		}
 		
