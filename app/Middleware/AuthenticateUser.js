@@ -33,6 +33,7 @@ class AuthenticateUser {
 			.then( async ({ data }) => {
 				
 				console.log(data, 'this is the data');
+				
 				if(data.status === 200) {
 					request.user = data.user;
 				}
