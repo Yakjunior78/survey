@@ -60,6 +60,8 @@ class Response {
 	{
 		let response = data.message;
 		
+		console.log(response, 'this is the response');
+		
 		let type = await question.type().first();
 		
 		let responseArray = [];

@@ -1,4 +1,4 @@
-const { publish } = use('App/Services/Messaging/PubSubHandler');
+const { publish } = use('App/Services/Messaging/ PubSubHandler');
 const Env = use('Env');
 
 class SMS {
