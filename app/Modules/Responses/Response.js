@@ -72,7 +72,7 @@ class Response {
 			case 'image_choice':
 			case 'ranking':
 				
-				responseArray = response.split('');
+				responseArray = Array.from(String(response), Number);
 				
 				let exists = await question.choices ().whereIn ('rank', responseArray).getCount ();
 				
