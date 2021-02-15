@@ -10,9 +10,9 @@ class Credit {
 	{
 		let data = await this.data(plan, quantity, description);
 		
-		return data;
+		console.log('BILLING INSTANCE: ', data, 'this is the billing data');
 		
-		console.log(data, 'this is the usage amount');
+		return data;
 		
 		return axios.post (
 			Env.get ('BILLING_URL') + '/api/usages',
