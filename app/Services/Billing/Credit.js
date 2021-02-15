@@ -40,7 +40,7 @@ class Credit {
 		return {
 			"subscription_id": plan.subscription_id,
 			"company_id": "1",
-			"unique_id": await randId()+ '+'+randId(),
+			"unique_id": await randId()+'-'+await randId(),
 			"breakdown": [
 				{
 					"plan_id": plan.plan_id,

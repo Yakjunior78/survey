@@ -35,7 +35,7 @@ const mapIds = async (arr, column) => {
 }
 
 const randId = async () => {
-	return Math.floor(100000000 + Math.random() * 900000000)
+	return Math.floor(10000000000000000 + Math.random() * 90000000000000000);
 }
 
 module.exports = {
