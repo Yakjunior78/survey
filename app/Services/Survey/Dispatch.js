@@ -31,6 +31,7 @@ class Dispatch {
 				return await Whatsapp.handle(instance);
 				
 			default:
+				console.log('DISPATCHING SURVEY: failed to identify the survey instance channel');
 				return;
 		}
 	}
