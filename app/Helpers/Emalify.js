@@ -34,10 +34,15 @@ const mapIds = async (arr, column) => {
 	return ids;
 }
 
+const randId = async () => {
+	return Math.floor(100000000 + Math.random() * 900000000)
+}
+
 module.exports = {
 	random,
 	token,
 	getStatus,
 	shortToken,
-	mapIds
+	mapIds,
+	randId
 }
