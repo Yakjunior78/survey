@@ -10,7 +10,6 @@ const InteractionModel = use('App/Models/Interaction');
 const InstanceForm = new(use('App/Modules/Instances/Form'))();
 const ContactRepository = new(use('App/Modules/Contacts/ContactRepository'))();
 const SessionRepo = new(use('App/Modules/Session/SessionRepository'))();
-const SurveyHandler = new(use('App/Modules/Surveys/SurveyHandler'))();
 
 const { isNowOrPast } = use('App/Helpers/DateHelper');
 const { notAllowed } = use('App/Helpers/Response');

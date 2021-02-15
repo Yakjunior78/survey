@@ -4,6 +4,7 @@ const SessionModel = use('App/Models/Session');
 const ContactModel = use('App/Models/Contact');
 
 const SMS = new(use('App/Services/SMS/Send'))();
+
 const InstanceQuestion = new( use('App/Modules/Questions/InstanceQuestionHandler'))();
 
 const Env = use('Env');
@@ -37,7 +38,8 @@ class Instance {
 		let data = await this.messageData(group, instance);
 		console.log(data, 'this is the data');
 		
-		console.log('dispatching the sms')
+		console.log('dispatching the sms');
+		
 		await SMS.handle(data);
 		
 		instance.sms_sent = true;

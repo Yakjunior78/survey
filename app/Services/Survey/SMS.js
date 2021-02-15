@@ -29,6 +29,7 @@ class SMS {
 	async clone(instance)
 	{
 		instance.clone_job_queued = true;
+		
 		await instance.save();
 		
 		return await publish(

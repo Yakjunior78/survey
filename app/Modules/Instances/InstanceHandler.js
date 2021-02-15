@@ -11,13 +11,15 @@ class InstanceHandler {
 	
 	async ready(id) {
 		
-		let instance = await InstanceModel.query().where('id', id).first();
+		let instance = await InstanceModel.findById(id);
 		
 		instance.should_dispatch = true;
 		
 		await instance.save ();
 		
-		if(isNowOrPast(instance.start_at)) {
+		let shouldDispatch = await isNowOrPast(instance.start_at);
+		
+		if(shouldDispatch) {
 			Event.fire('instance::ready', instance);
 		}
 		

@@ -3,7 +3,6 @@
 const Logger = use('Logger');
 const Response = new(use('App/Modules/Surveys/Response'))();
 const SurveyRepository = new(use('App/Modules/Surveys/SurveyRepository'))();
-const SurveyHandler = new(use('App/Modules/Surveys/SurveyHandler'))();
 const InstanceForm = new(use('App/Modules/Instances/Form'))();
 
 class SurveysController {

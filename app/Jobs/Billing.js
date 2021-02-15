@@ -9,24 +9,27 @@ class Billing {
 	
 	async handle(data)
 	{
-		let instance = await InstanceModel.find(data.id);
+		console.log('BILLING INSTANCE: ____________________________________________________________________')
+		
+		let instance = await InstanceModel.findById(data.id);
 		
 		if(!instance) {
-			console.log('Instance of survey instance not found');
+			console.log('BILLING INSTANCE: instance of survey instance not found');
 			return ;
 		}
 		
 		let size = await this.fileSize(instance);
 		
-		console.log(size, 'this is the size');
+		console.log('BILLING INSTANCE: ', size, 'this is the file size');
 		
 		let plan = await this.plan(instance);
 		
-		console.log(plan, 'this is the plan');
+		console.log('BILLING INSTANCE: ', plan, 'this is the plan');
 		
 		await Credit.handle(plan, size, 'Usage for survey dispatch');
 		
-		console.log('billed');
+		console.log('BILLING INSTANCE: billing completed');
+		console.log('BILLING INSTANCE: ____________________________________________________________________');
 		
 		instance.billed = true;
 		
