@@ -38,13 +38,13 @@ class Credit {
 	async data(plan, quantity, description)
 	{
 		return {
-			"subscription_id": plan.subscription_id,
+			"subscription_id": (plan.subscription_id).toString(),
 			"company_id": "1",
-			"unique_id": await randId()+'-'+await randId(),
+			"unique_id": (await randId()+'-'+await randId()).toString(),
 			"breakdown": [
 				{
-					"plan_id": plan.plan_id,
-					"quantity": quantity
+					"plan_id": plan.plan_id.toString(),
+					"quantity": quantity.toString()
 				}
 			],
 			"timestamp": (moment(Date.now()).unix()).toString(),
