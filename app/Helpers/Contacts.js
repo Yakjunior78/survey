@@ -4,7 +4,7 @@ const CompanyModel = use('App/Models/Company');
 const GroupModel = use('App/Models/Group');
 const ContactModel = use('App/Models/Contact');
 
-const group = async (id) =>
+const getGroup = async (id) =>
 {
 	return Database.connection ('mysqlSMS')
 		.from ('contact_groups')
@@ -12,7 +12,7 @@ const group = async (id) =>
 		.first ();
 };
 
-const file = async (id) =>
+const getFile = async (id) =>
 {
 	return Database.connection ('mysqlSMS')
 		.from ('file_upload_queues')
@@ -20,7 +20,7 @@ const file = async (id) =>
 		.first ();
 };
 
-const company = async (account) =>
+const getCompany = async (account) =>
 {
 	let company = await CompanyModel.query().where('identity', account).first();
 	
@@ -79,7 +79,7 @@ async function contacts(group, company, table)
 }
 
 module.exports = {
-	group,
-	file,
-	company
+	getGroup,
+	getFile,
+	getCompany
 }

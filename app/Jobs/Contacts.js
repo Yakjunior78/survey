@@ -7,7 +7,7 @@ const InstanceModel = use('App/Models/Instance');
 const Dispatch = new(use('App/Services/Survey/Dispatch'))();
 const ContactHandler = new(use('App/Modules/Contacts/ContactsHandler'))();
 
-const { group, file, company } = use('App/Helpers/Contacts');
+const { getGroup, getFile, getCompany } = use('App/Helpers/Contacts');
 
 const GroupHandler = new(use('App/Modules/Contacts/Group'))();
 
@@ -22,21 +22,21 @@ class Contacts {
 			return;
 		}
 		
-		let group = await group(instance.group_id);
+		let group = await getGroup(instance.group_id);
 		
 		if(!group) {
 			console.log('CONTACTS CLONING: contact group was not identified');
 			return;
 		}
 		
-		let file = await file(group.id);
+		let file = await getFile(group.id);
 		
 		if(!file) {
 			console.log('CONTACTS CLONING: contact group details was not identified');
 			return;
 		}
 		
-		let company = await company(group.customer_account);
+		let company = await getCompany(group.customer_account);
 		
 		let contactGroup = await GroupHandler.getByCode(group.id);
 		
