@@ -31,14 +31,14 @@ class DeductResourcesConsumer extends Command {
 	
 	async messageHandler(message) {
 		
-		Logger.info('Resource deduction started');
+		Logger.info('BILLING: resource deduction started');
 		
 		try {
 			const payload = JSON.parse(Buffer.from(message.data, 'utf-8').toString());
 			
 			await Billing.handle(payload.data);
 			
-			Logger.info('Resources deduction completed');
+			Logger.info('BILLING:resources deduction completed');
 			
 			return message.ack();
 			

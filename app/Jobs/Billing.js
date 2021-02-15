@@ -51,7 +51,7 @@ class Billing {
 				}
 			],
 			"timestamp": "1607004706",
-			"description": "This is a usage log deducting from the balannce to level the customers previus balance.",
+			"description": "This is a usage log deducting from the balance to level the customers previous balance.",
 			"metadata": {}
 		}
 	}

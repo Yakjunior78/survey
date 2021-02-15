@@ -12,8 +12,6 @@ class Credit {
 		
 		console.log('BILLING INSTANCE: ', data, 'this is the billing data');
 		
-		return data;
-		
 		return axios.post (
 			Env.get ('BILLING_URL') + '/api/usages',
 				data,
@@ -25,11 +23,11 @@ class Credit {
 					}
 				})
 				.then ( (data) => {
-					console.log(data, 'this is the result');
+					console.log('BILLING SYSTEM RESPONSE', data, 'this is the result');
 					return data;
 				})
 				.catch ((err) => {
-					console.log(err, 'this is the error');
+					console.log('BILLING SYSTEM RESPONSE', err, 'this is the error');
 					return null;
 				});
 	}
