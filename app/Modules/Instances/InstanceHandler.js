@@ -11,7 +11,7 @@ class InstanceHandler {
 	
 	async ready(id) {
 		
-		let instance = await InstanceModel.findById(id);
+		let instance = await InstanceModel.find(id);
 		
 		instance.should_dispatch = true;
 		

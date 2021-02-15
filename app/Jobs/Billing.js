@@ -11,7 +11,7 @@ class Billing {
 	{
 		console.log('BILLING INSTANCE: ____________________________________________________________________')
 		
-		let instance = await InstanceModel.findById(data.id);
+		let instance = await InstanceModel.find(data.id);
 		
 		if(!instance) {
 			console.log('BILLING INSTANCE: instance of survey instance not found');

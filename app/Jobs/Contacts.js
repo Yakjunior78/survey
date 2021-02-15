@@ -15,7 +15,7 @@ class Contacts {
 	
 	async clone(instance)
 	{
-		instance = await InstanceModel.findById(instance.id);
+		instance = await InstanceModel.find(instance.id);
 		
 		if(instance.cloned) {
 			console.log('Instance already cloned');
