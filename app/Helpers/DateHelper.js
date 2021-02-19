@@ -12,8 +12,6 @@ const isNowOrPast = async (dateTime) => {
 	
 	now.setHours( now.getHours() + 3 );
 	
-	console.log(dateTime, now, 'these are the dates');
-	
 	return !!(
 		moment (dateTime) < moment (now) ||
 		moment (dateTime).isSame (moment (now), 'time')

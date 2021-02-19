@@ -37,7 +37,7 @@ class Credit {
 	
 	async data(plan, quantity, description)
 	{
-		let now = Date.now();
+		let now = new Date();
 		
 		now.setHours( now.getHours() + 3 );
 		
