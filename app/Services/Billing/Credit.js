@@ -41,6 +41,8 @@ class Credit {
 		
 		now.setHours( now.getHours() + 3 );
 		
+		console.log('DEDUCT RESOURCE: ', now, 'this is the date on resource deduction');
+		
 		return {
 			"subscription_id": (plan.subscription_id).toString(),
 			"company_id": "1",
