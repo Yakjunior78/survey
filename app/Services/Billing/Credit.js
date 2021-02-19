@@ -39,8 +39,6 @@ class Credit {
 	{
 		let now = new Date();
 		
-		now.setHours( now.getHours() + 3 );
-		
 		console.log('DEDUCT RESOURCE: ', now, 'this is the date on resource deduction');
 		
 		return {
