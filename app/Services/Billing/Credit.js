@@ -30,7 +30,7 @@ class Credit {
 				return data;
 			})
 			.catch ((err) => {
-				console.log('BILLING SYSTEM RESPONSE', err.data, 'this is the error');
+				console.log('BILLING SYSTEM RESPONSE', err, 'this is the error');
 				return null;
 			});
 	}
