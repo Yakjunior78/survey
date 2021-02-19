@@ -3,11 +3,10 @@ const moment = use('moment');
 const Env = use('Env');
 
 class Plan {
+	
 	async store(account, subscription)
 	{
 		let data = await this.data(account, subscription);
-		
-		console.log(data, 'this is the data');
 		
 		return Database
 			.connection ('mysqlAuth')
@@ -24,7 +23,7 @@ class Plan {
 			description: 'Pre payment plan for emalify surveys',
 			customer_id: account.customer_id,
 			subscription_id: subscription.id,
-			amount: 0,
+			amount: 4,
 			item_id: 1,
 			network: null,
 			created_at: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),

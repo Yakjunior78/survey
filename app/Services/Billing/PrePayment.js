@@ -1,4 +1,5 @@
 const auth = new(use('App/Services/Billing/Auth'))();
+const { randId } = use('App/Helpers/Emalify');
 const axios = use('axios');
 const Env = use('Env');
 
@@ -55,9 +56,9 @@ class PrePayment {
 		return {
 			"user_id": account.customer_id,
 			"subscriptions": [ subscription.id ],
-			"payment_number": "2903181913103113-23123512112121345226311",
+			"payment_number": (await randId()+'-'+await randId()).toString(),
 			"payment_date": "12/11/2020",
-			"amount": 10000,
+			"amount": 20,
 			"notes": "Refund",
 			"payment_method_id": "2",
 			"taxes": []

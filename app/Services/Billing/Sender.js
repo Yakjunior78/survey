@@ -10,7 +10,7 @@ class Sender {
 		let company = await CompanyModel.create({
 			name: 'Emalify ' +user.customer_account,
 			slug: 'emalify ' + user.customer_account,
-			description: 'Survey account for the accoun no' +user.customer_account,
+			description: 'Survey account for the account no' +user.customer_account,
 			identity: user.customer_account,
 			created_by_name: user.name,
 		});

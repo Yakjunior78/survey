@@ -3,6 +3,7 @@ const Env = use('Env');
 const moment = use('moment');
 
 class Product {
+	
 	async store(user)
 	{
 		let data = await this.data(user);

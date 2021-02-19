@@ -37,6 +37,10 @@ class Credit {
 	
 	async data(plan, quantity, description)
 	{
+		let now = Date.now();
+		
+		now.setHours( now.getHours() + 3 );
+		
 		return {
 			"subscription_id": (plan.subscription_id).toString(),
 			"company_id": "1",
@@ -47,7 +51,7 @@ class Credit {
 					"quantity": quantity.toString()
 				}
 			],
-			"timestamp": (moment(Date.now()).unix()).toString(),
+			"timestamp": (moment(now).unix()).toString(),
 			"description": description,
 			"metadata": {}
 		}

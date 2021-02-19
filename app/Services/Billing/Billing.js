@@ -13,6 +13,13 @@ class Billing {
 	{
 		let account = await Account.handle(user);
 		
+		if(!account) {
+			return {
+				status: 406,
+				message: 'Failed to register user on billing account'
+			}
+		}
+		
 		let subscriptions = await Subscription.get(account.customer_id);
 		
 		let prePayment = null;
@@ -22,23 +29,11 @@ class Billing {
 			
 			subscription = await Subscription.create(account);
 			
-			prePayment = await Prepayment.create(account, subscription);
-			
 		} else {
-			
 			subscription = await Subscription.create(account);
-			
-			if(subscription) {
-				prePayment = await Prepayment.update(account, subscription);
-			}
 		}
 		
-		if(prePayment) {
-			
-			await Account.update(account, prePayment);
-			
-			await Plan.store(account, subscription);
-		}
+		await Plan.store(account, subscription);
 		
 		await UserProduct.store(user);
 		

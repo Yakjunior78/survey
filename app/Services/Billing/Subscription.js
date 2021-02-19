@@ -21,40 +21,41 @@ class Subscription {
 					return data;
 				})
 				.catch ((err) => {
-					console.log(err, 'this is an error');
 					return null;
 				});
 	}
 	
 	async create(account)
 	{
-		let data = await this.data(account);
+		let form = await this.data(account);
 		
 		return axios.post (
 			Env.get('BILLING_URL')+'/api/subscriptions',
-				data,
-				{
-					headers: {
-						Accept: 'application/json',
-						'Content-Type': 'application/json',
-						Authorization: 'Bearer ' + await auth.token()
-					}
-				})
-				.then ( ({ data }) => {
-					return data.subscription;
-				})
-				.catch ((err) => {
-					console.log(err, 'this is the error');
-					return null;
-				});
+			form,
+			{
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + await auth.token()
+				}
+			})
+			.then ( ({ data }) => {
+				return data.subscription;
+			})
+			.catch ((err) => {
+				console.log(err, 'this is the error');
+				return null;
+			});
 	}
 	
 	async data(account)
 	{
+		let plan = Env.get('BILLING_PRE_PAYMENT_PLAN_ID');
+		
 		return {
 			"name": "Subscription for survey",
 			"plans": [
-				Env.get('BILLING_PRE_PAYMENT_PLAN_ID')
+				plan.toString()
 			],
 			"customer_id": account.customer_id,
 			"description": "Default subscription for survey",
