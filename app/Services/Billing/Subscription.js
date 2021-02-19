@@ -57,7 +57,7 @@ class Subscription {
 			"plans": [
 				plan.toString()
 			],
-			"customer_id": account.customer_id,
+			"customer_id": (account.customer_id).toString(),
 			"description": "Default subscription for survey",
 			"prorated": false,
 			"active": true,
