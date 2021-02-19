@@ -19,6 +19,8 @@ class InstanceHandler {
 		
 		let shouldDispatch = await isNowOrPast(instance.start_at);
 		
+		console.log('DISPATCH INSTANCE: ', shouldDispatch, 'should dispatch survey');
+		
 		if(shouldDispatch) {
 			Event.fire('instance::ready', instance);
 		}

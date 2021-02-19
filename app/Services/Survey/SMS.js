@@ -32,6 +32,8 @@ class SMS {
 		
 		await instance.save();
 		
+		console.log('SHOULD CLONE SURVEY CONTACTS')
+		
 		return await publish(
 			instance,
 			Env.get('CLONE_SURVEY_CONTACTS'),
