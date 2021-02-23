@@ -2,6 +2,7 @@ const InstanceRepo = new(use('App/Modules/Instances/InstanceRepository'))();
 
 const InstanceModel = use('App/Models/Instance');
 const ResponseModel = use('App/Models/Response');
+const QuestionTypeModel = use('App/Models/QuestionType');
 
 class Response {
 	
@@ -63,6 +64,10 @@ class Response {
 		console.log(response, 'this is the response');
 		
 		let type = await question.type().first();
+		
+		if(!type) {
+			type = await QuestionTypeModel.query().where('slug', 'open_ended').first();
+		}
 		
 		console.log(type, 'this is the question type');
 		
