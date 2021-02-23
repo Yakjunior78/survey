@@ -64,6 +64,8 @@ class Response {
 		
 		let type = await question.type().first();
 		
+		console.log(type, 'this is the question type');
+		
 		let responseArray = [];
 		
 		switch(type.slug) {

@@ -102,6 +102,8 @@ class ResponseHandler {
 	
 	async reply(question, channel, repeat)
 	{
+		console.log('AT REPLY');
+		
 		switch(channel.slug) {
 			case 'sms':
 				return await smsReply(question, repeat);
