@@ -1,7 +1,7 @@
 const moment = use('moment');
 const Env = use('Env');
 
-const SessionModel = use('App/Models/Session');
+const StatusModel = use('App/Models/Status');
 
 class InstanceTransformer {
 	
@@ -14,7 +14,7 @@ class InstanceTransformer {
 		let survey = await instance.survey().first();
 		let sessions = await instance.sessions().getCount();
 		
-		let completeStatus = await SessionModel.query().where('status_id', 'closed').first();
+		let completeStatus = await StatusModel.query().where('slug', 'closed').first();
 		
 		let completedSessions = await instance
 			.sessions()
