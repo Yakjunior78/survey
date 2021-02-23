@@ -2,6 +2,7 @@ const auth = new(use('App/Services/Billing/Auth'))();
 
 const axios = use('axios');
 const Env = use('Env');
+const moment = use('moment');
 
 class Subscription {
 	
@@ -64,7 +65,7 @@ class Subscription {
 			"coupon": null,
 			"tax_rate": 0,
 			"discount": 0,
-			"billing_cycle_anchor": 15886333126,
+			"billing_cycle_anchor": (moment(now).unix()).toString(),
 			"metadata": {}
 		}
 	}
