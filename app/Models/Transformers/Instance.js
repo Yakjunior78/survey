@@ -1,6 +1,8 @@
 const moment = use('moment');
 const Env = use('Env');
 
+const SessionModel = use('App/Models/Session');
+
 class InstanceTransformer {
 	
 	async transform(instance) {
@@ -10,6 +12,14 @@ class InstanceTransformer {
 		let group = await instance.group().fetch();
 		let sender = await instance.sender().fetch();
 		let survey = await instance.survey().first();
+		let sessions = await instance.sessions().getCount();
+		
+		let completeStatus = await SessionModel.query().where('slug', 'closed').first();
+		
+		let completedSessions = await instance
+			.sessions()
+			.where('status_id', completeStatus.id)
+			.getCount();
 		
 		return {
 			id: instance.id,
@@ -40,6 +50,10 @@ class InstanceTransformer {
 			consent_question_id: instance.consent_question_id,
 			introductory_message: instance.introductory_message,
 			interaction_id: instance.interaction_id,
+			sessions: await instance.sessions().count(),
+			responses: sessions,
+			started: sessions,
+			completed: completedSessions
 		}
 	}
 }

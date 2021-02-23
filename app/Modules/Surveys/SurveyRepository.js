@@ -31,6 +31,7 @@ class SurveyRepository {
 			let survey = await SurveyModel.findOrFail(surveyList[i].id);
 			
 			let transformed = await transform (survey, 'Survey');
+			
 			transformedSurveys.push(transformed);
 		}
 		

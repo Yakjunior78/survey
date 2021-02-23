@@ -15,24 +15,26 @@ class Contacts {
 	
 	async clone(instance)
 	{
+		console.log('CONTACT CLONE: contact clone started ----------------------------------------------------------');
+		
 		instance = await InstanceModel.find(instance.id);
 		
 		if(instance.cloned) {
-			console.log('Instance already cloned');
-			return;
+			console.log('CONTACT CLONE: instance already cloned');
+			return null;
 		}
 		
 		let group = await getGroup(instance.group_id);
 		
 		if(!group) {
-			console.log('CONTACTS CLONING: contact group was not identified');
-			return;
+			console.log('CONTACTS CLONE: contact group was not identified');
+			return null;
 		}
 		
 		let file = await getFile(group.id);
 		
 		if(!file) {
-			console.log('CONTACTS CLONING: contact group details was not identified');
+			console.log('CONTACTS CLONE: contact group details was not identified');
 			return;
 		}
 		
@@ -41,7 +43,6 @@ class Contacts {
 		let contactGroup = await GroupHandler.getByCode(group.id);
 		
 		if(!contactGroup) {
-			console.log('CONTACTS CLONING: started');
 			await ContactHandler.clone(group, company, file);
 		}
 		
