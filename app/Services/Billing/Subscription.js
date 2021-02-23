@@ -53,6 +53,8 @@ class Subscription {
 	{
 		let plan = Env.get('BILLING_PRE_PAYMENT_PLAN_ID');
 		
+		let now = new Date();
+		
 		return {
 			"name": "Subscription for survey",
 			"plans": [
