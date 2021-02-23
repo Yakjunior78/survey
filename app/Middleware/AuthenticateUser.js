@@ -22,6 +22,8 @@ class AuthenticateUser {
 	
 	async validate(request, response, token, next)
 	{
+		console.log('AUTHENTICATION: ', Env.get('APP_AUTH_URL'));
+		
 		return await axios.get(
 			Env.get('APP_AUTH_URL') + '/api/user/details',
 			{
