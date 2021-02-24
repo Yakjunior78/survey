@@ -22,3 +22,5 @@ class ResponseRepository {
 		};
 	}
 }
+
+module.exports = ResponseRepository
