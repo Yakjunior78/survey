@@ -27,10 +27,10 @@ class ResponseRepository {
 		
 		let responses = await ResponseModel
 			.query()
+			.question()
 			.whereHas('session', (sessionQuery) => {
 				sessionQuery.where('instance_id', instance.id)
 			})
-			.groupBy('contact_id')
 			.fetch()
 		
 		return {
