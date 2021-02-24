@@ -26,7 +26,7 @@ class ResponseRepository {
 		
 		let channel = instance ? await instance.channel().first() : null;
 		
-		let sessions = await instance.sessions().paginate();
+		let sessions = await instance.sessions().fetch();
 		
 		sessions = sessions.toJSON();
 		
