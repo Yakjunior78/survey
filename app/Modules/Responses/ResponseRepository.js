@@ -26,10 +26,10 @@ class ResponseRepository {
 		let responses = await Database
 			.select( '*' )
 			.from('responses')
-			.leftJoin('questions', 'responses.question_id', 'questions.id')
 			.leftJoin('sessions', 'responses.session_id', 'sessions.id')
+			.innerJoin('instance', 'sessions.instance_id', instance.id)
 		
-		return {
+		return {    
 			instance: instance,
 			survey: survey,
 			responses: responses
