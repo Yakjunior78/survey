@@ -25,6 +25,8 @@ class ResponseRepository {
 		
 		let channel = instance ? await instance.channel().first() : null;
 		
+		let sessions = await instance.sessions().fetch();
+		
 		let responses = await ResponseModel
 			.query()
 			.whereHas('session', (sessionQuery) => {
@@ -36,7 +38,8 @@ class ResponseRepository {
 		
 		return {
 			questions: questions,
-			responses: responses
+			responses: responses,
+			sessions: sessions
 		};
 	}
 }
