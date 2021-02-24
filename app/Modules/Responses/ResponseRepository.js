@@ -27,7 +27,6 @@ class ResponseRepository {
 		
 		let responses = await ResponseModel
 			.query()
-			.with('question')
 			.whereHas('session', (sessionQuery) => {
 				sessionQuery.where('instance_id', instance.id)
 			})
