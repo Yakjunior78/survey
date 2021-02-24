@@ -26,10 +26,13 @@ class ResponseRepository {
 		let responses = await Database
 			.select( '*' )
 			.from('responses')
-			.leftJoin('sessions', 'responses.session_id', 'sessions.id')
-			.innerJoin('instance', 'sessions.instance_id', instance.id)
+			.leftJoin('questions', 'responses.question_id', 'questions.id')
+			.leftJoin('sessions', 'sessions.session_id', 'sessions.id')
+			.innerJoin('sessions', () => {
+				this.on('sessions.instance_id', instance.id)
+			})
 		
-		return {    
+		return {
 			instance: instance,
 			survey: survey,
 			responses: responses
