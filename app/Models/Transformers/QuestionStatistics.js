@@ -31,7 +31,6 @@ class QuestionStatistics {
 
 	async responses(question, channel, instance)
 	{
-		
 		if(instance) {
 			return question
 				.responses ()

@@ -48,6 +48,13 @@ class InstanceRepository {
 		};
 	}
 	
+	async responses(id)
+	{
+		let responses = [];
+		
+		return responses;
+	}
+	
 	async create(survey, channel, data) {
 		
 		let instances = await survey.instances().count('* as total');

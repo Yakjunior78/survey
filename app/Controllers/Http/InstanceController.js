@@ -36,9 +36,9 @@ class InstanceController {
 	
 	async dispatch({ params, response })
 	{
-		let result = await InstanceHandler.ready(params.id);
+		let result = await InstanceHandler.ready (params.id);
 		
-		return response.json(result);
+		return response.json (result);
 	}
 }
 

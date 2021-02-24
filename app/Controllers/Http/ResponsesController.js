@@ -5,6 +5,11 @@ const ChannelModel = use('App/Models/Channel');
 
 class ResponsesController {
 	
+	async index({ request, response })
+	{
+		return response.json(request.all());
+	}
+	
 	async handle({ request, response })
 	{
 		let req = request.all();
