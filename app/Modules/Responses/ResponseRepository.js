@@ -30,13 +30,11 @@ class ResponseRepository {
 		
 		let sessions = await SessionModel.query().where('instance_id', instance.id).fetch();
 		
-		sessions = sessions.toJSON();
-		
 		let transformedSessions = [];
 		
-		for (let i = 0; i < sessions.length; i++)
+		for (let session of sessions)
 		{
-			let session = await SessionModel.findOrFail(sessions[i].id);
+			let session = await SessionModel.findOrFail(session.id);
 			
 			let transformed = await transform (session, 'Session');
 			
