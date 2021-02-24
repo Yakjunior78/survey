@@ -3,6 +3,7 @@
 const InstanceModel = use('App/Models/Instance');
 const SurveyModel = use('App/Models/Survey');
 const ResponseModel = use('App/Models/Response');
+const SessionModel = use('App/Models/Session');
 
 const Database = use('Database');
 
@@ -25,21 +26,26 @@ class ResponseRepository {
 		
 		let channel = instance ? await instance.channel().first() : null;
 		
-		let sessions = await instance.sessions().fetch();
+		let sessions = await instance.sessions().paginate();
 		
-		let responses = await ResponseModel
-			.query()
-			.whereHas('session', (sessionQuery) => {
-				sessionQuery.where('instance_id', instance.id)
-			})
-			.fetch()
+		sessions = sessions.toJSON();
+		
+		let transformedSessions = [];
+		
+		for (let i = 0; i < sessions.length; i++)
+		{
+			let session = await SessionModel.findOrFail(sessions[i].id);
+			
+			let transformed = await transform (session, 'Session');
+			
+			transformedSessions.push(transformed);
+		}
 		
 		let questions = await instance.questions().fetch();
 		
 		return {
 			questions: questions,
-			responses: responses,
-			sessions: sessions
+			sessions: transformedSessions
 		};
 	}
 }

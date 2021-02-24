@@ -50,9 +50,7 @@ class InstanceRepository {
 	
 	async responses(id)
 	{
-		let responses = [];
-		
-		return responses;
+		return [];
 	}
 	
 	async create(survey, channel, data) {
