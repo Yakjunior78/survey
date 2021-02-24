@@ -25,14 +25,13 @@ class ResponseRepository {
 		
 		let channel = instance ? await instance.channel().first() : null;
 		
-		
 		let responses = await ResponseModel
 			.query()
 			.whereHas('session', (sessionQuery) => {
 				sessionQuery.where('instance_id', instance.id)
 			})
-			.fetch()
 			.groupBy('contact_id')
+			.fetch()
 		
 		return {
 			instance: instance,
