@@ -11,6 +11,10 @@ class ResponseRepository {
 		let instance = null;
 		let survey = null;
 		
+		if(!instance) {
+			return [];
+		}
+		
 		if(data.instance_id) {
 			instance = await InstanceModel.findBy('uuid', data.instance_id);
 		}
@@ -20,9 +24,11 @@ class ResponseRepository {
 		let channel = instance ? await instance.channel().first() : null;
 		
 		let responses = await Database
-			.select(  '*' )
+			.select( '*' )
 			.from('responses')
 			.leftJoin('questions', 'responses.question_id', 'questions.id')
+			.leftJoin('sessions', 'resposes.sessoin_id', 'sessions.id')
+			.where('instance_id', instance.id)
 		
 		return {
 			instance: instance,
