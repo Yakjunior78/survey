@@ -37,6 +37,10 @@ class Session extends Model {
 	question() {
 		return this.belongsTo('App/Models/Question');
 	}
+	
+	responses() {
+		return this.belongsTo('App/Models/Response');
+	}
 }
 
 module.exports = Session
