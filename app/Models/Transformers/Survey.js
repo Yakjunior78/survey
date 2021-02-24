@@ -1,6 +1,8 @@
 const { transform } = use('App/Helpers/Transformer');
 const QuestionModel = use('App/Models/Question');
 const InstanceModel = use('App/Models/Instance');
+const SessionModel = use('App/Models/Session');
+const Database = use('Database');
 
 class SurveyTransformer {
 	
@@ -27,8 +29,7 @@ class SurveyTransformer {
 			questions: await this.questions(survey),
 			instances: instances,
 			channels: channels,
-			created_by_name: survey.created_by_name,
-			sessions: await this.sessions(survey)
+			created_by_name: survey.created_by_name
 		}
 	}
 	
@@ -94,11 +95,6 @@ class SurveyTransformer {
 		}
 		
 		return transformedInstances;
-	}
-	
-	async sessions(survey)
-	{
-		return [];
 	}
 }
 

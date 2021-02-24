@@ -50,7 +50,7 @@ class InstanceTransformer {
 			consent_question_id: instance.consent_question_id,
 			introductory_message: instance.introductory_message,
 			interaction_id: instance.interaction_id,
-			sessions: await instance.sessions().count(),
+			sessions: await instance.sessions().getCount(),
 			responses: sessions,
 			started: sessions,
 			completed: completedSessions
