@@ -11,12 +11,12 @@ class ResponseRepository {
 		let instance = null;
 		let survey = null;
 		
-		if(!instance) {
-			return [];
-		}
-		
 		if(data.instance_id) {
 			instance = await InstanceModel.findBy('uuid', data.instance_id);
+		}
+		
+		if(!instance) {
+			return [];
 		}
 		
 		survey = instance ?  await instance.survey().first() : await SurveyModel.findBy('uuid', data.survey_id);
@@ -27,8 +27,7 @@ class ResponseRepository {
 			.select( '*' )
 			.from('responses')
 			.leftJoin('questions', 'responses.question_id', 'questions.id')
-			.leftJoin('sessions', 'resposes.sessoin_id', 'sessions.id')
-			.where('instance_id', instance.id)
+			.leftJoin('sessions', 'responses.session_id', 'sessions.id')
 		
 		return {
 			instance: instance,
