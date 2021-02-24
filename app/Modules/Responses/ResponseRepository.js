@@ -22,7 +22,7 @@ class ResponseRepository {
 		let responses = await Database
 			.select(  '*' )
 			.from('responses')
-			.leftJoin('questions', 'responses.question_id', 'question.id')
+			.leftJoin('questions', 'responses.question_id', 'questions.id')
 		
 		return {
 			instance: instance,
