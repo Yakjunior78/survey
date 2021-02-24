@@ -32,9 +32,10 @@ class ResponseRepository {
 			})
 			.fetch()
 		
+		let questions = await instance.questions().fetch();
+		
 		return {
-			instance: instance,
-			survey: survey,
+			questions: questions,
 			responses: responses
 		};
 	}
