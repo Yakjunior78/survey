@@ -20,14 +20,9 @@ class ResponseRepository {
 		let channel = instance ? await instance.channel().first() : null;
 		
 		let responses = await Database
-			.table('responses')
-			.whereHas('session', (sessionQuery) => {
-				sessionQuery.whereHas('instances', (instanceQuery) => {
-					instanceQuery.where('uuid', instance.uuid)
-				})
-			})
-		
-		// await Database.
+			.select(  'msisdn' )
+			.from('responses')
+			.leftJoin('questions', 'responses.question_id', 'question.id')
 		
 		return {
 			instance: instance,
