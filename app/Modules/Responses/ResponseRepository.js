@@ -5,6 +5,8 @@ const SurveyModel = use('App/Models/Survey');
 const ResponseModel = use('App/Models/Response');
 const SessionModel = use('App/Models/Session');
 
+const { transform } = use('App/Helpers/Transformer');
+
 const Database = use('Database');
 
 class ResponseRepository {
