@@ -31,8 +31,8 @@ class ResponseRepository {
 			.whereHas('session', (sessionQuery) => {
 				sessionQuery.where('instance_id', instance.id)
 			})
-			.groupBy('contact_id')
 			.fetch()
+			.groupBy('contact_id')
 		
 		return {
 			instance: instance,
