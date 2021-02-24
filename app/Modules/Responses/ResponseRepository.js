@@ -20,7 +20,7 @@ class ResponseRepository {
 		let channel = instance ? await instance.channel().first() : null;
 		
 		let responses = await Database
-			.select(  'msisdn' )
+			.select(  '*' )
 			.from('responses')
 			.leftJoin('questions', 'responses.question_id', 'question.id')
 		
