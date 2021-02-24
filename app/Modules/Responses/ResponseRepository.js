@@ -2,6 +2,8 @@
 
 const InstanceModel = use('App/Models/Instance');
 const SurveyModel = use('App/Models/Survey');
+const ResponseModel = use('App/Models/Response');
+
 const Database = use('Database');
 
 class ResponseRepository {
@@ -23,14 +25,16 @@ class ResponseRepository {
 		
 		let channel = instance ? await instance.channel().first() : null;
 		
-		let responses = await Database
-			.select( '*' )
-			.from('responses')
-			.leftJoin('questions', 'responses.question_id', 'questions.id')
-			.leftJoin('sessions', 'sessions.session_id', 'sessions.id')
-			.innerJoin('sessions', () => {
-				this.on('sessions.instance_id', instance.id)
+		await ResponseModel
+			.query()
+			.whereHas('')
+		
+		let responses = await ResponseModel
+			.query()
+			.whereHas('session', (sessionQuery) => {
+				sessionQuery.where('instance_id', instance.id)
 			})
+			.fetch()
 		
 		return {
 			instance: instance,
