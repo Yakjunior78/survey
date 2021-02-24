@@ -25,9 +25,6 @@ class ResponseRepository {
 		
 		let channel = instance ? await instance.channel().first() : null;
 		
-		await ResponseModel
-			.query()
-			.whereHas('')
 		
 		let responses = await ResponseModel
 			.query()
