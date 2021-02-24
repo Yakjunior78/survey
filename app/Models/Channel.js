@@ -4,6 +4,7 @@
 const Model = use('Model')
 
 class Channel extends Model {
+
 }
 
 module.exports = Channel
