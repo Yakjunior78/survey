@@ -39,7 +39,7 @@ class Session extends Model {
 	}
 	
 	responses() {
-		return this.belongsTo('App/Models/Response');
+		return this.hasMany('App/Models/Response');
 	}
 }
 

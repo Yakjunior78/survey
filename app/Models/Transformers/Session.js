@@ -9,8 +9,8 @@ class SessionTransformer {
 		
 		return {
 			contact: await session.contact().first(),
-			responses: await this.responses(session),
-			question: await session.question().first()
+			question: await session.question().first(),
+			responses: await this.responses(session)
 		}
 	}
 	
