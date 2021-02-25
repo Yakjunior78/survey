@@ -24,14 +24,20 @@ class ResponseRepository {
 			return [];
 		}
 		
-		survey = instance ?  await instance.survey().first() : await SurveyModel.findBy('uuid', data.survey_id);
+		survey = instance
+			?  await instance.survey().first()
+			: await SurveyModel.findBy('uuid', data.survey_id);
 		
 		let channel = instance ? await instance.channel().first() : null;
 		
 		let sessions = await SessionModel
 			.query()
 			.where('instance_id', instance.id)
-			.paginate(10);
+			.fetch();
+		
+		return {
+			sessions: sessions
+		};
 		
 		sessions = sessions.toJSON();
 		
