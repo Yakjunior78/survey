@@ -34,7 +34,7 @@ class ResponseRepository {
 			.query()
 			.where('instance_id', instance.id)
 			.orderBy('updated_at', 'desc')
-			.paginate(data.page ? data.page : 1, 8);
+			.paginate(8);
 		
 		sessions = sessions ? sessions.toJSON() : [];
 		
