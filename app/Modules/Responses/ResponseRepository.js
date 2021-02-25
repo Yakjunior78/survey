@@ -41,6 +41,10 @@ class ResponseRepository {
 		
 		sessions = sessions.toJSON();
 		
+		return {
+			sessions: sessions
+		};
+		
 		let transformedSessions = [];
 		
 		for (let i = 0; i < sessions.length; i++)
