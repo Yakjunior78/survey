@@ -42,9 +42,9 @@ class ResponseRepository {
 		
 		let transformedSessions = [];
 		
-		for (let i = 0; i < sessions.length; i++)
+		for (let i = 0; i < sessionList.length; i++)
 		{
-			let session = await SessionModel.query().where('id', sessions[i].id).first();
+			let session = await SessionModel.query().where('id', sessionList[i].id).first();
 			
 			let transformed = await transform (session, 'Session');
 			
