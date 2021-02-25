@@ -6,6 +6,8 @@ const ResponseModel = use('App/Models/Response');
 class SessionTransformer {
 	
 	async transform(session) {
+		
+		return session;
 		return {
 			contact: await session.contact().first(),
 			responses: await this.responses(session),

@@ -35,7 +35,7 @@ class ResponseRepository {
 			.where('instance_id', instance.id)
 			.fetch();
 		
-		sessions = sessions.toJSON();
+		sessions = sessions ? sessions.toJSON() : [];
 		
 		let transformedSessions = [];
 		
