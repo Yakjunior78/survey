@@ -2,6 +2,7 @@ const moment = use('moment');
 const Env = use('Env');
 
 const ResponseModel = use('App/Models/Response');
+const { transform } = use('App/Helpers/Transformer');
 
 class SessionTransformer {
 	
