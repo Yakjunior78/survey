@@ -38,6 +38,8 @@ class ResponseRepository {
 		
 		sessions = sessions ? sessions.toJSON() : [];
 		
+		let sessionList = sessions.data;
+		
 		let transformedSessions = [];
 		
 		for (let i = 0; i < sessions.length; i++)
@@ -51,9 +53,11 @@ class ResponseRepository {
 		
 		let questions = await instance.questions().orderBy('rank', 'asc').fetch();
 		
+		sessions.data = transformedSessions;
+		
 		return {
 			questions: questions,
-			sessions: transformedSessions
+			sessions: sessions
 		};
 	}
 }
