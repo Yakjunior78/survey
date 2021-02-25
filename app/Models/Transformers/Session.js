@@ -17,7 +17,7 @@ class SessionTransformer {
 	
 	async responses(session)
 	{
-		let responses = await session.responses().fetch();
+		let responses = await session.responses().orderBy('updated_at', 'asc').fetch();
 		
 		responses = responses ? responses.toJSON() : [];
 		

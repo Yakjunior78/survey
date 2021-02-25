@@ -48,7 +48,7 @@ class ResponseRepository {
 			transformedSessions.push(transformed);
 		}
 		
-		let questions = await instance.questions().fetch();
+		let questions = await instance.questions().orderBy('rank', 'asc').fetch();
 		
 		return {
 			questions: questions,
