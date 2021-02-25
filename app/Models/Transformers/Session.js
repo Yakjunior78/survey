@@ -7,7 +7,6 @@ class SessionTransformer {
 	
 	async transform(session) {
 		
-		return session;
 		return {
 			contact: await session.contact().first(),
 			responses: await this.responses(session),
@@ -19,13 +18,13 @@ class SessionTransformer {
 	{
 		let responses = await session.responses().fetch();
 		
-		responses = responses.toJSON();
+		responses = responses ? responses.toJSON() : [];
 		
 		let transformedResponses = [];
 		
 		for (let i = 0; i < responses.length; i++)
 		{
-			let response = await ResponseModel.findOrFail(responses[i].id);
+			let response = await ResponseModel.query().where('id', responses[i].id).first();
 			
 			let transformed = await transform (response, 'Response');
 			
