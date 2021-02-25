@@ -33,7 +33,12 @@ class ResponseRepository {
 		let sessions = await SessionModel
 			.query()
 			.where('instance_id', instance.id)
+			.orderBy('updated_at', 'desc')
 			.paginate(data.page ? data.page : 1, 8);
+		
+		return {
+			sessions: sessions
+		}
 		
 		sessions = sessions ? sessions.toJSON() : [];
 		
