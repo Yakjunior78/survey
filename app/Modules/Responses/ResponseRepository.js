@@ -35,10 +35,6 @@ class ResponseRepository {
 			.where('instance_id', instance.id)
 			.fetch();
 		
-		return {
-			sessions: sessions
-		};
-		
 		sessions = sessions.toJSON();
 		
 		return {
