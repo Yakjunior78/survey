@@ -33,7 +33,7 @@ class ResponseRepository {
 		let sessions = await SessionModel
 			.query()
 			.where('instance_id', instance.id)
-			.fetch();
+			.paginate(data.page ? data.page : 1, 8);
 		
 		sessions = sessions ? sessions.toJSON() : [];
 		
