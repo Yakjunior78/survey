@@ -21,55 +21,60 @@ const sessionHandler = new(use('App/Jobs/Session'))();
 const contactsClone = new(use('App/Modules/Contacts/ContactsClone'))();
 
 class TestController {
-	
+
 	async publish ({ request, response }) {
 		let resp = await Message.publish({req: request.all()});
 		return response.json(resp);
 	}
-	
+
 	async sendSms({ request, response }) {
-		
+
 		let data = request.all();
-		
+
 		let resp = await SMS.sendSingleSms(data);
-		
+
 		return response.json({
 			'status': 200,
 			'data': resp
 		})
 	}
-	
+
 	async token({ response }) {
-		
+
 		let token = await Auth.headers();
-		
+
 		return response.json({
 			'status' : 200,
 			'token' : token
 		});
 	}
-	
+
 	async createSession({ params, response })
 	{
 		let instance =await InstanceModel.find(16);
-		
+
 		await job.dispatch(instance);
 	}
-	
+
 	async cloneContacts({ request, response })
 	{
 		let instance = await InstanceModel.find(181);
-		
+
 		console.log(instance, 'this is the instance')
-		
+
 		if(instance.cloned) {
 			console.log('Instance already cloned');
 			return;
 		}
-		
+
 		return response.json({
 			data: await contactsClone.handle(instance)
 		});
+	}
+
+	async testDocker()
+	{
+		console.log('We are here');
 	}
 }
 

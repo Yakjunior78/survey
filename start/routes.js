@@ -19,11 +19,11 @@ const Route = use('Route')
 Route.on('/').render('welcome');
 
 Route.group( () => {
-	
+
 	Route.resource('/surveys', 'SurveysController');
-	
+
 	Route.resource('/instances', 'InstanceController');
-	
+
 	Route.post('/instances/initialize', 'InstanceController.initialize');
 	Route.post('/statistics', 'StatisticsController.questions');
 	Route.post('/stats-summary', 'StatisticsController.summary');
@@ -40,7 +40,7 @@ Route.group( () => {
 	Route.resource('/channels', 'ChannelsController');
 	Route.get('/interaction-modes', 'ChannelsController.interactionModes');
 	Route.resource('/statuses', 'StatusesController');
-	
+
 	Route.get('/question-types', 'QuestionTypesController.all');
 }).prefix('api');
 
@@ -69,6 +69,6 @@ Route.group( () => {
 }).prefix('api');
 
 Route.group( () => {
-	Route.post('test', 'TestController.publish');
+	Route.post('test', 'TestController.testDocker');
 	Route.post('test-contacts-clone', 'TestController.cloneContacts');
 }).prefix('api');
