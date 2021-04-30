@@ -1,6 +1,5 @@
 'use strict';
 
-const uuidv4 = require('uuid/v4');
 const cuid = require('cuid');
 const StatusModel = use('App/Models/Status');
 
@@ -9,7 +8,7 @@ const random = async () => {
 }
 
 const token = async () => {
-	return uuidv4(6);
+	return cuid();
 }
 
 const shortToken = async () => {
@@ -24,13 +23,13 @@ const getStatus = async (slug) => {
 }
 
 const mapIds = async (arr, column) => {
-	
+
 	let ids = [];
-	
+
 	for (let i = 0; i < arr.length; i++) {
 		await ids.push((parseInt(arr[i][column])));
 	}
-	
+
 	return ids;
 }
 
