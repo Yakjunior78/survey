@@ -84,7 +84,9 @@ class TestController {
 
 		await Redis.set(date, request.all());
 
-		return response.json(request.all())
+		let contacts = await ContactModel.all();
+
+		return response.json(contacts)
 	}
 }
 

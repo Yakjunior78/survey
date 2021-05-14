@@ -1,0 +1,1 @@
+'use strict';const Resource = exports = module.exports = {}Resource.deduct = async (instance) => {    console.log('DEDUCT RESOURCES');}

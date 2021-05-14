@@ -1,0 +1,1 @@
+'use strict';const Contact = exports = module.exports = {}Contact.clone = async (instance) => {    console.log('CLONE CONTACTS');}Contact.session = async (instance) => {    console.log('CREATE CONTACT SESSION');}

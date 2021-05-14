@@ -16,7 +16,7 @@ module.exports = {
     | interacting with SQL databases.
     |
     */
-    connection: Env.get('DB_CONNECTION', 'mysql'),
+    connection: Env.get('DB_CONNECTION', 'sqlite'),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,10 +51,10 @@ module.exports = {
         client: 'mysql',
         connection: {
             host: Env.get('DB_HOST', '127.0.0.1'),
-            port: Env.get('DB_PORT', '3306'),
+            port: Env.get('DB_PORT', '33060'),
             user: Env.get('DB_USER', 'homestead'),
             password: Env.get('DB_PASSWORD', 'secret'),
-            database: Env.get('DB_DATABASE', 'surveys')
+            database: Env.get('DB_DATABASE', 'survey')
         }
     },
 
@@ -62,7 +62,7 @@ module.exports = {
         client: 'mysql',
         connection: {
             host: Env.get('XEMA_DB_HOST', '127.0.0.1'),
-            port: Env.get('XEMA_DB_PORT', '3306'),
+            port: Env.get('XEMA_DB_PORT', '33060'),
             user: Env.get('XEMA_DB_USER', 'homestead'),
             password: Env.get('XEMA_DB_PASSWORD', 'secret'),
             database: Env.get('XEMA_DB_DATABASE', 'xemabox')
@@ -76,7 +76,7 @@ module.exports = {
         client: 'mysql',
         connection: {
             host: Env.get('AUTH_DB_HOST', '127.0.0.1'),
-            port: Env.get('AUTH_DB_PORT', '3306'),
+            port: Env.get('AUTH_DB_PORT', '33060'),
             user: Env.get('AUTH_DB_USER', 'homestead'),
             password: Env.get('AUTH_DB_PASSWORD', 'secret'),
             database: Env.get('AUTH_DB_DATABASE', 'xemabox')
