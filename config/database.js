@@ -7,117 +7,103 @@ const Env = use('Env')
 const Helpers = use('Helpers')
 
 module.exports = {
-  /*
-  |--------------------------------------------------------------------------
-  | Default Connection
-  |--------------------------------------------------------------------------
-  |
-  | Connection defines the default connection settings to be used while
-  | interacting with SQL databases.
-  |
-  */
-  connection: Env.get('DB_CONNECTION', 'sqlite'),
+    /*
+    |--------------------------------------------------------------------------
+    | Default Connection
+    |--------------------------------------------------------------------------
+    |
+    | Connection defines the default connection settings to be used while
+    | interacting with SQL databases.
+    |
+    */
+    connection: Env.get('DB_CONNECTION', 'mysql'),
 
-  /*
-  |--------------------------------------------------------------------------
-  | Sqlite
-  |--------------------------------------------------------------------------
-  |
-  | Sqlite is a flat file database and can be good choice under development
-  | environment.
-  |
-  | npm i --save sqlite3
-  |
-  */
-  sqlite: {
-    client: 'sqlite3',
-    connection: {
-      filename: Helpers.databasePath(`${Env.get('DB_DATABASE', 'development')}.sqlite`)
+    /*
+    |--------------------------------------------------------------------------
+    | Sqlite
+    |--------------------------------------------------------------------------
+    |
+    | Sqlite is a flat file database and can be good choice under development
+    | environment.
+    |
+    | npm i --save sqlite3
+    |
+    */
+    sqlite: {
+        client: 'sqlite3',
+        connection: {
+            filename: Helpers.databasePath(`${Env.get('DB_DATABASE', 'development')}.sqlite`)
+        },
+        useNullAsDefault: true
     },
-    useNullAsDefault: true
-  },
 
-  /*
-  |--------------------------------------------------------------------------
-  | MySQL
-  |--------------------------------------------------------------------------
-  |
-  | Here we define connection settings for MySQL database.
-  |
-  | npm i --save mysql
-  |
-  */
-  mysql: {
-    client: 'mysql',
-    connection: {
-      host: Env.get('DB_HOST', 'localhost'),
-      port: Env.get('DB_PORT', ''),
-      user: Env.get('DB_USER', 'root'),
-      password: Env.get('DB_PASSWORD', ''),
-      database: Env.get('DB_DATABASE', 'adonis')
-    }
-  },
-    
+    /*
+    |--------------------------------------------------------------------------
+    | MySQL
+    |--------------------------------------------------------------------------
+    |
+    | Here we define connection settings for MySQL database.
+    |
+    | npm i --save mysql
+    |
+    */
+    mysql: {
+        client: 'mysql',
+        connection: {
+            host: Env.get('DB_HOST', '127.0.0.1'),
+            port: Env.get('DB_PORT', '3306'),
+            user: Env.get('DB_USER', 'homestead'),
+            password: Env.get('DB_PASSWORD', 'secret'),
+            database: Env.get('DB_DATABASE', 'surveys')
+        }
+    },
+
     mysqlContacts: {
         client: 'mysql',
         connection: {
-            host: Env.get('DB_HOST_TEST', '35.240.42.252'),
-            port: Env.get('DB_PORT_TEST', '3306'),
-            user: Env.get('DB_USER_TEST', 'emalify'),
-            password: Env.get('DB_PASSWORD_TEST', 'emalify@2019'),
-            database: Env.get('DB_DATABASE_CONTACTS', 'ext_contacts')
-        },
-        pool: {
-            acquireTimeoutMillis: 60 * 1000,
-        }
-    },
-    
-    mysqlAuth: {
-        client: 'mysql',
-        connection: {
-            host: Env.get('DB_HOST_TEST', '35.240.42.252'),
-            port: Env.get('DB_PORT_TEST', '3306'),
-            user: Env.get('DB_USER_TEST', 'emalify'),
-            password: Env.get('DB_PASSWORD_TEST', 'emalify@2019'),
-            database: Env.get('DB_DATABASE_AUTH', 'emalify_auth_staging')
-        },
-        pool: {
-            acquireTimeoutMillis: 60 * 1000,
-        }
-    },
-    
-    mysqlSMS: {
-        client: 'mysql',
-        connection: {
-            host: Env.get('DB_HOST_TEST', '35.240.42.252'),
-            port: Env.get('DB_PORT_TEST', '3306'),
-            user: Env.get('DB_USER_TEST', 'emalify'),
-            password: Env.get('DB_PASSWORD_TEST', 'emalify@2019'),
-            database: Env.get('DB_DATABASE_SMS', 'rt_sms')
+            host: Env.get('XEMA_DB_HOST', '127.0.0.1'),
+            port: Env.get('XEMA_DB_PORT', '3306'),
+            user: Env.get('XEMA_DB_USER', 'homestead'),
+            password: Env.get('XEMA_DB_PASSWORD', 'secret'),
+            database: Env.get('XEMA_DB_DATABASE', 'xemabox')
         },
         pool: {
             acquireTimeoutMillis: 60 * 1000,
         }
     },
 
-  /*
-  |--------------------------------------------------------------------------
-  | PostgreSQL
-  |--------------------------------------------------------------------------
-  |
-  | Here we define connection settings for PostgreSQL database.
-  |
-  | npm i --save pg
-  |
-  */
-  pg: {
-      client: 'pg',
-      connection: {
-          host: Env.get('DB_HOST', 'localhost'),
-          port: Env.get('DB_PORT', ''),
-          user: Env.get('DB_USER', 'root'),
-          password: Env.get('DB_PASSWORD', ''),
-          database: Env.get('DB_DATABASE', 'adonis')
-      }
-  }
+    mysqlAuth: {
+        client: 'mysql',
+        connection: {
+            host: Env.get('AUTH_DB_HOST', '127.0.0.1'),
+            port: Env.get('AUTH_DB_PORT', '3306'),
+            user: Env.get('AUTH_DB_USER', 'homestead'),
+            password: Env.get('AUTH_DB_PASSWORD', 'secret'),
+            database: Env.get('AUTH_DB_DATABASE', 'xemabox')
+        },
+        pool: {
+            acquireTimeoutMillis: 60 * 1000,
+        }
+    },
+
+    /*
+    |--------------------------------------------------------------------------
+    | PostgreSQL
+    |--------------------------------------------------------------------------
+    |
+    | Here we define connection settings for PostgreSQL database.
+    |
+    | npm i --save pg
+    |
+    */
+    pg: {
+        client: 'pg',
+        connection: {
+            host: Env.get('DB_HOST', 'localhost'),
+            port: Env.get('DB_PORT', ''),
+            user: Env.get('DB_USER', 'root'),
+            password: Env.get('DB_PASSWORD', ''),
+            database: Env.get('DB_DATABASE', 'adonis')
+        }
+    }
 }

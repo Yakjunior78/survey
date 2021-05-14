@@ -4,6 +4,7 @@ const {PubSub} = require('@google-cloud/pubsub');
 const timeout = 60;
 const topic = 'test-topic';
 const Database = use('Database');
+const Redis = use('Redis');
 
 const Message = new(use('App/Modules/Messages/Message'))();
 const SMS = new(use('App/Modules/Surveys/SMS'))();
@@ -75,6 +76,15 @@ class TestController {
 	async testDocker()
 	{
 		console.log('We are here');
+	}
+
+	async testRedis({ request, response })
+	{
+		let date = (new Date()).toISOString();
+
+		await Redis.set(date, request.all());
+
+		return response.json(request.all())
 	}
 }
 

@@ -72,3 +72,5 @@ Route.group( () => {
 	Route.post('test', 'TestController.testDocker');
 	Route.post('test-contacts-clone', 'TestController.cloneContacts');
 }).prefix('api');
+
+Route.post('test-redis-client', 'TestController.testRedis').prefix('api')
