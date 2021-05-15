@@ -36,17 +36,22 @@ class Instance {
 
 		console.log('2:Found group');
 
-		let data = await this.messageData(group, instance);
+		try	{
+			let data = await this.messageData(group, instance);
 
-		console.log(data, 'this is the data');
+			console.log(data, 'this is the data');
 
-		console.log('dispatching the sms');
+			console.log('dispatching the sms');
 
-		await SMS.handle(data);
+			await SMS.handle(data);
 
-		instance.sms_sent = true;
+			instance.sms_sent = true;
 
-		return instance.save();
+			instance.save();
+
+		} catch (e) {
+			console.log('ERROR OCCURRED: ', e.message);
+		}
 	}
 
 	async messageData(group, instance)
