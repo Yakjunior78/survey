@@ -8,28 +8,28 @@ const Email = new(use('App/Services/Survey/Email'))();
 const Whatsapp = new(use('App/Services/Survey/Whatsapp'))();
 
 class Dispatch {
-	
+
 	async handle(instance)
 	{
 		let channel = await instance.channel().first();
-		
+
 		switch(channel.slug) {
-			
+
 			case 'sms':
 				return await SMS.handle(instance);
-				
+
 			case 'twitter':
 				return await Twitter.handle(instance);
-			
+
 			case 'facebook':
 				return await Facebook.handle(instance);
-			
+
 			case 'email':
 				return await Email.handle(instance);
-			
+
 			case 'whatsapp':
 				return await Whatsapp.handle(instance);
-				
+
 			default:
 				console.log('DISPATCHING SURVEY: failed to identify the survey instance channel');
 				return;

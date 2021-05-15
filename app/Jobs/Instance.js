@@ -2,6 +2,7 @@ const GroupModel = use('App/Models/Group');
 const InstanceModel = use('App/Models/Instance');
 const SessionModel = use('App/Models/Session');
 const ContactModel = use('App/Models/Contact');
+const ProfileContactGroupModel = use('App/Models/ProfileContactGroup');
 
 const SMS = new(use('App/Services/SMS/Send'))();
 
@@ -10,74 +11,56 @@ const InstanceQuestion = new( use('App/Modules/Questions/InstanceQuestionHandler
 const Env = use('Env');
 
 class Instance {
-	
+
 	async dispatch(instance)
 	{
 		instance = await InstanceModel.query().where('id', instance.id).first();
-		
+
 		if(!instance) {
 			return;
 		}
-		
+
 		if(instance.sms_sent) {
 			console.log('sms for the instance has already been dispatched');
 			return;
 		}
-		
+
 		console.log('1:Found instance');
-		
+
 		let group = await GroupModel.query().where('code', instance.group_id).first();
-		
+
 		if(!group) {
 			console.log('group was not found');
 			return instance;
 		}
-		
+
 		console.log('2:Found group');
-		
+
 		let data = await this.messageData(group, instance);
+
 		console.log(data, 'this is the data');
-		
+
 		console.log('dispatching the sms');
-		
+
 		await SMS.handle(data);
-		
+
 		instance.sms_sent = true;
-		
+
 		return instance.save();
 	}
-	
+
 	async messageData(group, instance)
 	{
 		let message = await InstanceQuestion.handle(instance);
-		
-		console.log(message, 'this is the message');
-		
-		let channel = await instance.channel().first();
-		
-		let contacts = await ContactModel
+
+		let profileContactGroup = await ProfileContactGroupModel
 			.query()
-			.where('group_id',  group.id)
-			.fetch();
-		
-		contacts = contacts.toJSON();
-		
-		let mode = await instance.interaction().first();
-		
-		let messages = []
+			.where('contactGroupID', group.code)
+			.first()
 
-		for (const contact of contacts) {
-			let recipient = {
-				recipient: contact.msisdn,
-				message: mode.slug === 'web-link' ? message + '?cid='+contact.uuid+'&channel='+channel.id : message
-			}
-
-			messages.push(recipient);
-		}
-		
 		return {
-			from: Env.get('DEFAULT_SHORT_CODE'),
-			messages: messages
+			'message': message,
+			'profileContactGroupMappingId': profileContactGroup.profileContactGroupMappingID
 		}
 	}
 }

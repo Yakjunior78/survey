@@ -1,0 +1,1 @@
+'use strict'/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */const Model = use('Model')class ProfileContactGroup extends Model {    static get table () {        return 'profileContactGroupMapping'    }    static get connection () {        return 'mysqlContacts'    }}module.exports = ProfileContactGroup

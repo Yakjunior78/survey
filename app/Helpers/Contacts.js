@@ -6,15 +6,15 @@ const ContactModel = use('App/Models/Contact');
 
 const getGroup = async (id) =>
 {
-	return Database.connection ('mysqlSMS')
-		.from ('contact_groups')
-		.where ('id', id)
+	return Database.connection ('mysqlContacts')
+		.from ('contactGroups')
+		.where ('contactGroupID', id)
 		.first ();
 };
 
 const getFile = async (id) =>
 {
-	return Database.connection ('mysqlSMS')
+	return Database.connection ('mysqlContacts')
 		.from ('file_upload_queues')
 		.where ('contact_groups_id', id)
 		.first ();
@@ -23,7 +23,7 @@ const getFile = async (id) =>
 const getCompany = async (account) =>
 {
 	let company = await CompanyModel.query().where('identity', account).first();
-	
+
 	return company ? company : await createCompany(account);
 }
 
@@ -34,18 +34,18 @@ const contactGroup = async (group, company, file) =>
 		.where('company_id', company.id)
 		.where('code', group.id)
 		.first();
-	
+
 	if(!contactGroup) {
-		
+
 		contactGroup = await GroupModel.create({
 			title: '',
 			code: group.id,
 			company_id: company.id
 		});
-		
+
 		return await this.contacts(contactGroup, company, file.table_name);
 	}
-	
+
 	return contactGroup;
 }
 
@@ -64,7 +64,7 @@ async function contacts(group, company, table)
 		.connection('mysqlContacts')
 		.select('msisdn', 'fname', 'lname', 'network')
 		.from(table);
-	
+
 	for (const contact of contacts) {
 		await ContactModel.create({
 			group_id: group.id,
@@ -74,7 +74,7 @@ async function contacts(group, company, table)
 			lname: contact.lname
 		});
 	}
-	
+
 	return true;
 }
 

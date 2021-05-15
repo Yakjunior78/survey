@@ -12,45 +12,30 @@ const { getGroup, getFile, getCompany } = use('App/Helpers/Contacts');
 const GroupHandler = new(use('App/Modules/Contacts/Group'))();
 
 class Contacts {
-	
+
 	async clone(instance)
 	{
 		console.log('CONTACT CLONE: contact clone started ----------------------------------------------------------');
-		
+
 		instance = await InstanceModel.find(instance.id);
-		
+
 		if(instance.cloned) {
 			console.log('CONTACT CLONE: instance already cloned');
 			return null;
 		}
-		
+
 		let group = await getGroup(instance.group_id);
-		
+
 		if(!group) {
-			console.log('CONTACTS CLONE: contact group was not identified');
+			console.log('CONTACTS CLONE: contact group was not found');
 			return null;
 		}
-		
-		let file = await getFile(group.id);
-		
-		if(!file) {
-			console.log('CONTACTS CLONE: contact group details was not identified');
-			return;
-		}
-		
-		let company = await getCompany(group.customer_account);
-		
-		let contactGroup = await GroupHandler.getByCode(group.id);
-		
-		if(!contactGroup) {
-			await ContactHandler.clone(group, company, file);
-		}
-		
+
+		await ContactHandler.clone(group);
+
 		instance.cloned = true;
-		
-		await instance.save ();
-		
-		return await Dispatch.handle(instance);
+
+		return instance.save ();
 	}
 }
 

@@ -36,13 +36,6 @@ class InstanceController {
 
 	async dispatch({ params, response })
 	{
-		console.log(params.id);
-
-		return response.json ({
-			status: 201,
-			message: 'Survey instance sent successfully'
-		});
-
 		let result = await InstanceHandler.ready (params.id);
 
 		return response.json (result);
