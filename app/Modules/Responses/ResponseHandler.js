@@ -11,13 +11,13 @@ const ContactHandler = new(use('App/Modules/Contacts/ContactsHandler'))();
 const SessionHandler = new(use('App/Modules/Session/SessionHandler'))();
 
 const { smsReply, jsonReply } = use('App/Helpers/Question');
-const { publish } = use('App/Services/Messaging/PubSubHandler');
+const { publish } = use('App/Services/Messaging/RedisPubSubHandler');
 
 const Logger = use('Logger');
 const Env = use('Env');
 
 class ResponseHandler {
-	
+
 	async handle(data, channel)
 	{
 		switch(channel.slug) {
@@ -30,7 +30,7 @@ class ResponseHandler {
 				return 'unknown survey channel';
 		}
 	}
-	
+
 	async publish(data, channel)
 	{
 		return await publish(
@@ -38,72 +38,77 @@ class ResponseHandler {
 				data: data,
 				channel: channel
 			},
-			Env.get('HANDLE_RESPONSE'),
-			'handle_response'
+			'response:received'
 		);
 	}
-	
+
 	async respond(data, channel)
 	{
 		let session = await this.session(data, channel);
-		
+
 		console.log(session, 'this is the session');
-		
+
 		if(!session) return null;
-		
+
 		return this.response (session, data, channel);
 	}
-	
+
 	async response(session, data, channel)
 	{
 		let response = await Response.record (session, data, channel);
-		
+
 		if(!response) {
+			console.log('RESPONSE RECEIVED : response not found');
 			let current = await session.question ().with ('conditions').first ();
 			return await this.reply(current, channel, true);
 		}
-		
+
+		console.log('RESPONSE RECEIVED : response found');
+
 		let nextQuestion = await Question.handle(session, response);
-		
+
 		await this.updateSession(session, nextQuestion);
-		
+
 		return await this.reply(nextQuestion, channel);
 	}
-	
+
 	async session(data, channel)
 	{
 		let contacts = await ContactHandler.find(data, channel);
-		
+
 		if(!contacts) {
-			console.log(instances, 'there are no contacts found');
 			return null
 		}
-		
+
 		let instances = null;
-		
+
 		if(data.instanceId) {
 			instances = await InstanceModel.query().where('uuid', data.instanceId).fetch();
 		} else {
 			instances = await Instance.find(data, contacts, channel);
 		}
-		
+
+		console.log(instances, 'this is the instance');
+
 		if(!instances) {
 			console.log(instances, 'there are no instances found');
 			return null
 		}
 
+
+
 		return await SessionHandler.handle (contacts, instances);
 	}
-	
+
 	async updateSession(session, question)
 	{
 		return await SessionHandler.update(session, question);
 	}
-	
+
 	async reply(question, channel, repeat)
 	{
 		console.log('AT REPLY');
-		
+
 		switch(channel.slug) {
 			case 'sms':
 				return await smsReply(question, repeat);
@@ -114,7 +119,7 @@ class ResponseHandler {
 				return null;
 		}
 	}
-	
+
 	async type(type)
 	{
 		return ChannelModel.query ().where ('service', type).first ();

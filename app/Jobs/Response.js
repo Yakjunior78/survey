@@ -7,53 +7,42 @@ const Env = use('Env');
 const Logger = use('Logger');
 
 class Response {
-	
+
 	async handle(data)
 	{
 		let channel = data.channel;
-		
+
 		data = data.data;
-		
+
 		let session = await ResponseHandler.session(data, channel);
-		
+
+		console.log(session, 'this is the session');
+
 		if(!session) {
 			console.log('there is no session');
 			return null;
 		}
-		
+
 		let response = await ResponseHandler.response(session, data, channel);
-		
+
 		let contact = await ContactModel.query().where('id', session.contact_id).first();
-		
+
 		if(!contact) {
 			console.log('contact not identified');
 			return null
 		}
-		
-		return await this.reply(response, contact, data)
+
+		return await this.reply(response, contact)
 	}
-	
-	async reply(response, contact, data)
+
+	async reply(response, contact)
 	{
-		let sender = await SenderModel
-			.query()
-			.where('code', data.shortCode)
-			.first();
-		
-		let from = sender ? sender.code : Env.get('DEFAULT_SHORT_CODE');
-		
-		let messages = [];
-		
-		messages.push({
-			recipient: contact.msisdn,
-			message: response
-		});
-		
-		console.log(messages, 'these are the messages for reply');
-		
 		return await SMS.handle({
-			from: from,
-			messages: messages
+			'profileID': '1',
+			'message': response,
+			'destination': contact.msisdn,
+			'providerCode': 'AT',
+			'type': 'singlesms'
 		});
 	}
 }

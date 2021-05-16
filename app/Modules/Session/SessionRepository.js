@@ -10,12 +10,12 @@ const { notAllowed } = use('App/Helpers/Response');
 const { mapIds } = use('App/Helpers/Emalify');
 
 class SessionRepository {
-	
+
 	async find(contacts, instances)
 	{
 		let contact_ids = await mapIds(contacts.toJSON(), 'id');
 		let instance_ids = await mapIds(instances.toJSON(), 'id');
-		
+
 		return SessionModel
 			.query ()
 			.whereIn ('contact_id', contact_ids)
@@ -26,33 +26,33 @@ class SessionRepository {
 			.orderBy ('updated_at', 'asc')
 			.first ();
 	}
-	
+
 	async init(instance, contact) //TODO to be removed
 	{
 		let survey = await instance.survey().fetch();
-		
+
 		let question = await QuestionRepo.get(survey, 1);
-		
+
 		if(!question) return null;
-		
+
 		return await this.create(instance, contact, question);
 	}
-	
+
 	async create(contact, instance)
 	{
 		instance = await InstanceModel.query().where('id', instance.id).first();
-		
+
 		let selectedContact = await ContactModel.query()
 			.where('msisdn', contact.msisdn)
 			.where('group_id', contact.group_id)
 			.first();
-		
+
 		let status = await getStatus('active');
-		
+
 		let survey = await instance.survey().fetch();
-		
+
 		let question = await QuestionRepo.get(survey, 1);
-		
+
 		if(!question) return null;
 
 		return await SessionModel.create ({
@@ -62,7 +62,7 @@ class SessionRepository {
 			question_id: question ? question.id : null
 		});
 	}
-	
+
 	async checkExpiry(contact, instance)
 	{
 		return SessionModel
@@ -71,7 +71,7 @@ class SessionRepository {
 			.where ('instance_id', instance.id)
 			.first ();
 	}
-	
+
 	async show(contact, instance, sender)
 	{
 		if(instance) {
@@ -84,7 +84,7 @@ class SessionRepository {
 				.where('contact_id', contact.id)
 				.first ();
 		}
-		
+
 		if(sender) {
 			return SessionModel
 				.query ()
@@ -95,14 +95,14 @@ class SessionRepository {
 				.where ('contact_id', contact.id)
 				.first ();
 		}
-		
+
 		return null;
 	}
-	
+
 	async update(session, next)
 	{
 		await session.save();
-		
+
 		return session;
 	}
 }

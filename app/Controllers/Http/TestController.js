@@ -8,7 +8,7 @@ const Redis = use('Redis');
 
 const Message = new(use('App/Modules/Messages/Message'))();
 const SMS = new(use('App/Modules/Surveys/SMS'))();
-const Auth = new(use('App/Modules/Auth/SMS'))();
+const Auth = new(use('App/Services/SMS/Auth'))();
 
 const ContactModel = use('App/Models/Contact');
 const SessionModel = use('App/Models/Session');
@@ -42,7 +42,7 @@ class TestController {
 
 	async token({ response }) {
 
-		let token = await Auth.headers();
+		let token = await Auth.apiToken();
 
 		return response.json({
 			'status' : 200,
@@ -85,6 +85,13 @@ class TestController {
 		await Redis.set(date, request.all());
 
 		let contacts = await ContactModel.all();
+
+		return response.json(contacts)
+	}
+
+	async auth({ request, response })
+	{
+
 
 		return response.json(contacts)
 	}

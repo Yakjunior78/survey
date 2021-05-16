@@ -27,7 +27,9 @@ const mapIds = async (arr, column) => {
 	let ids = [];
 
 	for (let i = 0; i < arr.length; i++) {
-		await ids.push((parseInt(arr[i][column])));
+		if(arr[i][column]) {
+			ids.push((parseInt(arr[i][column])));
+		}
 	}
 
 	return ids;

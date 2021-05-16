@@ -39,9 +39,7 @@ class Instance {
 		try	{
 			let data = await this.messageData(group, instance);
 
-			console.log(data, 'this is the data');
-
-			console.log('dispatching the sms');
+			data.type = 'bulksms';
 
 			await SMS.handle(data);
 

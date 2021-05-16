@@ -13,6 +13,8 @@ class ContactsHandler {
 
 	async find(data, channel)
 	{
+		console.log(data, channel, 'this is the channel');
+
 		switch(channel.slug) {
 			case 'sms':
 				return await repo.forSms(data);

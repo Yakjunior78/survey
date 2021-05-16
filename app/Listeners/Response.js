@@ -1,0 +1,1 @@
+'use strict';const ResponseHandler = new(use('App/Jobs/Response'))();const Response = exports = module.exports = {}Response.received = async (data) => {    let parsedData = JSON.parse(data);    await ResponseHandler.handle(parsedData.data);    console.log('RESPONSE RECEIVED : response sent!');}
