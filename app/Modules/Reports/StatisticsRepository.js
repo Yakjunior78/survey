@@ -31,8 +31,8 @@ class StatisticsRepository {
 				'QuestionStatistics',
 				{
 					channel: channel,
-					instance : instance}
-				)
+					instance : instance
+				})
 
 			await transformedQuestions.push(transformedQuestion);
 		}

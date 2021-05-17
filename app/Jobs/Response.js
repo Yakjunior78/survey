@@ -16,19 +16,18 @@ class Response {
 
 		let session = await ResponseHandler.session(data, channel);
 
-		console.log(session, 'this is the session');
-
 		if(!session) {
-			console.log('there is no session');
+			console.log('HANDLE RESPONSE 3: session not found!');
 			return null;
 		}
+
+		console.log('HANDLE RESPONSE 3: session found!');
 
 		let response = await ResponseHandler.response(session, data, channel);
 
 		let contact = await ContactModel.query().where('id', session.contact_id).first();
 
 		if(!contact) {
-			console.log('contact not identified');
 			return null
 		}
 

@@ -22,17 +22,30 @@ class ResponsesController {
 			req.type = 'OnDemandNotification';
 
 			req.data = {
-				'phoneNumber':'254704664119',
-				'shortCode':'20880',
-				'message':'xema 1'
+				'phoneNumber': (req.from).substring(1),
+				'shortCode': req.to,
+				'message': await this.trimMessage(req.text)
 			}
 		}
+
+		console.log(req, 'This is the request');
 
 		let channel = await ChannelModel.query().where ('service', req.type).first();
 
 		let result = await ResponseHandler.handle(req.data, channel);
 
 		return response.json(result);
+	}
+
+	async trimMessage(str) {
+
+		let position = str.search(/Dng/i);
+
+		if (position === 0) {
+			str = str.substring( str.indexOf(" ") + 1, str.length );
+		}
+
+		return str;
 	}
 }
 

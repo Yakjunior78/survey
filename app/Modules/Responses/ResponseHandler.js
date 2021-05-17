@@ -46,8 +46,6 @@ class ResponseHandler {
 	{
 		let session = await this.session(data, channel);
 
-		console.log(session, 'this is the session');
-
 		if(!session) return null;
 
 		return this.response (session, data, channel);
@@ -58,12 +56,12 @@ class ResponseHandler {
 		let response = await Response.record (session, data, channel);
 
 		if(!response) {
-			console.log('RESPONSE RECEIVED : response not found');
+			console.log('HANDLE RESPONSE 4: response not found!');
 			let current = await session.question ().with ('conditions').first ();
 			return await this.reply(current, channel, true);
 		}
 
-		console.log('RESPONSE RECEIVED : response found');
+		console.log('HANDLE RESPONSE 4: response found!');
 
 		let nextQuestion = await Question.handle(session, response);
 
@@ -77,8 +75,11 @@ class ResponseHandler {
 		let contacts = await ContactHandler.find(data, channel);
 
 		if(!contacts) {
+			console.log('HANDLE RESPONSE 1: no contact found!');
 			return null
 		}
+
+		console.log('HANDLE RESPONSE 1: contacts found!');
 
 		let instances = null;
 
@@ -88,14 +89,12 @@ class ResponseHandler {
 			instances = await Instance.find(data, contacts, channel);
 		}
 
-		console.log(instances, 'this is the instance');
-
 		if(!instances) {
-			console.log(instances, 'there are no instances found');
+			console.log('HANDLE RESPONSE 2: no instance found!');
 			return null
 		}
 
-
+		console.log('HANDLE RESPONSE 2: instance found!');
 
 		return await SessionHandler.handle (contacts, instances);
 	}

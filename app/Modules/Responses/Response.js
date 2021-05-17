@@ -61,15 +61,11 @@ class Response {
 	{
 		let response = data.message;
 
-		console.log(response, 'this is the response');
-
 		let type = await question.type().first();
 
 		if(!type) {
 			type = await QuestionTypeModel.query().where('slug', 'open_ended').first();
 		}
-
-		console.log(type, 'this is the question type');
 
 		let responseArray = [];
 
@@ -85,15 +81,11 @@ class Response {
 					return !Number.isNaN(value);
 				});
 
-				console.log(responseArray, 'this is the response array');
-
 				let exists = await question.choices ().whereIn ('rank', newArray).getCount ();
 
 				if(!exists) {
 					exists = await question.choices ().where ('value', data.message).getCount ();
 				}
-
-				console.log(exists, 'this is the validator count')
 
 				return exists > 0;
 
