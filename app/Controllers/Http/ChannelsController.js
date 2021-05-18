@@ -15,7 +15,7 @@ class ChannelsController {
 	async interactionModes({ response })
 	{
 		let modes = await InteractionModel.all();
-		
+
 		return response.json(modes);
 	}
 }
