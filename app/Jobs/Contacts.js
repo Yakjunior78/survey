@@ -31,7 +31,9 @@ class Contacts {
 			return null;
 		}
 
-		await ContactHandler.clone(group);
+		let survey = await instance.survey().fetch();
+
+		await ContactHandler.clone(group, survey);
 
 		instance.cloned = true;
 

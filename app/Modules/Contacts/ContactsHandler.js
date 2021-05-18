@@ -36,7 +36,7 @@ class ContactsHandler {
 		return contact;
 	}
 
-	async clone(group)
+	async clone(group, survey)
 	{
 		let profileContactGroup = await ProfileContactGroupModel
 			.query()
@@ -57,13 +57,13 @@ class ContactsHandler {
 		let contactGroup = await GroupHandler.store({
 			title: group.contactGroupName,
 			code: group.contactGroupID,
-			company_id: profileContactGroup.profileID
+			company_id: survey ? survey.company_id : null
 		});
 
 		for (const contact of contacts) {
 			await ContactModel.create({
 				group_id: contactGroup.id,
-				company_id: profileContactGroup.profileID,
+				company_id: survey ? survey.company_id : null,
 				msisdn: contact.destination,
 				fname: contact.fullNames ? contact.fullNames : null,
 				lname: contact.fullNames ? contact.fullNames : null

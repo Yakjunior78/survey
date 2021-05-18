@@ -9,6 +9,7 @@ tmp
 .env
 .env.production
 .env.example
+.env.local
 
 # The development sqlite file
 database/*.sqlite
