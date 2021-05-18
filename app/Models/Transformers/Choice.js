@@ -2,8 +2,6 @@ class QuestionTransformer {
 
 	async transform(choice, data) {
 
-		console.log(choice.value, 'this is te value')
-
 		let question = await choice.question().first();
 
 		let instance = data && data.instance ? data.instance : null;
