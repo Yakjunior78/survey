@@ -24,7 +24,7 @@ class QuestionTransformer {
 			question_type_id: type ? type.id : null,
 			questionType: type ? type : null,
 			rank: question.rank,
-			response: await question.responses().fetch()
+			responses: await question.responses().fetch()
 		}
 	}
 
