@@ -1,1 +1,1 @@
-version: '2'services:  nodejs:    build:      context: .      dockerfile: Dockerfile    ports:      - "3000:3000"
+version: '2'services:  nodejs:      build:          context: .          dockerfile: Dockerfile      ports:          - "3000:3000"
