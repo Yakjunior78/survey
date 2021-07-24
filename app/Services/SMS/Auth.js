@@ -19,13 +19,12 @@ class Auth {
 				return rep;
 			});
 	}
-	
 
 	async oauthCredentials()
 	{
 		return {
-			'username': 'yakjunior78@gmail.com',
-			'password': 'hatikvah78'
+			'username': '254718532419',
+			'password': 'X8l5CScI4LpietiOyT8clA=='
 		}
 	}
 
