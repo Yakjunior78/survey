@@ -11,7 +11,7 @@ class Auth {
 
 		return await axios.post(
 				base_url+'/profile-services/customers/login',
-				this.oauthCredentials())
+				await this.oauthCredentials())
 			.then( ({ data })=> {
 				return data.result.data.token;
 			})
@@ -19,8 +19,9 @@ class Auth {
 				return rep;
 			});
 	}
+	
 
-	oauthCredentials()
+	async oauthCredentials()
 	{
 		return {
 			'username': 'yakjunior78@gmail.com',
