@@ -23,8 +23,8 @@ class Auth {
 	oauthCredentials()
 	{
 		return {
-			'username': 'bluelimo254@gmail.com',
-			'password': 'password'
+			'username': 'yakjunior78@gmail.com',
+			'password': 'hatikvah78'
 		}
 	}
 
